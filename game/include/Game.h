@@ -4,9 +4,9 @@
 
 class Game {
 public:
-    explicit Game(Engine& engine);
+    explicit Game(GameEngine::Engine& engine);
     void run();
 
 private:
-    Engine& engine_;
+    GameEngine::Engine& engine_;
 };

@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <string>
 
+namespace GameEngine {
+
 class Engine {
 public:
     Engine(const std::string& title, int width, int height);
@@ -19,3 +21,5 @@ private:
     SDL_Window* window_ = nullptr;
     bool running_ = false;
 };
+
+}

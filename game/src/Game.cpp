@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(Engine& engine)
+Game::Game(GameEngine::Engine& engine)
     : engine_(engine) {
 }
 
