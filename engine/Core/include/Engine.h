@@ -10,7 +10,7 @@ public:
     Engine(const std::string& title, int width, int height);
     ~Engine();
 
-    bool init();
+    bool init(const std::string& resourcePath);
     void run();
     void shutdown();
 

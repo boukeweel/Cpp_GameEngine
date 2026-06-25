@@ -9,6 +9,8 @@ namespace GameEngine {
         : m_Transform{std::make_unique<Transform>(*this)}
     {}
 
+    GameObject::~GameObject() = default;
+
     void GameObject::Update() {
         for (auto& [type, components] : m_Components) {
             for (auto& component : components) {

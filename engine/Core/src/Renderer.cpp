@@ -1,4 +1,8 @@
 #include "Renderer.h"
+#include "GameObject.h"
+#include "Texture2D.h"
+#include <SDL_render.h>
+#include <SDL.h>
 
 namespace GameEngine
 {
@@ -50,6 +54,22 @@ namespace GameEngine
 	{
     	SDL_SetRenderDrawColor(GetSDLRenderer(), 255, 0, 0, 255);
 		SDL_RenderDrawRect(GetSDLRenderer(), &rect);
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height, const float angle) const
+	{
+		SDL_Rect dst{};
+		dst.x = static_cast<int>(x);
+		dst.y = static_cast<int>(y);
+		dst.w = static_cast<int>(width);
+		dst.h = static_cast<int>(height);
+
+		SDL_Point center{};
+		center.x = dst.w / 2;
+		center.y = dst.h / 2;
+
+		SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &center, SDL_FLIP_NONE);
+	
 	}
 }
 

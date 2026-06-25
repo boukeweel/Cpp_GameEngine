@@ -2,8 +2,8 @@
 #include "Game.h"
 
 int main() {
-    GameEngine::Engine engine("Small engine", 1280, 720);
-    if (!engine.init()) {
+    GameEngine::Engine engine("Small engine", 1920, 1080);
+    if (!engine.init("game/Resources")) {
         return 1;
     }
 

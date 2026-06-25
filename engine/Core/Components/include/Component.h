@@ -12,10 +12,9 @@ namespace GameEngine {
         virtual void Update() {}
         virtual void FixedUpdate() {}
         virtual void Render() {}
-        
-    private:
-        GameObject* m_Owner;
 
+    protected:
+        GameObject* m_Owner;
     public:
         virtual ~Component() = default;
         Component(const Component&) = delete;

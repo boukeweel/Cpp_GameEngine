@@ -1,6 +1,8 @@
 #include "Engine.h"
 #include "EngineTime.h"
 #include "Renderer.h"
+#include "ResourceManger.h"
+#include <SDL_image.h>
 #include <iostream>
 
 namespace GameEngine {
@@ -13,7 +15,7 @@ namespace GameEngine {
         shutdown();
     }
     
-    bool Engine::init() {
+    bool Engine::init(const std::string& resourcePath) {
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
             std::cerr << "SDL_Init Error: " << SDL_GetError() << '\n';
             return false;
@@ -35,6 +37,7 @@ namespace GameEngine {
         }
     
         GameEngine::Renderer::GetInstance().Init(window_);
+        GameEngine::ResourceManager::GetInstance().SetResourcePath(resourcePath);
     
         srand(static_cast<unsigned int>(time(nullptr)));
     
@@ -43,7 +46,8 @@ namespace GameEngine {
     }
     
     void Engine::run() {
-    
+
+        
         auto& renderer = GameEngine::Renderer::GetInstance();
     
         while (running_) {

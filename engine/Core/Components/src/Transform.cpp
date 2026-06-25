@@ -37,19 +37,16 @@ namespace GameEngine
     {
         if (GetIsDirtyTransform())
             UpdateWorldPosition();
-	    return m_WorldPosition;
+        return m_WorldPosition;
     }
 
     void Transform::UpdateWorldPosition()
     {
-        if(GetIsDirtyTransform())
+        if (GetIsDirtyTransform())
         {
-            if(!m_Owner){
-                m_WorldPosition = m_LocalPosition;
-            }
-            else{
-                m_WorldPosition = m_LocalPosition + m_Owner->GetTransform().GetWorldPosition();
-            }
+            // No parent transform support yet, so world position is local position.
+            m_WorldPosition = m_LocalPosition;
+            IsDirty = false;
         }
     }
     
