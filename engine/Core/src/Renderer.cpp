@@ -1,8 +1,8 @@
 #include "Renderer.h"
-#include "GameObject.h"
 #include "Texture2D.h"
 #include <SDL_render.h>
 #include <SDL.h>
+#include "Scene.h"
 
 namespace GameEngine
 {
@@ -30,13 +30,13 @@ namespace GameEngine
     	}
 	}
 
-	void Renderer::Render()
+	void Renderer::Render(const Scene& currentScene) const
 	{
     	const auto& clearColor = GetClearColor();
     	SDL_SetRenderDrawColor(m_pRenderer, clearColor.r, clearColor.g, clearColor.b, clearColor.a);
     	SDL_RenderClear(m_pRenderer);
 
-    	//todo: Render things here
+    	currentScene.Render();
 
     	SDL_RenderPresent(m_pRenderer);
 	}

@@ -1,13 +1,14 @@
 #pragma once
 
 #include <SDL.h>
-#include "GameObject.h"
+#include "Scene.h"
 #include "Singleton.h"
 
 namespace GameEngine
 {
     class Texture2D;
     class GameObject;
+    class Scene;
 
     class Renderer final : public Singleton<Renderer>
     {
@@ -17,7 +18,7 @@ namespace GameEngine
 
     public:
         void Init(SDL_Window* window);
-        void Render();
+        void Render(const Scene& currentScene) const;
         void Destroy();
 
         void RenderRect(const SDL_Rect& rect);

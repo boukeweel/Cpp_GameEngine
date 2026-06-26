@@ -12,7 +12,7 @@ target_link_libraries(game PRIVATE
 )
 
 
-set(GAME_RESOURCE_SOURCE_DIR ${CMAKE_SOURCE_DIR}/Resources)
+set(GAME_RESOURCE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 set(GAME_RESOURCE_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Resources)
 if(EXISTS ${GAME_RESOURCE_SOURCE_DIR})
     add_custom_target(copy_game_resources ALL

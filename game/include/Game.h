@@ -8,5 +8,5 @@ public:
     void run();
 
 private:
-    GameEngine::Engine& engine_;
+    GameEngine::Engine& m_engine;
 };

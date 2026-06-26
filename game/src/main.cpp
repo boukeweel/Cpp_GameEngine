@@ -3,7 +3,7 @@
 
 int main() {
     GameEngine::Engine engine("Small engine", 1920, 1080);
-    if (!engine.init("game/Resources")) {
+    if (!engine.init("Resources")) {
         return 1;
     }
 

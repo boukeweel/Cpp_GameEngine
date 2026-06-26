@@ -2,6 +2,7 @@
 #include "EngineTime.h"
 #include "Renderer.h"
 #include "ResourceManger.h"
+#include "Scene.h"
 #include <SDL_image.h>
 #include <iostream>
 
@@ -38,6 +39,8 @@ namespace GameEngine {
     
         GameEngine::Renderer::GetInstance().Init(window_);
         GameEngine::ResourceManager::GetInstance().SetResourcePath(resourcePath);
+
+        m_currentScene = std::make_unique<Scene>("Default Scene");
     
         srand(static_cast<unsigned int>(time(nullptr)));
     
@@ -49,6 +52,10 @@ namespace GameEngine {
 
         
         auto& renderer = GameEngine::Renderer::GetInstance();
+
+        if (!m_currentScene) {
+            m_currentScene = std::make_unique<Scene>("Default Scene");
+        }
     
         while (running_) {
             GameEngine::EngineTime::Update();
@@ -64,13 +71,13 @@ namespace GameEngine {
         
             while (GameEngine::EngineTime::lag >= GameEngine::EngineTime::GetFixedDeltaTime()) {
                 
-                //todo: Fixed update call here
+                m_currentScene->FixedUpdate();
             
                 GameEngine::EngineTime::lag -= GameEngine::EngineTime::GetFixedDeltaTime();
             }
         
-            //todo: Update call here
-            renderer.Render();
+            m_currentScene->Update();
+            renderer.Render(*m_currentScene);
         
         
             SDL_Delay(GameEngine::EngineTime::GetSleepTime().count());
