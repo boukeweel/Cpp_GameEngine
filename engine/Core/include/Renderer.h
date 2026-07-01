@@ -23,6 +23,7 @@ namespace GameEngine
 
         void RenderRect(const SDL_Rect& rect);
         void RenderTexture(const Texture2D& texture, float x, float y, float width, float height, const float angle = 0) const;
+        void RenderTexture(const Texture2D& texture, float x, float y, const float angle = 0) const;
 
         SDL_Renderer* GetSDLRenderer() const { return m_pRenderer; }
 

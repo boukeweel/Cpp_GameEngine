@@ -11,7 +11,7 @@ namespace GameEngine {
 
         virtual void Update() {}
         virtual void FixedUpdate() {}
-        virtual void Render() {}
+        virtual void Render() const {}
 
     protected:
         GameObject* m_Owner;

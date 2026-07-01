@@ -69,7 +69,19 @@ namespace GameEngine
 		center.y = dst.h / 2;
 
 		SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &center, SDL_FLIP_NONE);
-	
+	}
+
+	void Renderer::RenderTexture(const Texture2D& texture, float x, float y, const float angle) const
+	{
+		SDL_Rect dst{};
+		dst.x = static_cast<int>(x);
+		dst.y = static_cast<int>(y);
+		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		SDL_Point center{};
+		center.x = dst.w / 2;
+		center.y = dst.h / 2;
+		
+		SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &center, SDL_FLIP_NONE);
 	}
 }
 

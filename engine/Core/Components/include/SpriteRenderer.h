@@ -15,7 +15,7 @@ namespace GameEngine {
         SpriteRenderer(GameObject* owner, const std::string& texturePath);
         SpriteRenderer(GameObject* owner, std::unique_ptr<Texture2D> texture);
        
-        void Render() override;
+        void Render() const override;
 
         void SetTexture(const std::string& texturePath);
         void SetTexture(std::unique_ptr<Texture2D> texture);

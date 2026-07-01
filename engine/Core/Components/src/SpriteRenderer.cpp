@@ -25,7 +25,7 @@ namespace GameEngine {
         
     }
 
-    void SpriteRenderer::Render()
+    void SpriteRenderer::Render() const
     {
         if (!m_Texture)
         {

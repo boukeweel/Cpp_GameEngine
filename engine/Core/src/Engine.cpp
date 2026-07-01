@@ -38,7 +38,7 @@ namespace GameEngine {
         }
     
         GameEngine::Renderer::GetInstance().Init(window_);
-        GameEngine::ResourceManager::GetInstance().SetResourcePath(resourcePath);
+        GameEngine::ResourceManager::GetInstance().Init(resourcePath);
 
         m_currentScene = std::make_unique<Scene>("Default Scene");
     
