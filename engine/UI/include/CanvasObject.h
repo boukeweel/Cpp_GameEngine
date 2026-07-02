@@ -20,7 +20,7 @@ namespace GameEngine
         CanvasObject();
 
         void Update();
-        void Renderer() const;
+        void Render() const;
 
         template<class T, typename... Args> requires std::derived_from<T, UIElement>
         T* AddElement(Args&&... args);
@@ -37,7 +37,7 @@ namespace GameEngine
         std::unordered_map<std::type_index, std::vector<std::unique_ptr<UIElement>>> m_elements;
     
     public:
-        ~CanvasObject() = delete;
+        ~CanvasObject() = default;
         CanvasObject(const CanvasObject&) = delete;
         CanvasObject& operator=(const CanvasObject&) = delete;
         CanvasObject(CanvasObject&&) = delete;
