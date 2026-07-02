@@ -50,7 +50,7 @@ namespace GameEngine {
     	const auto key = std::type_index(typeid(T));
         auto newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
         T* componentPtr = newComponent.get();
-        m_Components[key].push_back(std::move(newComponent));
+        m_Components[key].emplace_back(std::move(newComponent));
         return componentPtr;
     }
     template <class  T> requires std::derived_from<T, Component>
