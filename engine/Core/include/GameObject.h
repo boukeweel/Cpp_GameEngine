@@ -30,8 +30,7 @@ namespace GameEngine {
 	    template<class  T> requires std::derived_from<T, Component>
 	    bool HasComponent() const;
 
-
-        Transform& GetTransform() { return *m_Transform; }
+        [[nodiscard]] Transform& GetTransform() const { return *m_Transform; }
     private:
         std::unique_ptr<Transform> m_Transform;
         std::unordered_map<std::type_index,std::vector<std::unique_ptr<Component>>> m_Components;

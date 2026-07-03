@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 #include "UIElement.h"
+#include "UITransform.h"
 
 
 namespace GameEngine 
@@ -22,6 +23,8 @@ namespace GameEngine
         void Update();
         void Render() const;
 
+        [[nodiscard]] UITransform& GetTransform() const {return *m_transform;}
+
         template<class T, typename... Args> requires std::derived_from<T, UIElement>
         T* AddElement(Args&&... args);
         template<class T> requires std::derived_from<T, UIElement>
@@ -34,6 +37,7 @@ namespace GameEngine
         bool HasComponent() const;
 
     private:
+        std::unique_ptr<UITransform> m_transform;
         std::unordered_map<std::type_index, std::vector<std::unique_ptr<UIElement>>> m_elements;
     
     public:
