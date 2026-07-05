@@ -1,6 +1,7 @@
 #pragma  once
 
 #include "CanvasObject.h"
+#include "glm/ext/vector_float2.hpp"
 #include <memory>
 #include <sys/types.h>
 #include <vector>
@@ -10,10 +11,11 @@ namespace GameEngine
 {
     class CanvasObject;
 
-    class Canvas 
+    class Canvas final
     {
     public:
         Canvas(glm::vec2 size = {480,720});
+        Canvas(glm::vec2 position = {0,0}, glm::vec2 size = {480,720});
 
         void Update();
         void Render() const;
@@ -26,8 +28,16 @@ namespace GameEngine
         //todo: maybe make this a canvas transform or something.
         void SetSize(glm::vec2 newSize);
         void SetSize(float x, float y);
+        const glm::vec2& GetSize() const {return m_size;}
+
+        void SetPosition(glm::vec2 newPosition);
+        void SetPosition(float x, float y);
+        const glm::vec2& GetPosition() const {return m_position;}
 
     private:
+        void SetPositionDirty();
+
+        glm::vec2 m_position{};
         glm::vec2 m_size{200,200};
         std::vector<std::unique_ptr<CanvasObject>> m_objects{};
 

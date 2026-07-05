@@ -15,15 +15,20 @@ namespace GameEngine
     //Ask chat when back if there is a way to make a base class for this and gameobject,
     //where the componenet system works the same but it just checks for gameobject if base = Component, and same for this
 
+    class Canvas;
+
     class CanvasObject final 
     {
     public:
         CanvasObject();
+        CanvasObject(UITransform& transform);
+        CanvasObject(anchorPoint anchorPoint, glm::vec2 offset, glm::vec2 size = {1.f,1.f}, float depth = 0);
 
         void Update();
         void Render() const;
 
         [[nodiscard]] UITransform& GetTransform() const {return *m_transform;}
+        [[nodiscard]] Canvas& GetParentCanvas() const {return *m_pParent;}
 
         template<class T, typename... Args> requires std::derived_from<T, UIElement>
         T* AddElement(Args&&... args);
@@ -39,6 +44,8 @@ namespace GameEngine
     private:
         std::unique_ptr<UITransform> m_transform;
         std::unordered_map<std::type_index, std::vector<std::unique_ptr<UIElement>>> m_elements;
+
+        Canvas* m_pParent;
     
     public:
         ~CanvasObject() = default;

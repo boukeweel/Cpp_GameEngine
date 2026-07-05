@@ -17,7 +17,7 @@ namespace GameEngine {
         void SetPosition(float x, float y, float z);
         void SetPosition(const glm::vec3& position);
         glm::vec3 GetWorldPosition();
-
+        
         void SetRotationX(float angle);
         void SetRotation(const glm::vec3& rotation);
         glm::vec3 GetRotation() const;
