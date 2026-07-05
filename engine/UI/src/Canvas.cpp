@@ -1,22 +1,20 @@
 #include "Canvas.h"
 #include "CanvasObject.h"
 #include "glm/ext/vector_float2.hpp"
-#include <algorithm>
 #include <memory>
 #include <utility>
+#include "CanvasObject.h"
 
 
 
 namespace GameEngine
 {
-    Canvas::Canvas(glm::vec2 size) : m_size{size}
-    {}
-
     Canvas::Canvas(glm::vec2 position, glm::vec2 size) : m_position{position}, m_size{size}
     {}
 
     void Canvas::AddObject(std::unique_ptr<CanvasObject> object)
     {
+        object->AsignCanvas(*this);
         m_objects.emplace_back(std::move(object));
     }
 

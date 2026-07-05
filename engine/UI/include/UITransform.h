@@ -26,6 +26,7 @@ namespace GameEngine
         friend class Canvas;
     public:
         UITransform(CanvasObject& owner);
+        UITransform(CanvasObject& owner, glm::vec2 offset, glm::vec2 size, float depth);
 
         void SetLocation(float x, float y);        
         void SetLocation(const glm::vec2& newLocation);

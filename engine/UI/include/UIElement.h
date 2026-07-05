@@ -9,8 +9,8 @@ namespace GameEngine
     public:
         UIElement(CanvasObject* owner);
 
-        virtual void Update();
-        virtual void Renderer() const;
+        virtual void Update() {};
+        virtual void Render() const {};
 
     protected:
         CanvasObject* m_owner;

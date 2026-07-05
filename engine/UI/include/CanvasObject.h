@@ -27,6 +27,8 @@ namespace GameEngine
         void Update();
         void Render() const;
 
+        void AsignCanvas(Canvas& canvas);
+
         [[nodiscard]] UITransform& GetTransform() const {return *m_transform;}
         [[nodiscard]] Canvas& GetParentCanvas() const {return *m_pParent;}
 

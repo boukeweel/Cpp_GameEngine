@@ -1,4 +1,5 @@
 #pragma once
+#include "Canvas.h"
 #include "GameObject.h"
 #include "Renderer.h"
 #include <memory>
@@ -11,6 +12,15 @@ namespace GameEngine{
     class Scene final{
     public:
         Scene(const std::string& name);
+
+        ///Only adds if the canvas pointer is nullptr atm
+        bool AddCanvas(std::unique_ptr<Canvas> Canvas);
+        ///Always adds; replaces any existing canvas
+        void AggressiveAddCanvas(std::unique_ptr<Canvas> Canvas);
+        ///Removes and returns ownership of the canvas (may be null)
+        std::unique_ptr<Canvas> RemoveCanvas();
+        bool HasCanvas();
+        Canvas* GetCanvas();
 
         void AddObject(std::unique_ptr<GameObject> object);
         void RemoveObject(std::unique_ptr<GameObject> object);
@@ -27,6 +37,7 @@ namespace GameEngine{
     
     private:
         std::vector<std::unique_ptr<GameObject>> m_sceneObjects{};
+        std::unique_ptr<Canvas> m_canvas{};
 
         std::string m_name{};
         unsigned int m_id{};

@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Canvas.h"
+#include "CanvasObject.h"
 #include "GameObject.h"
 #include "ResourceManger.h"
 #include "Scene.h"
@@ -7,6 +9,8 @@
 #include <utility>
 #include "TextComponent.h"
 #include "Transform.h" 
+#include "UITextElement.h"
+#include "UITransform.h"
 
 Game::Game(GameEngine::Engine& engine)
     : m_engine(engine) {
@@ -17,6 +21,20 @@ void Game::run()
     auto scene = std::make_unique<GameEngine::Scene>("Main Scene");
 
     auto font = GameEngine::ResourceManager::GetInstance().LoadFont("/Fonts/RobotoMono-VariableFont_wght.ttf", 100);
+    
+    glm::vec2 screenSize = m_engine.GetSize();
+    glm::vec2 position = {0,0};
+    auto canvas = std::make_unique<GameEngine::Canvas>(position,screenSize);
+
+    auto canvasObject = std::make_unique<GameEngine::CanvasObject>();
+    canvasObject->GetTransform().SetAnchorPoint(GameEngine::anchorPoint::TopMiddle);
+    canvasObject->AddElement<GameEngine::UITextElement>("UIText",font);
+    canvasObject->GetTransform().SetSize(100.f,100.f);
+    canvas->AddObject(std::move(canvasObject));
+
+    scene->AddCanvas(std::move(canvas));
+    
+    
     auto TextObject = std::make_unique<GameEngine::GameObject>();
     TextObject->AddComponent<GameEngine::TextComponent>("Hallo", font);
     TextObject->GetTransform().SetPosition({500.f,200.f,0});
@@ -39,6 +57,9 @@ void Game::run()
 
 
     scene->AddObject(std::move(obj));
+
+
+
     m_engine.SetScene(std::move(scene));
     m_engine.run();
 }

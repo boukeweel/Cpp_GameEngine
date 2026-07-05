@@ -3,12 +3,40 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#include <utility>
 
 
 namespace GameEngine{
 
     Scene::Scene(const std::string& name) : m_name{name}
     {}
+
+    bool Scene::AddCanvas(std::unique_ptr<Canvas> canvas)
+    {
+        if(m_canvas == nullptr)
+        {
+            m_canvas = std::move(canvas);
+            return true;
+        }
+        return false;
+    }
+    void Scene::AggressiveAddCanvas(std::unique_ptr<Canvas> canvas)
+    {
+        RemoveCanvas();
+        m_canvas = std::move(canvas);
+    }
+    std::unique_ptr<Canvas> Scene::RemoveCanvas()
+    {
+        return std::move(m_canvas);
+    }
+    bool Scene::HasCanvas()
+    {
+        return m_canvas != nullptr;
+    }
+    Canvas* Scene::GetCanvas()
+    {
+        return m_canvas.get();
+    }
 
     void Scene::AddObject(std::unique_ptr<GameObject> object)
     {
@@ -39,6 +67,11 @@ namespace GameEngine{
     	{
     		object->Update();
     	}
+
+        if(m_canvas != nullptr)
+        {
+            m_canvas->Update();
+        }
     }
     
     void Scene::Render() const
@@ -47,5 +80,10 @@ namespace GameEngine{
     	{
     		object->Render();
     	}
+
+        if(m_canvas != nullptr)
+        {
+            m_canvas->Render();
+        }
     }
 }

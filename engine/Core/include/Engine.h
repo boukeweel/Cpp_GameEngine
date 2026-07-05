@@ -22,12 +22,14 @@ namespace GameEngine {
         //temp until scene manager
         void SetScene(std::unique_ptr<Scene> newScene){m_currentScene = std::move(newScene);}
 
+        glm::vec2 GetSize() const {return {m_width,m_height};}
+
     private:
-        std::string title_;
-        int width_;
-        int height_;
-        SDL_Window* window_ = nullptr;
-        bool running_ = false;
+        std::string m_title;
+        int m_width;
+        int m_height;
+        SDL_Window* m_window = nullptr;
+        bool m_running = false;
 
         std::unique_ptr<Scene> m_currentScene{};
     };

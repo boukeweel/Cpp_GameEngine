@@ -3,7 +3,7 @@
 This project has been created on linux Ubuntu(26.04)
 
 ## General todo's
-- []
+- [ ] comment code 
 
 ## my todo's Engine
 - [ ] Canvas System

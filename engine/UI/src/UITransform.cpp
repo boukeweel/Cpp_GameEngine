@@ -11,6 +11,9 @@ namespace GameEngine
     : m_owner{&owner}, m_anchorPoint{otherTransform.GetAnchorPoint()}, m_offset{otherTransform.GetLocation()}
     , m_size{otherTransform.GetSize()}, m_depth{otherTransform.GetDepth()}
     {}
+    UITransform::UITransform(CanvasObject& owner, glm::vec2 offset, glm::vec2 size, float depth) 
+        : m_owner{&owner},m_offset{offset},m_size{size},m_depth{depth}
+    {}
 
     void UITransform::UpdateResolvedPosition()
     {

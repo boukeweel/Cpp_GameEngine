@@ -1,23 +1,23 @@
-#include "TextComponent.h"
+#include "UITextElement.h"
+#include "CanvasObject.h"
+#include "UIElement.h"
+#include "Renderer.h"
+#include "UITransform.h"
 #include "Font.h"
 #include "Texture2D.h"
 #include <SDL_ttf.h>
 #include <memory>
 #include <string>
 #include <utility>
-#include "GameObject.h"
-#include "Transform.h"
-#include "Renderer.h"
-
 
 namespace GameEngine
 {
-    TextComponent::TextComponent(GameObject* pparentObject,const std::string& text, std::shared_ptr<Font> font, SDL_Color color):
-	Component(pparentObject), m_needsUpdate(true), m_text(text), m_pfont(std::move(font)), m_ptextTexture(nullptr), m_fontSize{1}, m_color{color}
-    {}
+    UITextElement::UITextElement(CanvasObject* pParentObject, const std::string& text, 
+        std::shared_ptr<Font> font,SDL_Color color)
+        : UIElement(pParentObject), m_needsUpdate(true), m_text(text), m_pfont(std::move(font)), m_ptextTexture(nullptr), m_fontSize{1}, m_color{color}
+        {}
 
-
-    void TextComponent::Update()
+    void UITextElement::Update()
     {
         if(!m_needsUpdate) return;
 
@@ -34,31 +34,31 @@ namespace GameEngine
 		SDL_FreeSurface(surf);
 		m_ptextTexture = std::make_unique<Texture2D>(texture);
 		m_needsUpdate = false;
-
     }
 
-    void TextComponent::Render() const
+    void UITextElement::Render() const
     {
         if(m_ptextTexture != nullptr)
         {
-            const auto pos =  m_Owner->GetTransform().GetWorldPosition();
-            Renderer::GetInstance().RenderTexture(*m_ptextTexture, pos.x, pos.y);
+            const glm::vec2 pos =  m_owner->GetTransform().GetLocation();
+            const glm::vec2 Size = m_owner->GetTransform().GetSize();
+            Renderer::GetInstance().RenderTexture(*m_ptextTexture, pos.x, pos.y,Size.x,Size.y);
         }
     }
-
-    void TextComponent::SetText(const std::string& newText)
+    
+    void UITextElement::SetText(const std::string& newText)
     {
         m_text = newText;
         m_needsUpdate = true;
     }
 
-    void TextComponent::SetFont(std::shared_ptr<Font> newFont)
+    void UITextElement::SetFont(std::shared_ptr<Font> newFont)
     {
         m_pfont = std::move(newFont);
         m_needsUpdate = true;
     }
 
-    void TextComponent::SetColor(SDL_Color newColor)
+    void UITextElement::SetColor(SDL_Color newColor)
     {
         m_color = newColor;
         m_needsUpdate = true;

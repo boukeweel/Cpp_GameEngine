@@ -14,7 +14,7 @@ namespace GameEngine
     class Canvas final
     {
     public:
-        Canvas(glm::vec2 size = {480,720});
+
         Canvas(glm::vec2 position = {0,0}, glm::vec2 size = {480,720});
 
         void Update();
