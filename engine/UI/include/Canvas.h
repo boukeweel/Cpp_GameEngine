@@ -1,7 +1,6 @@
 #pragma  once
 
 #include "CanvasObject.h"
-#include "glm/ext/vector_float2.hpp"
 #include <memory>
 #include <sys/types.h>
 #include <vector>
