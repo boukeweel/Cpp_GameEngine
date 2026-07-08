@@ -1,6 +1,8 @@
 #pragma once
 #include "Command.h"
 #include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <memory>
 #include <vector>
 #include <SDL_events.h>
@@ -17,6 +19,22 @@ namespace GameEngine
         {
             return std::find(keyBoardKeys.begin(), keyBoardKeys.end(),key) != keyBoardKeys.end();
         }
+
+        bool operator==(const InputAction& other) const
+        {
+            if(keyBoardKeys.size() != other.keyBoardKeys.size())
+                return false;
+
+            if(!keyBoardKeys.empty())
+            {
+                for(size_t i = 0; i < keyBoardKeys.size(); ++i){
+                    if(keyBoardKeys[i] != other.keyBoardKeys[i]){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     };
 
     enum class InputStates
@@ -28,7 +46,7 @@ namespace GameEngine
 
     struct CommandInfo
     {
-        CommandInfo(InputStates buttonState, int controllerIndex, const InputAction& action, std::unique_ptr<Command> command)
+        CommandInfo(InputStates buttonState, const InputAction& action, std::unique_ptr<Command> command)
 			: inputState(buttonState), Action(action), command(std::move(command))
 		{}
 
