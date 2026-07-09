@@ -9,8 +9,8 @@ class EngineTime final
 {
     friend class Engine;
 public:
-    [[nodiscard]] static double deltaTime() noexcept { return s_DeltaTime; }
-    [[nodiscard]] static float deltaTimeFloat() noexcept { return static_cast<float>(s_DeltaTime); }
+    [[nodiscard]] static double GetdeltaTime() noexcept { return s_DeltaTime; }
+    [[nodiscard]] static float GetdeltaTimeFloat() noexcept { return static_cast<float>(s_DeltaTime); }
 
     [[nodiscard]] static float GetFixedDeltaTime() noexcept { return s_FixedDeltaTime; }
 

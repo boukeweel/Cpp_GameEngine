@@ -1,16 +1,22 @@
-add_executable(game
-    src/main.cpp
-    src/Game.cpp
+file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
+    Core/src/*.cpp
+    Components/src/*.cpp
+    Interfaces/src/*.cpp
+    Commands/src/*.cpp
 )
 
+add_executable(game ${GAME_SOURCES})
+
 target_include_directories(game PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Core/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Components/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Interfaces/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Commands/include
 )
 
 target_link_libraries(game PRIVATE
     engine
 )
-
 
 set(GAME_RESOURCE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 set(GAME_RESOURCE_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Resources)

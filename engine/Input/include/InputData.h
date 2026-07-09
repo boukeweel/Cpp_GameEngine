@@ -1,7 +1,6 @@
 #pragma once
-#include "Command.h"
+#include "ICommand.h"
 #include <algorithm>
-#include <cmath>
 #include <cstddef>
 #include <memory>
 #include <vector>
@@ -9,7 +8,7 @@
 
 namespace GameEngine
 {
-    class Command;
+    class ICommand;
 
     struct InputAction
     {
@@ -46,13 +45,13 @@ namespace GameEngine
 
     struct CommandInfo
     {
-        CommandInfo(InputStates buttonState, const InputAction& action, std::unique_ptr<Command> command)
+        CommandInfo(InputStates buttonState, const InputAction& action, std::unique_ptr<ICommand> command)
 			: inputState(buttonState), Action(action), command(std::move(command))
 		{}
 
         InputStates inputState{};
         InputAction Action{};
-        std::unique_ptr<Command> command;
+        std::unique_ptr<ICommand> command;
 
         void TryExecutedKeyBoard(InputStates checkState, SDL_Scancode key) const
         {

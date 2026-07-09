@@ -11,7 +11,7 @@ namespace GameEngine
     struct InputAction;
     struct CommandInfo;
     enum class InputStates;
-    class Command;
+    class ICommand;
     enum class InputKeys;
 
     class InputHandler final : public Singleton<InputHandler>
@@ -25,7 +25,7 @@ namespace GameEngine
         bool HandelKeyBoardEvent(const SDL_Event& event) const;
 		void HandleKeyboardContinually() const;
 
-        void AddCommand(const InputKeys& key, InputStates state, std::unique_ptr<Command> command);
+        void AddCommand(const InputKeys& key, InputStates state, std::unique_ptr<ICommand> command);
         
         void RemoveAllCommands();
 		void RemoveCommand(const InputKeys& key);

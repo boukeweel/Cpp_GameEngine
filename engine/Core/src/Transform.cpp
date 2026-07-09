@@ -102,4 +102,14 @@ namespace GameEngine
     {
         return m_scale;
     }
+
+    void Transform::Translate(const glm::vec3& translation)
+    {
+        SetLocalPosition(m_LocalPosition + translation);
+    }
+
+    void Transform::Translate(const glm::vec2& translation)
+    {
+        Translate({translation.x,translation.y,m_LocalPosition.z});
+    }
 }

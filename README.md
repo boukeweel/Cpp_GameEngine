@@ -12,8 +12,8 @@ This project has been created on linux Ubuntu(26.04)
     - [ ] Image rendering on canvas
     - [ ] Buttons 
     - [ ] Eventmangar for button selection with keyboard.
-- [ ] input system
-    [Command Pattern](https://gameprogrammingpatterns.com/command.html)
+- [ ] input system [Command Pattern](https://gameprogrammingpatterns.com/command.html)
+    - Y 1 is down and -1 is up that nees to be swaped
 - [ ] Controler input
 - [ ] Event
 - [ ] Audio system

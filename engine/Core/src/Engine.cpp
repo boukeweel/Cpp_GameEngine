@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "EngineTime.h"
+#include "InputHandler.h"
 #include "Renderer.h"
 #include "ResourceManger.h"
 #include "Scene.h"
@@ -52,27 +53,25 @@ namespace GameEngine {
 
         
         auto& renderer = GameEngine::Renderer::GetInstance();
+        auto& inputHandler = GameEngine::InputHandler::GetInstance();
 
         if (!m_currentScene) {
             m_currentScene = std::make_unique<Scene>("Default Scene");
         }
     
         while (m_running) {
+            //update Time
             GameEngine::EngineTime::Update();
-            GameEngine::EngineTime::lag += GameEngine::EngineTime::deltaTime();
-        
-        
-            SDL_Event event;
-            while (SDL_PollEvent(&event)) {
-                if (event.type == SDL_QUIT) {
-                    m_running = false;
-                }
-            }
+
+            GameEngine::EngineTime::lag += GameEngine::EngineTime::GetdeltaTime();
+
+            //Handle Input
+            m_running = inputHandler.ProccesInput();
+            
         
             while (GameEngine::EngineTime::lag >= GameEngine::EngineTime::GetFixedDeltaTime()) {
                 
                 m_currentScene->FixedUpdate();
-            
                 GameEngine::EngineTime::lag -= GameEngine::EngineTime::GetFixedDeltaTime();
             }
         

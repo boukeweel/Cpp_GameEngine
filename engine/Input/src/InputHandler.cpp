@@ -1,5 +1,5 @@
 #include "InputHandler.h"
-#include "Command.h"
+#include "ICommand.h"
 #include "InputData.h"
 #include <SDL_events.h>
 #include <SDL_keyboard.h>
@@ -10,6 +10,12 @@
 
 namespace GameEngine 
 {
+    InputHandler::InputHandler()
+    {}
+
+    InputHandler::~InputHandler()
+    {}
+
     bool InputHandler::ProccesInput()
     {
         HandleKeyboardContinually();
@@ -40,7 +46,7 @@ namespace GameEngine
                         continue;
 
                     command.TryExecutedKeyBoard(inputState, event.key.keysym.scancode);
-                }
+                } 
                 return true;
         }
         return false;
@@ -67,7 +73,7 @@ namespace GameEngine
         }
     }
 
-    void InputHandler::AddCommand(const InputKeys& key, InputStates state, std::unique_ptr<Command> command)
+    void InputHandler::AddCommand(const InputKeys& key, InputStates state, std::unique_ptr<ICommand> command)
     {
         m_commands.emplace_back(state,m_inputButtons.at(key), std::move(command));
     }
@@ -82,7 +88,6 @@ namespace GameEngine
         m_commands.erase(std::remove_if(m_commands.begin(),m_commands.end(),
         [this,&key](const CommandInfo& cmd) { return cmd.Action == m_inputButtons.at(key); }),
         m_commands.end());
-
     }
 
     void InputHandler::AddInput(const InputKeys& key, const InputAction& actions){

@@ -30,6 +30,9 @@ namespace GameEngine {
 
         bool GetIsDirtyTransform() const { return IsDirty; }
 
+        void Translate(const glm::vec3& translation);
+        void Translate(const glm::vec2& translation);
+
     private:
         void UpdateWorldPosition();
         void SetLocalPosition(const glm::vec3& position);

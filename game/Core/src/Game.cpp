@@ -2,6 +2,10 @@
 #include "Canvas.h"
 #include "CanvasObject.h"
 #include "GameObject.h"
+#include "InputData.h"
+#include "InputHandler.h"
+#include "MoveCommand.h"
+#include "PlayerMovement.h"
 #include "ResourceManger.h"
 #include "Scene.h"
 #include "SpriteRenderer.h"
@@ -18,6 +22,13 @@ Game::Game(GameEngine::Engine& engine)
 
 void Game::run() 
 {
+    auto& input = GameEngine::InputHandler::GetInstance();
+
+	input.AddInput(GameEngine::InputKeys::ARROW_UP, GameEngine::InputAction{{SDL_SCANCODE_UP}});
+	input.AddInput(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputAction{{SDL_SCANCODE_DOWN}});
+	input.AddInput(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputAction{{SDL_SCANCODE_LEFT}});
+	input.AddInput(GameEngine::InputKeys::ARROW_RIGHT, GameEngine::InputAction{{SDL_SCANCODE_RIGHT}});
+
     auto scene = std::make_unique<GameEngine::Scene>("Main Scene");
 
     auto font = GameEngine::ResourceManager::GetInstance().LoadFont("/Fonts/RobotoMono-VariableFont_wght.ttf", 100);
@@ -43,19 +54,25 @@ void Game::run()
 
     auto obj = std::make_unique<GameEngine::GameObject>();
     obj->AddComponent<GameEngine::SpriteRenderer>("/images/AllyTemp.png");
-
+    auto moveObject = obj->AddComponent<PlayerMovement>(50);
     obj->GetTransform().SetPosition(400,400,0);
     obj->GetTransform().SetScale(10.f,10.f);
+
+    input.AddCommand(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputStates::Held
+        , std::make_unique<MoveCommand>(moveObject, glm::vec3{-1.f, 0.f, 0.f}));
+    input.AddCommand(GameEngine::InputKeys::ARROW_RIGHT, GameEngine::InputStates::Held
+        , std::make_unique<MoveCommand>(moveObject, glm::vec3{1.f, 0.f, 0.f}));
+    input.AddCommand(GameEngine::InputKeys::ARROW_UP, GameEngine::InputStates::Held
+        , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, -1.f, 0.f}));
+    input.AddCommand(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputStates::Held
+        , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, 1.f, 0.f}));
 
     scene->AddObject(std::move(obj));
 
     obj = std::make_unique<GameEngine::GameObject>();
     obj->AddComponent<GameEngine::SpriteRenderer>("/images/EnemyTemp.png");
-
     obj->GetTransform().SetPosition(1200,400,0);
     obj->GetTransform().SetScale(10.f,10.f);
-
-
     scene->AddObject(std::move(obj));
 
 
