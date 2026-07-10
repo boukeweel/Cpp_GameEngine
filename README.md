@@ -18,6 +18,7 @@ This project has been created on linux Ubuntu(26.04)
 - [ ] Camera
     - [ ] First simple version Camera owned by renderer
     - [ ] Second Camera component for GameObjects
+    - [ ] Object culling
 - [ ] Controler input
 - [ ] Event
 - [ ] Audio system
@@ -28,7 +29,7 @@ This project has been created on linux Ubuntu(26.04)
 
 ## Pushing conventions
 
-you first tart of with the type of push:
+you first start of with the type of push:
 - feat(): = new feature or working on feature
 - fix(): = as the name applies a fix for a problem
 - chore(): = updating readme, adding comments, renaming parts
