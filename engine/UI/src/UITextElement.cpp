@@ -42,7 +42,7 @@ namespace GameEngine
         {
             const glm::vec2 pos =  m_owner->GetTransform().GetLocation();
             const glm::vec2 Size = m_owner->GetTransform().GetSize();
-            Renderer::GetInstance().RenderTexture(*m_ptextTexture, pos.x, pos.y,Size.x,Size.y);
+            Renderer::GetInstance().RenderTextureUI(*m_ptextTexture, pos.x, pos.y,Size.x,Size.y);
         }
     }
     

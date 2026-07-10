@@ -1,8 +1,11 @@
 #include "Renderer.h"
+#include "Camera.h"
 #include "Texture2D.h"
 #include <SDL_render.h>
 #include <SDL.h>
+#include <memory>
 #include "Scene.h"
+#include "glm/ext/vector_float2.hpp"
 
 namespace GameEngine
 {
@@ -28,6 +31,15 @@ namespace GameEngine
     	{
         	SDL_Log("Failed to create renderer: %s", SDL_GetError());
     	}
+		CreateCamera();
+	}
+
+	void Renderer::CreateCamera()
+	{
+		int width{};
+		int height{};
+		SDL_GetWindowSize(m_pWindow, &width, &height);
+		m_camera = std::make_unique<Camera>(glm::vec2{width,height});
 	}
 
 	void Renderer::Render(const Scene& currentScene) const
@@ -57,10 +69,11 @@ namespace GameEngine
 	}
 
 	void Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height, const float angle) const
-	{
+	{			
+		glm::vec2 screenPos = m_camera->WorldToScreen({x,y});;
 		SDL_Rect dst{};
-		dst.x = static_cast<int>(x);
-		dst.y = static_cast<int>(y);
+		dst.x = static_cast<int>(screenPos.x);
+		dst.y = static_cast<int>(screenPos.y);
 		dst.w = static_cast<int>(width);
 		dst.h = static_cast<int>(height);
 
@@ -74,14 +87,30 @@ namespace GameEngine
 	void Renderer::RenderTexture(const Texture2D& texture, float x, float y, const float angle) const
 	{
 		SDL_Rect dst{};
+		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		
+		RenderTexture(texture,x,y,dst.w,dst.h,angle);
+	}
+
+	void Renderer::RenderTextureUI(const Texture2D& texture, float x, float y, float width, float height, const float angle) const
+	{
+		SDL_Rect dst{};
 		dst.x = static_cast<int>(x);
 		dst.y = static_cast<int>(y);
-		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		dst.w = static_cast<int>(width);
+		dst.h = static_cast<int>(height);
+
 		SDL_Point center{};
 		center.x = dst.w / 2;
 		center.y = dst.h / 2;
-		
+
 		SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &center, SDL_FLIP_NONE);
+	}
+	void Renderer::RenderTextureUI(const Texture2D& texture, float x, float y, const float angle) const
+	{
+		SDL_Rect dst{};
+		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		RenderTextureUI(texture,x,y,dst.w,dst.h,angle);
 	}
 }
 

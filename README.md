@@ -13,12 +13,11 @@ This project has been created on linux Ubuntu(26.04)
     - [ ] Image rendering on canvas
     - [ ] Buttons 
     - [ ] Eventmangar for button selection with keyboard.
-- [ ] input system [Command Pattern](https://gameprogrammingpatterns.com/command.html)
-    - Problem = Y 1 is down and -1 is up that nees to be swaped
-- [ ] Camera
-    - [ ] First simple version Camera owned by renderer
+- [x] input system [Command Pattern](https://gameprogrammingpatterns.com/command.html)
+- [x] Camera
+    - [x] First simple version Camera owned by renderer
     - [ ] Second Camera component for GameObjects
-    - [ ] Object culling
+- [ ] Object culling
 - [ ] Controler input
 - [ ] Event
 - [ ] Audio system
@@ -26,6 +25,9 @@ This project has been created on linux Ubuntu(26.04)
 - [ ] sprite animation
 - [ ] scene managar
 
+## refactoring code
+Because I am solo on this project I will try my best to look at ways to refactor it alone.
+But my knowledge is not endless so I will also be using Github Copilot, for help in the refactoring.
 
 ## Pushing conventions
 

@@ -63,9 +63,9 @@ void Game::run()
     input.AddCommand(GameEngine::InputKeys::ARROW_RIGHT, GameEngine::InputStates::Held
         , std::make_unique<MoveCommand>(moveObject, glm::vec3{1.f, 0.f, 0.f}));
     input.AddCommand(GameEngine::InputKeys::ARROW_UP, GameEngine::InputStates::Held
-        , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, -1.f, 0.f}));
-    input.AddCommand(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputStates::Held
         , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, 1.f, 0.f}));
+    input.AddCommand(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputStates::Held
+        , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, -1.f, 0.f}));
 
     scene->AddObject(std::move(obj));
 
