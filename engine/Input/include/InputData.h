@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INPUT_DATA_H
+#define INPUT_DATA_H
+
 #include "ICommand.h"
 #include <algorithm>
 #include <cstddef>
@@ -81,3 +83,5 @@ namespace GameEngine
         KEY_SPACE,
     };
 }   
+
+#endif //INPUT_DATA_H

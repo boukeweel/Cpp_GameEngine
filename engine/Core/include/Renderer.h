@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include <SDL.h>
 #include <memory>
@@ -46,3 +47,5 @@ namespace GameEngine
 
 
 }
+
+#endif //RENDERER_H

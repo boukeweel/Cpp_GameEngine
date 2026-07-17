@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INPUT_HANDLER_H
+#define INPUT_HANDLER_H
 
 #include "Singleton.h"
 #include <map>
@@ -37,3 +38,5 @@ namespace GameEngine
         std::vector<CommandInfo> m_commands;
     };
 }
+
+#endif //INPUT_HANDLER_H

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCENE_H
+#define SCENE_H
+
 #include "Canvas.h"
 #include "GameObject.h"
 #include "Renderer.h"
@@ -52,3 +54,5 @@ namespace GameEngine{
 		Scene& operator=(Scene&& other) = delete;
     };
 }
+
+#endif //SCENE_H

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLAYER_MOVEMENT_H
+#define PLAYER_MOVEMENT_H
 
 #include "Component.h"
 #include "GameObject.h"
@@ -18,3 +19,5 @@ public:
 	PlayerMovement& operator=(const PlayerMovement& other) = delete;
 	PlayerMovement& operator=(PlayerMovement&& other) = delete;
 };
+
+#endif //PLAYER_MOVEMENT_H

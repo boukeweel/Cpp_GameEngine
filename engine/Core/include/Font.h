@@ -1,4 +1,7 @@
-#pragma once
+#ifndef FONT_H
+#define FONT_H;
+
+
 #include <string>
 
 struct TTF_Font;
@@ -22,3 +25,5 @@ namespace GameEngine {
 	};
 
 }
+
+#endif //FONT_H

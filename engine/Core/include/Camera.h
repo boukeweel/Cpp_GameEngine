@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
@@ -26,3 +28,5 @@ namespace GameEngine
     };
 
 }
+
+#endif //CAMERA

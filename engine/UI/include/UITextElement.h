@@ -1,4 +1,6 @@
-#pragma once
+#ifndef UI_TEXT_ELEMENT_H
+#define UI_TEXT_ELEMENT_H
+
 #include "UIElement.h"
 #include <SDL_pixels.h>
 #include <memory>
@@ -38,3 +40,5 @@ namespace GameEngine
         UITextElement& operator=(UITextElement&&) = delete;
     };
 }
+
+#endif //UI_TEXT_ELEMENT_H

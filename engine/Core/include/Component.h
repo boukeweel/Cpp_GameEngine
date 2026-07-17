@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 namespace GameEngine {
 
@@ -23,3 +24,5 @@ namespace GameEngine {
 	    Component& operator=(Component&&) = delete;
     };
 }
+
+#endif //COMPONENT_H

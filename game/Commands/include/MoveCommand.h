@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MOVE_COMMAND_H
+#define MOVE_COMMAND_H
 
 #include "ICommand.h"
 #include <glm/vec3.hpp>
@@ -14,3 +15,5 @@ private:
     IMoveable* m_target;
     glm::vec3 m_direction;
 };
+
+#endif //MOVE_COMMAND_H

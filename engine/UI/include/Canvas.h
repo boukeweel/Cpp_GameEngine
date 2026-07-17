@@ -1,4 +1,5 @@
-#pragma  once
+#ifndef CANVAS_H
+#define CANVAS_H
 
 #include "CanvasObject.h"
 #include <memory>
@@ -49,3 +50,5 @@ namespace GameEngine
     };
 
 }
+
+#endif //CANVAS_H

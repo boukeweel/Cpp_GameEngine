@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RESOURCE_MANAGER_H
+
 #include <memory>
 #include <string>
 

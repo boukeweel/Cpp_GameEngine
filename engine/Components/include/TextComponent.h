@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TEXT_COMPONENT_H
+#define TEXT_COMPONENT_H
 
 #include "Component.h"
 #include <SDL_pixels.h>
@@ -35,3 +36,5 @@ namespace GameEngine{
 		TextComponent& operator=(TextComponent&& other) = delete;
     };
 }
+
+#endif //TEXT_COMPONENT_H

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CANVAS_OBJECT_H
+#define CANVAS_OBJECT_H
+
 #include <algorithm>
 #include <concepts>
 #include <memory>
@@ -119,3 +121,5 @@ namespace GameEngine
         return it != m_elements.end() && !it->second.empty();
     }
 }
+
+#endif //CANVAS_OBJECT_H

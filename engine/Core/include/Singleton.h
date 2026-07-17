@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SINGLETON_H
+#define SINGLETON_H
 
 namespace GameEngine
 { 
@@ -24,3 +25,5 @@ protected:
 
 };
 }
+
+#endif //SINGLETON_H

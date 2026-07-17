@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE_TIME_H
+#define ENGINE_TIME_H
 
 #include <chrono>
 
@@ -39,3 +40,5 @@ private:
 };
 
 }
+
+#endif //ENGINE_TIME_H

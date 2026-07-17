@@ -1,4 +1,6 @@
-#pragma once
+#ifndef UI_TRANSFORM_H
+#define UI_TRANSFORM_H
+
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 
@@ -69,4 +71,5 @@ namespace GameEngine
 
     
 }
-  
+ 
+#endif //UI_TRANSFORM_H

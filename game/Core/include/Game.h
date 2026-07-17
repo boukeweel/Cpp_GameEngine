@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
 #include "Engine.h"
 
@@ -10,3 +11,5 @@ public:
 private:
     GameEngine::Engine& m_engine;
 };
+
+#endif GAME_H

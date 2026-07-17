@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ICOMMAND_H
+#define ICOMMAND_H
 
 namespace GameEngine
 {
@@ -16,3 +17,5 @@ namespace GameEngine
     };
 
 }
+
+#endif //ICOMMAND_H

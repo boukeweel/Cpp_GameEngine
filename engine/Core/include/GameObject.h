@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
+
 #include <algorithm>
 #include <memory>
 #include <typeindex>
@@ -102,3 +104,5 @@ namespace GameEngine {
         return it != m_Components.end() && !it->second.empty();
     }
 } 
+
+#endif //GAME_OBJECT_H

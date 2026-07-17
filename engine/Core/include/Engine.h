@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include <SDL.h>
 #include <memory>
@@ -35,3 +36,5 @@ namespace GameEngine {
     };
 
 }
+
+#endif //ENGINE_H

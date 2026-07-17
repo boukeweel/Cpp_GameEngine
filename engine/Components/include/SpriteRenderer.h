@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPRITE_RENDERER_H
+#define SPRITE_RENDERER_H
 #include "Component.h"
 #include <string>
 #include <SDL.h>
@@ -34,3 +35,5 @@ namespace GameEngine {
     };
 
 }
+
+#endif //SPRITE_RENDERER_H

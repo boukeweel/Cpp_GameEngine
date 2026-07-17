@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UI_ELEMENT_H
+#define UI_ELEMENT_H
 
 namespace GameEngine
 {
@@ -22,3 +23,5 @@ namespace GameEngine
         UIElement& operator=(UIElement&&) = delete;
     };
 }
+
+#endif //UI_ELEMENT_H
