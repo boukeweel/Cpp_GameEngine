@@ -1,4 +1,5 @@
 #ifndef RESOURCE_MANAGER_H
+#define RESOURCE_MANAGER_H
 
 #include <memory>
 #include <string>
@@ -23,3 +24,5 @@ namespace GameEngine
     	std::string m_ResourcePath;
     };
 }
+
+#endif //RESOURCE_MANAGER_H

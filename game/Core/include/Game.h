@@ -12,4 +12,4 @@ private:
     GameEngine::Engine& m_engine;
 };
 
-#endif GAME_H
+#endif //GAME_H
