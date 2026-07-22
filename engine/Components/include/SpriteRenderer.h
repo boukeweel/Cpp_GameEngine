@@ -23,7 +23,7 @@ namespace GameEngine {
         [[nodiscard]] Texture2D* GetTexture() const { return m_Texture.get(); }
 
     private:
-        std::string m_TexturePath;
+        std::string m_TexturePath{};
         std::unique_ptr<Texture2D> m_Texture;
 
     public:

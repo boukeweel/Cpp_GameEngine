@@ -10,11 +10,6 @@
 
 namespace GameEngine 
 {
-    InputHandler::InputHandler()
-    {}
-
-    InputHandler::~InputHandler()
-    {}
 
     bool InputHandler::ProccesInput()
     {

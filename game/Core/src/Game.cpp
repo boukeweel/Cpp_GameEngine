@@ -48,15 +48,15 @@ void Game::run()
     
     auto TextObject = std::make_unique<GameEngine::GameObject>();
     TextObject->AddComponent<GameEngine::TextComponent>("Hallo", font);
-    TextObject->GetTransform().SetPosition({500.f,200.f,0});
+    TextObject->GetTransform().SetPosition({200.f,400.f,0});
     scene->AddObject(std::move(TextObject));
 
 
     auto obj = std::make_unique<GameEngine::GameObject>();
     obj->AddComponent<GameEngine::SpriteRenderer>("/images/AllyTemp.png");
     auto moveObject = obj->AddComponent<PlayerMovement>(50);
-    obj->GetTransform().SetPosition(400,400,0);
-    obj->GetTransform().SetScale(10.f,10.f);
+    obj->GetTransform().SetPosition(50.f,100.f,0);
+    obj->GetTransform().SetScale(5.f,5.f);
 
     input.AddCommand(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputStates::Held
         , std::make_unique<MoveCommand>(moveObject, glm::vec3{-1.f, 0.f, 0.f}));
@@ -71,8 +71,8 @@ void Game::run()
 
     obj = std::make_unique<GameEngine::GameObject>();
     obj->AddComponent<GameEngine::SpriteRenderer>("/images/EnemyTemp.png");
-    obj->GetTransform().SetPosition(1200,400,0);
-    obj->GetTransform().SetScale(10.f,10.f);
+    obj->GetTransform().SetPosition(600,100,0);
+    obj->GetTransform().SetScale(5.f,5.f);
     scene->AddObject(std::move(obj));
 
 

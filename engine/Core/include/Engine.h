@@ -26,9 +26,9 @@ namespace GameEngine {
         glm::vec2 GetSize() const {return {m_width,m_height};}
 
     private:
-        std::string m_title;
-        int m_width;
-        int m_height;
+        std::string m_title{"small engine"};
+        int m_width{720};
+        int m_height{480};
         SDL_Window* m_window = nullptr;
         bool m_running = false;
 

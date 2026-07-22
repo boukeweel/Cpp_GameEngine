@@ -37,7 +37,7 @@ namespace GameEngine
     private:
         void SetPositionDirty();
 
-        glm::vec2 m_position{};
+        glm::vec2 m_position{0,0};
         glm::vec2 m_size{200,200};
         std::vector<std::unique_ptr<CanvasObject>> m_objects{};
 

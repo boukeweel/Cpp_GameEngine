@@ -17,8 +17,8 @@ namespace GameEngine
         const glm::vec2& GetCameraPosition() const;
 
     private:
-        glm::vec2 m_screenSize;
-        glm::vec2 m_cameraPosition;
+        glm::vec2 m_screenSize{0,0};
+        glm::vec2 m_cameraPosition{0,0};
     public:
         ~Camera() = default;
         Camera(const Camera&) = delete;

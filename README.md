@@ -5,6 +5,7 @@ This project has been created on linux Ubuntu(26.04)
 ## General todo's
 - [ ] comment code 
 - [ ] Go to Refactoring guru site. to find any patterns I can apply
+- [ ] sprites are from top left to bottom, I would rather have them center, aka if locations is {100,100} the center of the sprite should be on {100,100}
 
 ## my todo's Engine
 - [ ] Canvas System

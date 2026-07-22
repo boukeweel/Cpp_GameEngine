@@ -2,7 +2,7 @@
 #include "Game.h"
 
 int main() {
-    GameEngine::Engine engine("Small engine", 1920, 1080);
+    GameEngine::Engine engine("Small engine", 720, 480);
     if (!engine.init("Resources")) {
         return 1;
     }

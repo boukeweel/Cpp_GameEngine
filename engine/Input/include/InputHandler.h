@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 #include <SDL_events.h>
+#include "InputData.h"
 
 namespace GameEngine
 {
@@ -18,8 +19,8 @@ namespace GameEngine
     class InputHandler final : public Singleton<InputHandler>
     {
     public:
-        InputHandler();
-        ~InputHandler();
+        InputHandler() = default;
+        ~InputHandler() = default;
 
         bool ProccesInput();
 
