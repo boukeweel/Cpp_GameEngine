@@ -10,6 +10,9 @@
 namespace GameEngine {
     class GameObject;
 
+
+    //todo think about making the texture a shared pointer, so that multiple assets can use the same one.
+    //so that not all sprites have there own texture if its the same
     class SpriteRenderer final : public Component
     {
     public:
