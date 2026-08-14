@@ -27,6 +27,8 @@ namespace GameEngine{
         Scene& GetCurrentScene() const { return *m_Scenes[m_CurrentScene]; }
 		unsigned int GetCurrentSceneId() const { return m_CurrentScene; }
 
+        bool HasAnyScenes() const {return !m_Scenes.empty();}
+
         void FixedUpdate();
         void Update();
         void Render() const;

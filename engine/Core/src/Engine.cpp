@@ -6,6 +6,7 @@
 #include "SceneManagar.h"
 #include "Scene.h"
 #include "IBaseScene.h"
+#include "DefaultScene.h"
 #include <SDL_image.h>
 #include <iostream>
 #include <iostream>
@@ -48,6 +49,11 @@ namespace GameEngine {
         auto& renderer = Renderer::GetInstance();
         auto& inputHandler = InputHandler::GetInstance();
         auto& SceneManagar = SceneManagar::GetInstance();
+
+        if(!SceneManagar.HasAnyScenes()){
+            SceneManagar.CreateScene("defaultScene", std::make_unique<DefaultScene>());
+            SceneManagar.LoadScene(0);
+        }
 
         while (m_running) {
             //update Time

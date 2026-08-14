@@ -4,6 +4,7 @@ file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
     UI/src/*.cpp
     Input/src/*.cpp
     Audio/src/*.cpp
+    Scenes/src/*.cpp
 )
 
 add_library(engine STATIC ${ENGINE_SOURCES})
@@ -14,7 +15,8 @@ target_include_directories(engine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Components/include
     ${CMAKE_CURRENT_SOURCE_DIR}/UI/include
     ${CMAKE_CURRENT_SOURCE_DIR}/Input/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Audio/includeS
+    ${CMAKE_CURRENT_SOURCE_DIR}/Audio/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scenes/include
 )
 
 target_link_libraries(engine PUBLIC
