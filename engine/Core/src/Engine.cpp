@@ -3,45 +3,40 @@
 #include "InputHandler.h"
 #include "Renderer.h"
 #include "ResourceManger.h"
+#include "SceneManagar.h"
 #include "Scene.h"
+#include "IBaseScene.h"
 #include <SDL_image.h>
+#include <iostream>
 #include <iostream>
 
 namespace GameEngine {
 
     Engine::Engine(const std::string& title, int width, int height)
-        : m_title(title), m_width(width), m_height(height) {
-    }
+        : m_title(title), m_width(width), m_height(height),m_window(title, width, height) {}
     
     Engine::~Engine() {
         shutdown();
     }
     
     bool Engine::init(const std::string& resourcePath) {
-        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-            std::cerr << "SDL_Init Error: " << SDL_GetError() << '\n';
+        if (SDL_Init(SDL_INIT_VIDEO) != 0)
+        { 
+            std::cerr << "SDL_Init Error: " << SDL_GetError() << '\n'; 
             return false;
         }
-    
-        m_window = SDL_CreateWindow(
-            m_title.c_str(),
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            m_width,
-            m_height,
-            SDL_WINDOW_SHOWN
-        );
-    
-        if (!m_window) {
-            std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << '\n';
+
+        if (!m_window.Init())
+        {
             SDL_Quit();
             return false;
         }
     
-        GameEngine::Renderer::GetInstance().Init(m_window);
+        GameEngine::Renderer::GetInstance().Init(m_window.GetHandle());
         GameEngine::ResourceManager::GetInstance().Init(resourcePath);
-
-        m_currentScene = std::make_unique<Scene>("Default Scene");
+        
+        SceneContext context = { &m_window };
+        GameEngine::SceneManagar::GetInstance().SetSceneContext(context);
     
         srand(static_cast<unsigned int>(time(nullptr)));
     
@@ -50,14 +45,9 @@ namespace GameEngine {
     }
     
     void Engine::run() {
-
-        
-        auto& renderer = GameEngine::Renderer::GetInstance();
-        auto& inputHandler = GameEngine::InputHandler::GetInstance();
-
-        if (!m_currentScene) {
-            m_currentScene = std::make_unique<Scene>("Default Scene");
-        }
+        auto& renderer = Renderer::GetInstance();
+        auto& inputHandler = InputHandler::GetInstance();
+        auto& SceneManagar = SceneManagar::GetInstance();
     
         while (m_running) {
             //update Time
@@ -71,12 +61,12 @@ namespace GameEngine {
         
             while (GameEngine::EngineTime::lag >= GameEngine::EngineTime::GetFixedDeltaTime()) {
                 
-                m_currentScene->FixedUpdate();
+                SceneManagar.FixedUpdate();
                 GameEngine::EngineTime::lag -= GameEngine::EngineTime::GetFixedDeltaTime();
             }
         
-            m_currentScene->Update();
-            renderer.Render(*m_currentScene);
+            SceneManagar.Update();
+            renderer.Render(SceneManagar.GetCurrentScene());
         
         
             SDL_Delay(GameEngine::EngineTime::GetSleepTime().count());
@@ -85,12 +75,7 @@ namespace GameEngine {
     }
     
     void Engine::shutdown() {
-        if (m_window) {
-            SDL_DestroyWindow(m_window);
-            m_window = nullptr;
-        }
-        if (SDL_WasInit(SDL_INIT_VIDEO)) {
-            SDL_Quit();
-        }
+        m_window.Shutdown();
+        if (SDL_WasInit(SDL_INIT_VIDEO)) SDL_Quit();
     }
 }

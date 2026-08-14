@@ -4,12 +4,19 @@
 #include <memory>
 #include <string>
 #include <utility>
-
+#include "IBaseScene.h"
 
 namespace GameEngine{
 
-    Scene::Scene(const std::string& name) : m_name{name}
-    {}
+    unsigned int Scene::s_idCounter = 0;
+
+    Scene::Scene(const std::string& name, std::unique_ptr<IBaseScene> load, const SceneContext& sceneContext) 
+    : m_name(name), m_id(s_idCounter++), m_Load{ std::move(load) }, m_SceneContext{sceneContext} {}
+
+    void Scene::LoadInScene()
+    {
+        m_Load->Load(*this);
+    }
 
     bool Scene::AddCanvas(std::unique_ptr<Canvas> canvas)
     {

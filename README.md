@@ -19,13 +19,11 @@ because I was noticing a hard part in what I should be creating for the engine, 
 ### small vamipre surviore type game
 - [ ] simple player movement
 - [ ] weapon, attacking closest weapon (blue staff from vamipre survivors)
-- [ ] eara effect weapon, (garlic/tome)
+- [ ] aera effect weapon, (garlic/tome)
 - [ ] enemy running at player
 - [ ] level up system
 - [ ] level up, choses
 - [ ] dmg numbers
-
-s
 
 ## my todo's Engine
 - [ ] Canvas System

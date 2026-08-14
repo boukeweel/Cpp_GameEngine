@@ -6,6 +6,7 @@
 #include <string>
 #include <utility>
 #include "Scene.h"
+#include "Window.h"
 
 namespace GameEngine {
 
@@ -20,19 +21,12 @@ namespace GameEngine {
         void run();
         void shutdown();
 
-        //temp until scene manager
-        void SetScene(std::unique_ptr<Scene> newScene){m_currentScene = std::move(newScene);}
-
-        glm::vec2 GetSize() const {return {m_width,m_height};}
-
     private:
         std::string m_title{"small engine"};
         int m_width{720};
         int m_height{480};
-        SDL_Window* m_window = nullptr;
+        Window m_window;
         bool m_running = false;
-
-        std::unique_ptr<Scene> m_currentScene{};
     };
 
 }

@@ -8,12 +8,15 @@
 #include <string>
 #include <sys/types.h>
 #include <vector>
+#include "SceneManagar.h"
 
 namespace GameEngine{
 
     class Scene final{
+
+        friend Scene& SceneManagar::CreateScene(const std::string& name, std::unique_ptr<IBaseScene> load);
     public:
-        Scene(const std::string& name);
+        //Scene(const std::string& name);
 
         ///Only adds if the canvas pointer is nullptr atm
         bool AddCanvas(std::unique_ptr<Canvas> Canvas);
@@ -36,8 +39,14 @@ namespace GameEngine{
 
         unsigned int GetId(){return m_id;}
         const std::string& GetName(){return m_name;}
+
+        const SceneContext& GetSceneContext(){return m_SceneContext;}
     
     private:
+        explicit Scene(const std::string& name, std::unique_ptr<IBaseScene> load, const SceneContext& SceneContext);
+
+        std::unique_ptr<IBaseScene> m_Load;
+
         std::vector<std::unique_ptr<GameObject>> m_sceneObjects{};
         std::unique_ptr<Canvas> m_canvas{};
 
@@ -45,6 +54,8 @@ namespace GameEngine{
         unsigned int m_id{};
 
         static unsigned int s_idCounter;
+
+        const SceneContext& m_SceneContext;
 
     public:
         ~Scene() = default;

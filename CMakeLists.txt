@@ -38,6 +38,6 @@ if(NOT glm_FOUND)
 endif()
 
 add_subdirectory(engine)
-add_subdirectory(game)
+add_subdirectory(TestingProject)
 
 
