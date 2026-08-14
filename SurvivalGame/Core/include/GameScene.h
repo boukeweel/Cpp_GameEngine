@@ -8,7 +8,12 @@ namespace SurvivalGame
 {
     class GameScene : public GameEngine::IBaseScene
     {
+    public:
         void Load(GameEngine::Scene& scene) override;
+        
+        void LoadPlayer(GameEngine::Scene& scene);
+
+        void LoadInput();
     };    
 }
 
