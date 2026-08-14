@@ -39,5 +39,6 @@ endif()
 
 add_subdirectory(engine)
 add_subdirectory(TestingProject)
+add_subdirectory(VampireSurvivor_Game)
 
 

@@ -1,25 +1,19 @@
-#!/usr/bin/env bash
 set -euo pipefail
 
-# Build directory
-BUILD_DIR="build"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BUILD_DIR="$ROOT_DIR/build"
+TARGET="${1:-TestingProject}"
 
-# Create build directory if needed
 mkdir -p "$BUILD_DIR"
-cd "$BUILD_DIR"
 
-# Configure and build
-cmake ..
-cmake --build .
+cmake -S "$ROOT_DIR" -B "$BUILD_DIR"
+cmake --build "$BUILD_DIR"
 
-# Run the executable
-if [ -x "GameEngine" ]; then
-  ./GameEngine
-elif [ -x "game" ] && [ ! -d "game" ]; then
-  ./game
-elif [ -x "game/game" ]; then
-  ./game/game
-else
-  echo "No executable found after build."
-  exit 1
+BINARY="$(find "$BUILD_DIR" -type f -executable -name "$TARGET" | head -n 1)"
+
+if [ -z "$BINARY" ]; then
+    echo "Executable '$TARGET' not found in $BUILD_DIR"
+    exit 1
 fi
+
+exec "$BINARY"

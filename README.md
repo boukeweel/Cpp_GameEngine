@@ -12,6 +12,10 @@ fully inside of visual studio code
 - [ ] Go to Refactoring guru site. to find any patterns I can apply
 - [x] sprites are from top left to bottom, I would rather have them center, aka if locations is {100,100} the center of the sprite should be on {100,100}
 
+## Know Bugs
+- [ ] if no scene is create engine crashes
+    - make it so that if know scene is created a default scene is created by the eninge
+
 ## game todo's
 I will start using small games to furter develop the engine, to keep more motivated in keep going on deveoping the engine
 because I was noticing a hard part in what I should be creating for the engine, and with small games what it should be for I hope to keep a better direction in the developement of this projet.

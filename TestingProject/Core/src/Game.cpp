@@ -13,6 +13,8 @@ void Game::run()
 {
     GameEngine::SceneManagar::GetInstance().CreateScene("Test_Scene",std::make_unique<TestScene>());
 
+    GameEngine::SceneManagar::GetInstance().LoadScene(0);
+
     m_engine.run();
 }
 

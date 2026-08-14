@@ -48,7 +48,7 @@ namespace GameEngine {
         auto& renderer = Renderer::GetInstance();
         auto& inputHandler = InputHandler::GetInstance();
         auto& SceneManagar = SceneManagar::GetInstance();
-    
+
         while (m_running) {
             //update Time
             GameEngine::EngineTime::Update();
