@@ -8,8 +8,6 @@
 #include "IBaseScene.h"
 #include "DefaultScene.h"
 #include <SDL_image.h>
-#include <iostream>
-#include <iostream>
 
 namespace GameEngine {
 

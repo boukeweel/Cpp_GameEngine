@@ -10,10 +10,12 @@ namespace SurvivalGame
     {
     public:
         void Load(GameEngine::Scene& scene) override;
-        
-        void LoadPlayer(GameEngine::Scene& scene);
-
+    private:
         void LoadInput();
+        std::unique_ptr<GameEngine::GameObject> LoadPlayer();
+        std::unique_ptr<GameEngine::GameObject> LoadEnemy();
+
+        GameEngine::GameObject* rawPlayerPtr{nullptr};
     };    
 }
 

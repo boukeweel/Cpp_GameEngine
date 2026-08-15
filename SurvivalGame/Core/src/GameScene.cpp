@@ -7,14 +7,20 @@
 #include "SGPlayerMovement.h"
 #include "Transform.h"
 #include "SpriteRenderer.h"
+#include "SGGameData.h"
+#include "MoveToPlayerComponent.h"
 
 namespace SurvivalGame
 {
 
     void GameScene::Load(GameEngine::Scene& scene)
     {
+
         LoadInput();
-        LoadPlayer(scene);
+
+
+        scene.AddObject(LoadPlayer());
+        scene.AddObject(LoadEnemy());
     }
 
     void GameScene::LoadInput()
@@ -27,7 +33,7 @@ namespace SurvivalGame
 	    input.AddInput(GameEngine::InputKeys::ARROW_RIGHT, GameEngine::InputAction{{SDL_SCANCODE_RIGHT}});
     }
 
-    void GameScene::LoadPlayer(GameEngine::Scene& scene)
+    std::unique_ptr<GameEngine::GameObject> GameScene::LoadPlayer()
     {
         auto& input = GameEngine::InputHandler::GetInstance();
 
@@ -46,6 +52,22 @@ namespace SurvivalGame
         input.AddCommand(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputStates::Held
             , std::make_unique<SGMoveCommand>(moveObject, glm::vec3{0.f, -1.f, 0.f}));
         
-        scene.AddObject(std::move(player));
+        SGGameDate::GetInstance().SetPlayer(player.get());
+    
+        rawPlayerPtr = player.get();
+        return std::move(player);
+    }
+
+    std::unique_ptr<GameEngine::GameObject> GameScene::LoadEnemy()
+    {
+        auto enemy = std::make_unique<GameEngine::GameObject>();
+        enemy->AddComponent<GameEngine::SpriteRenderer>("/Images/EnemyTemp.png");
+        enemy->GetTransform().SetPosition(300.f,300.f,0);
+        enemy->GetTransform().SetScale(1.5f,1.5f);
+
+        float enemySpeed = 20.f;
+        enemy->AddComponent<MoveToPlayerComponent>(rawPlayerPtr, enemySpeed);
+
+        return std::move(enemy);
     }
 }

@@ -1,6 +1,7 @@
 file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
     Core/src/*.cpp
     Player/src/*.cpp
+    Enemies/src/*.cpp
 )
 
 add_executable(SurvivalGame ${GAME_SOURCES})
@@ -8,6 +9,7 @@ add_executable(SurvivalGame ${GAME_SOURCES})
 target_include_directories(SurvivalGame PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/include
     ${CMAKE_CURRENT_SOURCE_DIR}/Player/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Enemies/include
 )
 
 target_link_libraries(SurvivalGame PRIVATE
