@@ -1,11 +1,10 @@
 # C++_GameEngine
 
-this readme, has mutlible purposes in is mainly for me, the devopler for now
+this readme, has mutlible purposes in is mainly for me, the devopler
 I will use it a small blog, talking about what I am going to make and what I want to achieve,
-and it will be used as a todo list to keep me on track with what I need to do, without needing to switch out of the ide,+
+and it will be used as a todo list to keep me on track with what I need to do, without needing to switch out of the IDE
 
 This project has been created on linux Ubuntu(26.04)
-fully inside of visual studio code
 
 ## General todo's
 - [ ] comment code 
@@ -18,7 +17,7 @@ fully inside of visual studio code
 I will start using small games to furter develop the engine, to keep more motivated in keep going on deveoping the engine
 because I was noticing a hard part in what I should be creating for the engine, and with small games what it should be for I hope to keep a better direction in the developement of this projet.
 
-### small vamipre surviore type game
+###  surviore game
 - [ ] simple player movement
 - [ ] weapon, attacking closest weapon (blue staff from vamipre survivors)
 - [ ] aera effect weapon, (garlic/tome)
@@ -38,7 +37,8 @@ because I was noticing a hard part in what I should be creating for the engine, 
 - [x] Camera
     - [x] First simple version Camera owned by renderer
     - [ ] Second Camera component for GameObjects (camera made for scrolling games that will follow the player where he goes)
-- [ ] Object culling
+- [ ] Object culling for rendering
+    - Look into Frustum culling
 - [ ] Controler input
 - [ ] Event
 - [ ] Audio system
@@ -46,6 +46,9 @@ because I was noticing a hard part in what I should be creating for the engine, 
 - [ ] sprite animation
 - [ ] scene managar
 - [ ] Collision system
+    - [ ] rect collidor
+    - [ ] capsule collidor (if length == 0; it becomes a sphere)
+    - look into Binary Search Partitioning for the broad culling of the object
 - [ ] physic system
     - [ ] gravity reaction
 

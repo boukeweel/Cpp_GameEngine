@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <vector>
 #include "SceneManagar.h"
+#include "CollisionHandler.h"
 
 namespace GameEngine{
 
@@ -26,6 +27,8 @@ namespace GameEngine{
         std::unique_ptr<Canvas> RemoveCanvas();
         bool HasCanvas();
         Canvas* GetCanvas();
+
+        CollisionHandler* GetCollisionHandler() const {return m_CollisionHandler.get();}
 
         void AddObject(std::unique_ptr<GameObject> object);
         void RemoveObject(std::unique_ptr<GameObject> object);
@@ -49,6 +52,7 @@ namespace GameEngine{
 
         std::vector<std::unique_ptr<GameObject>> m_sceneObjects{};
         std::unique_ptr<Canvas> m_canvas{};
+        std::unique_ptr<CollisionHandler> m_CollisionHandler{};
 
         std::string m_name{};
         unsigned int m_id{};
@@ -56,6 +60,7 @@ namespace GameEngine{
         static unsigned int s_idCounter;
 
         const SceneContext& m_SceneContext;
+        
 
     public:
         ~Scene() = default;

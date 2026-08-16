@@ -5,13 +5,17 @@
 #include <string>
 #include <utility>
 #include "IBaseScene.h"
+#include "CollisionHandler.h"
 
 namespace GameEngine{
 
     unsigned int Scene::s_idCounter = 0;
 
     Scene::Scene(const std::string& name, std::unique_ptr<IBaseScene> load, const SceneContext& sceneContext) 
-    : m_name(name), m_id(s_idCounter++), m_Load{ std::move(load) }, m_SceneContext{sceneContext} {}
+    : m_name(name), m_id(s_idCounter++), m_Load{ std::move(load) }, m_SceneContext{sceneContext} 
+    {
+        m_CollisionHandler = std::make_unique<CollisionHandler>();
+    }
 
     void Scene::LoadInScene()
     {
@@ -78,6 +82,12 @@ namespace GameEngine{
         if(m_canvas != nullptr)
         {
             m_canvas->Update();
+        }
+
+        //TODO: put this in a seperated update loop, like a collision update loop
+        if(m_CollisionHandler != nullptr)
+        {
+            m_CollisionHandler->Update();
         }
     }
     

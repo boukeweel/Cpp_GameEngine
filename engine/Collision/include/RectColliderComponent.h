@@ -1,0 +1,4 @@
+#ifndef RECT_COLLIDER_COMPONENT_H
+#define RECT_COLLIDER_COMPONENT_H
+
+#endif
