@@ -9,6 +9,7 @@ This project has been created on linux Ubuntu(26.04)
 ## General todo's
 - [ ] comment code 
 - [ ] Go to Refactoring guru site. to find any patterns I can apply
+- [ ] Make (0,0) middle of the screen
 
 ## Know Bugs
 
@@ -48,7 +49,7 @@ because I was noticing a hard part in what I should be creating for the engine, 
 - [ ] Collision system
     - [ ] rect collidor
     - [ ] capsule collidor (if length == 0; it becomes a sphere)
-    - look into Binary Search Partitioning for the broad culling of the object
+    - [ ] Get QuadTrees to work.
 - [ ] physic system
     - [ ] gravity reaction
 

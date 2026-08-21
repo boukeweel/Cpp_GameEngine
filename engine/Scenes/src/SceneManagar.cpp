@@ -1,4 +1,4 @@
-GetCurrentScene#include "SceneManagar.h"
+#include "SceneManagar.h"
 #include "Scene.h"
 #include <iostream>
 #include <memory>

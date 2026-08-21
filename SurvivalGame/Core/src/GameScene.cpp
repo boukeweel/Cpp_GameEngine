@@ -40,7 +40,7 @@ namespace SurvivalGame
         auto player = std::make_unique<GameEngine::GameObject>();
         player->AddComponent<GameEngine::SpriteRenderer>("/Images/AllyTemp.png");
         auto moveObject = player->AddComponent<SGPlayerMovement>(75);
-        player->GetTransform().SetPosition(50.f,100.f,0);
+        player->GetTransform().SetPosition(100.f,100.f,0);
         player->GetTransform().SetScale(2.f,2.f);
         
         input.AddCommand(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputStates::Held

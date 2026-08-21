@@ -15,7 +15,7 @@ namespace GameEngine
 
     void CollisionHandler::RegisterCollider(BaseColliderComponent* collider)
     {
-        m_allColliders.emplace_back(collider);
+        
     }
 
     void CollisionHandler::RemoveCollider(BaseColliderComponent* collider)

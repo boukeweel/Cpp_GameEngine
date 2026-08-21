@@ -6,7 +6,6 @@ file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
     Audio/src/*.cpp
     Scenes/src/*.cpp
     Collision/src/*.cpp
-
 )
 
 add_library(engine STATIC ${ENGINE_SOURCES})

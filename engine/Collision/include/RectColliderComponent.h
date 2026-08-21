@@ -1,4 +1,39 @@
 #ifndef RECT_COLLIDER_COMPONENT_H
 #define RECT_COLLIDER_COMPONENT_H
+#include <glm/glm.hpp>
+#include "BaseColliderComponent.h"
+
+
+namespace GameEngine
+{
+    struct RectShape
+    {
+        RectShape(float left, float right, float top, float bottom)
+            : Left{left}, Right{right}, Top{top}, Bottom{bottom}
+        {}
+        RectShape() =default;
+        float Left{};
+        float Right{};
+        float Top{};
+        float Bottom{};
+    };
+    class RectColliderComponent : public BaseColliderComponent
+    {
+    public:
+        RectColliderComponent(GameObject* owner);
+        void GetBounds(float& outMinX, float& outMinY,float& outMaxX, float& outMaxY) const override;
+
+        void SetBounds(float left, float right, float top, float bottom);
+    private:
+        RectShape m_ColliderShape{1.f,1.f,1.f,1.f};
+
+    public:
+        ~RectColliderComponent() override = default;
+        RectColliderComponent(const RectColliderComponent& other) = delete;
+	    RectColliderComponent(RectColliderComponent&& other) = delete;
+	    RectColliderComponent& operator=(const RectColliderComponent& other) = delete;
+	    RectColliderComponent& operator=(RectColliderComponent&& other) = delete;       
+    };
+}
 
 #endif
