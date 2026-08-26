@@ -11,7 +11,7 @@ namespace GameEngine
 
     void CollisionHandler::Update()
     {
-        m_QuadTree = std::make_unique<CollisionQuadTree>(RectShape{0,1280.f,720.f,0}, 1);
+        m_QuadTree = std::make_unique<CollisionQuadTree>(RectShape{0,1280.f,720.f,0}, 2);
         for (auto* collider : m_Colliders)
             m_QuadTree->Insert(collider);
     }

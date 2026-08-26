@@ -37,11 +37,11 @@ namespace GameEngine
         if (!m_IsSubdivided)
         {
             SubDivide();
-            //Insert all colliders from this quadtree into the subdevisions
             for (auto& collider : m_Colliders)
             {
                 InsertIntoDevision(collider);
             }
+            m_Colliders.clear();
         }
         InsertIntoDevision(collider);
     }
@@ -80,7 +80,7 @@ namespace GameEngine
     void CollisionQuadTree::DebugDraw() const
     {
         auto& renderer = Renderer::GetInstance();
-        renderer.DrawDebugRect(m_QuadTreeShape, {0, 255, 0, 255});
+        renderer.DrawDebugRect(m_QuadTreeShape, {0, 255, 255, 255});
 
         if (m_IsSubdivided) {
             for (const auto& quadTree : m_QuadTrees)

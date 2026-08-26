@@ -12,6 +12,9 @@
 #include "SpriteRenderer.h"
 #include <memory>
 #include <utility>
+
+#include "RandomFunctions.h"
+#include "RectColliderComponent.h"
 #include "TextComponent.h"
 #include "Transform.h" 
 #include "UITextElement.h"
@@ -19,52 +22,17 @@
 
 void TestScene::Load(GameEngine::Scene& scene)
 {
-    auto& input = GameEngine::InputHandler::GetInstance();
 
-	input.AddInput(GameEngine::InputKeys::ARROW_UP, GameEngine::InputAction{{SDL_SCANCODE_UP}});
-	input.AddInput(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputAction{{SDL_SCANCODE_DOWN}});
-	input.AddInput(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputAction{{SDL_SCANCODE_LEFT}});
-	input.AddInput(GameEngine::InputKeys::ARROW_RIGHT, GameEngine::InputAction{{SDL_SCANCODE_RIGHT}});
 
-    auto font = GameEngine::ResourceManager::GetInstance().LoadFont("/Fonts/RobotoMono-VariableFont_wght.ttf", 100);
-    
-    glm::vec2 screenSize = scene.GetSceneContext().window->GetSize();
-    glm::vec2 position = {0,0};
-    auto canvas = std::make_unique<GameEngine::Canvas>(position,screenSize);
+    /*float enemySpeed = 20.f;
+    enemy->AddComponent<MoveToPlayerComponent>(rawPlayerPtr, enemySpeed);*/
 
-    auto canvasObject = std::make_unique<GameEngine::CanvasObject>();
-    canvasObject->GetTransform().SetAnchorPoint(GameEngine::anchorPoint::TopMiddle);
-    canvasObject->AddElement<GameEngine::UITextElement>("UIText",font);
-    canvasObject->GetTransform().SetSize(100.f,100.f);
-    canvas->AddObject(std::move(canvasObject));
-
-    scene.AddCanvas(std::move(canvas));
-    
-    auto TextObject = std::make_unique<GameEngine::GameObject>();
-    TextObject->AddComponent<GameEngine::TextComponent>("Hallo", font);
-    TextObject->GetTransform().SetPosition({200.f,400.f,0});
-    scene.AddObject(std::move(TextObject));
-
-    auto obj = std::make_unique<GameEngine::GameObject>();
-    obj->AddComponent<GameEngine::SpriteRenderer>("/images/AllyTemp.png");
-    auto moveObject = obj->AddComponent<PlayerMovement>(50);
-    obj->GetTransform().SetPosition(50.f,100.f,0);
-    obj->GetTransform().SetScale(5.f,5.f);
-
-    input.AddCommand(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputStates::Held
-        , std::make_unique<MoveCommand>(moveObject, glm::vec3{-1.f, 0.f, 0.f}));
-    input.AddCommand(GameEngine::InputKeys::ARROW_RIGHT, GameEngine::InputStates::Held
-        , std::make_unique<MoveCommand>(moveObject, glm::vec3{1.f, 0.f, 0.f}));
-    input.AddCommand(GameEngine::InputKeys::ARROW_UP, GameEngine::InputStates::Held
-        , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, 1.f, 0.f}));
-    input.AddCommand(GameEngine::InputKeys::ARROW_DOWN, GameEngine::InputStates::Held
-        , std::make_unique<MoveCommand>(moveObject, glm::vec3{0.f, -1.f, 0.f}));
-
-    scene.AddObject(std::move(obj));
-
-    obj = std::make_unique<GameEngine::GameObject>();
-    obj->AddComponent<GameEngine::SpriteRenderer>("/images/EnemyTemp.png");
-    obj->GetTransform().SetPosition(600,100,0);
-    obj->GetTransform().SetScale(5.f,5.f);
-    scene.AddObject(std::move(obj));
+    for (int i = 0; i < 100; ++i) {
+        auto Cube = std::make_unique<GameEngine::GameObject>();
+        Cube->AddComponent<GameEngine::SpriteRenderer>("/images/Dection_Cube.png");
+        Cube->GetTransform().SetScale(1.f,1.f);
+        Cube->AddComponent<GameEngine::RectColliderComponent>();
+        Cube->GetTransform().SetPosition(GameEngine::Random::RandomF(0,1280.f),GameEngine::Random::RandomF(0,720.f),0);
+        scene.AddObject(std::move(Cube));
+    }
 }

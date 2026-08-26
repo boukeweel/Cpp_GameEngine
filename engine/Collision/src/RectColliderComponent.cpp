@@ -1,12 +1,18 @@
 #include "RectColliderComponent.h"
+
+#include <iostream>
+
 #include "GameObject.h"
+#include "SpriteRenderer.h"
 #include "Transform.h"
+
 
 namespace GameEngine
 {
     RectColliderComponent::RectColliderComponent(GameObject* owner) : BaseColliderComponent(owner, ColliderShape::Rect)
     {
         Init();
+        SetBoundsToSprite();
     }
 
     void RectColliderComponent::GetBounds(float& outMinX, float& outMinY, float& outMaxX, float& outMaxY) const
@@ -26,5 +32,24 @@ namespace GameEngine
         m_ColliderShape.Right = right;
         m_ColliderShape.Top = top;
         m_ColliderShape.Bottom = bottom;
+    }
+
+    void RectColliderComponent::SetBoundsToSprite()
+    {
+        const auto* sprite = m_Owner->GetComponent<SpriteRenderer>();
+        if (sprite == nullptr || sprite->GetTexture() == nullptr)
+            return;
+
+        const glm::vec2 textureSize = sprite->GetTexture()->GetSize();
+        const glm::vec2 scale = m_Owner->GetTransform().GetScale();
+        const glm::vec2 drawSize = textureSize * scale;
+
+        const float halfWidth = drawSize.x * 0.5f;
+        const float halfHeight = drawSize.y * 0.5f;
+
+        SetBounds(halfWidth, halfWidth, halfHeight, halfHeight);
+
+        // Move the centered collider to the sprite's center.
+        SetOffset({halfWidth, halfHeight, 0.f});
     }
 }

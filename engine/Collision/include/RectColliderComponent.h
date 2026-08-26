@@ -15,8 +15,9 @@ namespace GameEngine
 
         void SetBounds(float left, float right, float top, float bottom);
     private:
-        RectShape m_ColliderShape{1.f,1.f,1.f,1.f};
+        void SetBoundsToSprite();
 
+        RectShape m_ColliderShape{0.f,1.f,1.f,0.f};
     public:
         ~RectColliderComponent() override = default;
         RectColliderComponent(const RectColliderComponent& other) = delete;
