@@ -11,6 +11,12 @@ namespace GameEngine{
 
     unsigned int Scene::s_idCounter = 0;
 
+    Scene::~Scene()
+    {
+        m_sceneObjects.clear();
+        m_CollisionHandler.reset();
+    }
+
     Scene::Scene(const std::string& name, std::unique_ptr<IBaseScene> load, const SceneContext& sceneContext) 
     : m_name(name), m_id(s_idCounter++), m_Load{ std::move(load) }, m_SceneContext{sceneContext} 
     {
@@ -101,6 +107,11 @@ namespace GameEngine{
         if(m_canvas != nullptr)
         {
             m_canvas->Render();
+        }
+
+        if(m_CollisionHandler != nullptr)
+        {
+            m_CollisionHandler->Render();
         }
     }
 }

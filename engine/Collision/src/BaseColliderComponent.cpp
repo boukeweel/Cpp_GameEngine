@@ -10,8 +10,19 @@ namespace GameEngine
     {
         auto& sceneManagar = SceneManagar::GetInstance();
         auto& scene = sceneManagar.GetCurrentScene();
-        
-        scene.GetCollisionHandler()->RegisterCollider(this);
+        m_CollisionHandler = scene.GetCollisionHandler();
     }
 
+    BaseColliderComponent::~BaseColliderComponent()
+    {
+        if (m_CollisionHandler != nullptr)
+            m_CollisionHandler->RemoveCollider(this);
+    }
+
+    void BaseColliderComponent::Init()
+    {
+
+        if (m_CollisionHandler != nullptr)
+            m_CollisionHandler->RegisterCollider(this);
+    }
 }

@@ -6,6 +6,8 @@
 
 namespace GameEngine
 {
+    class CollisionHandler;
+
     enum class ColliderShape
     {
         Rect,
@@ -16,7 +18,8 @@ namespace GameEngine
     {
     public:
         BaseColliderComponent(GameObject* owner, ColliderShape shape);
-        virtual ~BaseColliderComponent() = default;
+
+        ~BaseColliderComponent() override;
     
         ColliderShape GetShape() const { return m_Shape; }
     
@@ -27,8 +30,13 @@ namespace GameEngine
         virtual void SetOffset(glm::vec3 offset) {m_Offset = offset;}
     protected:
         glm::vec3 m_Offset{0.f,0.f,0.f};
+
+        virtual void Init();
     private:
         ColliderShape m_Shape;
+        CollisionHandler* m_CollisionHandler;
+
+
     };
 }
 

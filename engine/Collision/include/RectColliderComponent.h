@@ -2,21 +2,11 @@
 #define RECT_COLLIDER_COMPONENT_H
 #include <glm/glm.hpp>
 #include "BaseColliderComponent.h"
-
+#include "CollisionDataStructures.h"
 
 namespace GameEngine
 {
-    struct RectShape
-    {
-        RectShape(float left, float right, float top, float bottom)
-            : Left{left}, Right{right}, Top{top}, Bottom{bottom}
-        {}
-        RectShape() =default;
-        float Left{};
-        float Right{};
-        float Top{};
-        float Bottom{};
-    };
+
     class RectColliderComponent : public BaseColliderComponent
     {
     public:

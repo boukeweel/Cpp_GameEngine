@@ -14,11 +14,13 @@ namespace GameEngine {
         CollisionQuadTree(RectShape shape,int maxColliders);
 
         void Insert(BaseColliderComponent* collider);
+        void DebugDraw() const;
 
     private:
         void SubDivide();
         void InsertIntoDevision(BaseColliderComponent* collider) const;
         bool Intersects(float minX, float minY, float maxX, float maxY) const;
+
 
         RectShape m_QuadTreeShape{0,0,0,0};
         int m_MaxColliders{5};

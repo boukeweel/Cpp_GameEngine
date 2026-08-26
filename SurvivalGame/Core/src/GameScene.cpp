@@ -9,6 +9,7 @@
 #include "SpriteRenderer.h"
 #include "SGGameData.h"
 #include "MoveToPlayerComponent.h"
+#include "RectColliderComponent.h"
 
 namespace SurvivalGame
 {
@@ -20,7 +21,25 @@ namespace SurvivalGame
 
 
         scene.AddObject(LoadPlayer());
-        scene.AddObject(LoadEnemy());
+
+        auto Enemy = LoadEnemy();
+        Enemy->GetTransform().SetPosition(300.f,300.f,0);
+        scene.AddObject(std::move(Enemy));
+        Enemy = LoadEnemy();
+        Enemy->GetTransform().SetPosition(300.f,200.f,0);
+        scene.AddObject(std::move(Enemy));
+        Enemy = LoadEnemy();
+        Enemy->GetTransform().SetPosition(10.f,500.f,0);
+        scene.AddObject(std::move(Enemy));
+        Enemy = LoadEnemy();
+        Enemy->GetTransform().SetPosition(200.f,450.f,0);
+        scene.AddObject(std::move(Enemy));
+        Enemy = LoadEnemy();
+        Enemy->GetTransform().SetPosition(50.f,420.f,0);
+        scene.AddObject(std::move(Enemy));
+        Enemy = LoadEnemy();
+        Enemy->GetTransform().SetPosition(150.f,350.f,0);
+        scene.AddObject(std::move(Enemy));
     }
 
     void GameScene::LoadInput()
@@ -65,8 +84,10 @@ namespace SurvivalGame
         enemy->GetTransform().SetPosition(300.f,300.f,0);
         enemy->GetTransform().SetScale(1.5f,1.5f);
 
-        float enemySpeed = 20.f;
-        enemy->AddComponent<MoveToPlayerComponent>(rawPlayerPtr, enemySpeed);
+        enemy->AddComponent<GameEngine::RectColliderComponent>();
+
+        /*float enemySpeed = 20.f;
+        enemy->AddComponent<MoveToPlayerComponent>(rawPlayerPtr, enemySpeed);*/
 
         return std::move(enemy);
     }

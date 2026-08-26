@@ -1,10 +1,12 @@
 #ifndef COLLISION_HANDLER_H
 #define COLLISION_HANDLER_H
 
+#include <memory>
 #include <vector>
 
 namespace GameEngine
 {
+    class CollisionQuadTree;
     class BaseColliderComponent;
 
     class CollisionHandler final
@@ -16,11 +18,14 @@ namespace GameEngine
         void RemoveCollider(BaseColliderComponent* collider);
         void Update();
 
+        void Render() const;
+
     private:
-        std::vector<BaseColliderComponent*> m_allColliders;
+        std::unique_ptr<CollisionQuadTree> m_QuadTree;
+        std::vector<BaseColliderComponent*> m_Colliders;
 
     public:
-        ~CollisionHandler() = default;
+        ~CollisionHandler();
         CollisionHandler(const CollisionHandler& other) = delete;
 	    CollisionHandler(CollisionHandler&& other) = delete;
 	    CollisionHandler& operator=(const CollisionHandler& other) = delete;

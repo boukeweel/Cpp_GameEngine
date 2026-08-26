@@ -5,7 +5,9 @@
 namespace GameEngine
 {
     RectColliderComponent::RectColliderComponent(GameObject* owner) : BaseColliderComponent(owner, ColliderShape::Rect)
-    {}
+    {
+        Init();
+    }
 
     void RectColliderComponent::GetBounds(float& outMinX, float& outMinY, float& outMaxX, float& outMaxY) const
     {

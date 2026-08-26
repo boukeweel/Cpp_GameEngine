@@ -7,6 +7,8 @@
 #include "Scene.h"
 #include "glm/ext/vector_float2.hpp"
 
+#include "CollisionDataStructures.h"
+
 namespace GameEngine
 {
 	int GetOpenGLDriverIndex()
@@ -111,6 +113,23 @@ namespace GameEngine
 		SDL_Rect dst{};
 		SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 		RenderTextureUI(texture,x,y,dst.w,dst.h,angle);
+	}
+
+	void Renderer::DrawDebugRect(const RectShape &bounds, SDL_Color color) const
+	{
+		if (!m_camera) return; // you already assert/check this elsewhere
+
+		glm::vec2 topLeft     = m_camera->WorldToScreen({bounds.Left,  bounds.Top});
+		glm::vec2 bottomRight = m_camera->WorldToScreen({bounds.Right, bounds.Bottom});
+
+		SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
+		SDL_FRect rect{
+			topLeft.x,
+			topLeft.y,
+			bottomRight.x - topLeft.x,
+			bottomRight.y - topLeft.y
+		};
+		SDL_RenderDrawRectF(m_pRenderer, &rect);
 	}
 }
 

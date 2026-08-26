@@ -13,6 +13,7 @@ namespace GameEngine
     class GameObject;
     class Scene;
     class Camera;
+    struct RectShape;
 
     class Renderer final : public Singleton<Renderer>
     {
@@ -31,6 +32,8 @@ namespace GameEngine
 
         void RenderTextureUI(const Texture2D& texture, float x, float y, float width, float height, const float angle = 0) const;
         void RenderTextureUI(const Texture2D& texture, float x, float y, const float angle = 0) const;
+
+        void DrawDebugRect(const RectShape& bounds, SDL_Color color) const;
 
         SDL_Renderer* GetSDLRenderer() const { return m_pRenderer; }
 

@@ -28,7 +28,7 @@ namespace GameEngine{
         bool HasCanvas();
         Canvas* GetCanvas();
 
-        CollisionHandler* GetCollisionHandler() const {return m_CollisionHandler.get();}
+        [[nodiscard]] CollisionHandler* GetCollisionHandler() const {return m_CollisionHandler.get();}
 
         void AddObject(std::unique_ptr<GameObject> object);
         void RemoveObject(std::unique_ptr<GameObject> object);
@@ -63,7 +63,7 @@ namespace GameEngine{
         
 
     public:
-        ~Scene() = default;
+        ~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;
