@@ -9,6 +9,7 @@
 #include "SpriteRenderer.h"
 #include "SGGameData.h"
 #include "MoveToPlayerComponent.h"
+#include "RandomFunctions.h"
 #include "RectColliderComponent.h"
 
 namespace SurvivalGame
@@ -22,24 +23,11 @@ namespace SurvivalGame
 
         scene.AddObject(LoadPlayer());
 
-        auto Enemy = LoadEnemy();
-        Enemy->GetTransform().SetPosition(300.f,300.f,0);
-        scene.AddObject(std::move(Enemy));
-        Enemy = LoadEnemy();
-        Enemy->GetTransform().SetPosition(300.f,200.f,0);
-        scene.AddObject(std::move(Enemy));
-        Enemy = LoadEnemy();
-        Enemy->GetTransform().SetPosition(10.f,500.f,0);
-        scene.AddObject(std::move(Enemy));
-        Enemy = LoadEnemy();
-        Enemy->GetTransform().SetPosition(200.f,450.f,0);
-        scene.AddObject(std::move(Enemy));
-        Enemy = LoadEnemy();
-        Enemy->GetTransform().SetPosition(50.f,420.f,0);
-        scene.AddObject(std::move(Enemy));
-        Enemy = LoadEnemy();
-        Enemy->GetTransform().SetPosition(150.f,350.f,0);
-        scene.AddObject(std::move(Enemy));
+        for (int i = 0; i < 50; ++i) {
+            auto Enemy = LoadEnemy();
+            Enemy->GetTransform().SetPosition(GameEngine::Random::RandomF(0,1280.f),GameEngine::Random::RandomF(0,720.f),0);
+            scene.AddObject(std::move(Enemy));
+        }
     }
 
     void GameScene::LoadInput()
@@ -81,8 +69,8 @@ namespace SurvivalGame
     {
         auto enemy = std::make_unique<GameEngine::GameObject>();
         enemy->AddComponent<GameEngine::SpriteRenderer>("/Images/EnemyTemp.png");
-        enemy->GetTransform().SetPosition(300.f,300.f,0);
-        enemy->GetTransform().SetScale(1.5f,1.5f);
+        //enemy->GetTransform().SetPosition(300.f,300.f,0);
+        enemy->GetTransform().SetScale(1.f,1.f);
 
         enemy->AddComponent<GameEngine::RectColliderComponent>();
 
