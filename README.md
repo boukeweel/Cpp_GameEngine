@@ -47,9 +47,12 @@ because I was noticing a hard part in what I should be creating for the engine, 
 - [ ] sprite animation
 - [ ] scene managar
 - [ ] Collision system
-    - [ ] rect collidor
+    - [x] rect collidor
     - [ ] capsule collidor (if length == 0; it becomes a sphere)
-    - [ ] Get QuadTrees to work.
+    - [x] Get QuadTrees to work.
+      - <img src="./Docs/Images/QuadTree_WorkingScreenShot.png" alt="QuadTree" width="500">
+    - [ ] Able to Get colliders from a portion of the Qaudtree
+    - [ ] narrow phase for collision.
 - [ ] physic system
     - [ ] gravity reaction
 

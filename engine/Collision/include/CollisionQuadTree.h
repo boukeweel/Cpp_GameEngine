@@ -11,9 +11,12 @@ namespace GameEngine {
     class CollisionQuadTree
     {
     public:
-        CollisionQuadTree(RectShape shape,int maxColliders);
+        CollisionQuadTree(RectShape shape,int maxColliders,bool drawDebugLines=false);
 
         void Insert(BaseColliderComponent* collider);
+
+        void SetDrawDebugLines(bool drawDebugLines);
+
         void DebugDraw() const;
 
     private:
@@ -26,6 +29,8 @@ namespace GameEngine {
         int m_MaxColliders{5};
         std::vector<BaseColliderComponent*> m_Colliders{};
         bool m_IsSubdivided{false};
+
+        bool m_DrawDebugLines{false};
 
         std::array<std::unique_ptr<CollisionQuadTree>, 4> m_QuadTrees{};
 

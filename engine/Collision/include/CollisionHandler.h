@@ -18,6 +18,8 @@ namespace GameEngine
         void RemoveCollider(BaseColliderComponent* collider);
         void Update();
 
+        [[nodiscard]] const CollisionQuadTree* GetQuadTree() const;
+
         void Render() const;
 
     private:

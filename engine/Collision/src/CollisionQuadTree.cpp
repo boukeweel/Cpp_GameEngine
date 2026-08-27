@@ -7,7 +7,8 @@
 
 namespace GameEngine
 {
-    CollisionQuadTree::CollisionQuadTree(RectShape shape,int maxColliders): m_QuadTreeShape(shape), m_MaxColliders{maxColliders}
+    CollisionQuadTree::CollisionQuadTree(RectShape shape,int maxColliders,bool drawDebugLines)
+    : m_QuadTreeShape(shape), m_MaxColliders{maxColliders}, m_DrawDebugLines{drawDebugLines}
     {
         m_Colliders.reserve(maxColliders);
     }
@@ -45,19 +46,22 @@ namespace GameEngine
         }
         InsertIntoDevision(collider);
     }
+
+
+
     void CollisionQuadTree::SubDivide()
     {
         const float midX = (m_QuadTreeShape.Left + m_QuadTreeShape.Right) / 2.f;
         const float midY = (m_QuadTreeShape.Bottom + m_QuadTreeShape.Top) / 2.f;
 
         RectShape topLeft{m_QuadTreeShape.Left, midX, m_QuadTreeShape.Top, midY};
-        m_QuadTrees[0] = std::make_unique<CollisionQuadTree>(topLeft, m_MaxColliders);
+        m_QuadTrees[0] = std::make_unique<CollisionQuadTree>(topLeft, m_MaxColliders,m_DrawDebugLines);
         RectShape topRight{midX, m_QuadTreeShape.Right, m_QuadTreeShape.Top, midY};
-        m_QuadTrees[1] = std::make_unique<CollisionQuadTree>(topRight, m_MaxColliders);
+        m_QuadTrees[1] = std::make_unique<CollisionQuadTree>(topRight, m_MaxColliders,m_DrawDebugLines);
         RectShape bottomLeft{m_QuadTreeShape.Left, midX, midY, m_QuadTreeShape.Bottom};
-        m_QuadTrees[2] = std::make_unique<CollisionQuadTree>(bottomLeft, m_MaxColliders);
+        m_QuadTrees[2] = std::make_unique<CollisionQuadTree>(bottomLeft, m_MaxColliders,m_DrawDebugLines);
         RectShape bottomRight{midX, m_QuadTreeShape.Right, midY, m_QuadTreeShape.Bottom};
-        m_QuadTrees[3] = std::make_unique<CollisionQuadTree>(bottomRight, m_MaxColliders);
+        m_QuadTrees[3] = std::make_unique<CollisionQuadTree>(bottomRight, m_MaxColliders,m_DrawDebugLines);
 
         m_IsSubdivided = true;
     }
@@ -77,8 +81,20 @@ namespace GameEngine
                  maxY < m_QuadTreeShape.Bottom);
     }
 
+    void CollisionQuadTree::SetDrawDebugLines(bool drawDebugLines)
+    {
+        m_DrawDebugLines = drawDebugLines;
+        for (const auto& quadTree : m_QuadTrees)
+        {
+            if (quadTree)
+                quadTree->SetDrawDebugLines(drawDebugLines);
+        }
+    }
+
     void CollisionQuadTree::DebugDraw() const
     {
+        if (!m_DrawDebugLines) return;
+
         auto& renderer = Renderer::GetInstance();
         renderer.DrawDebugRect(m_QuadTreeShape, {0, 255, 255, 255});
 

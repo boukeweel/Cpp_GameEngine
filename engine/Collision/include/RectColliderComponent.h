@@ -14,10 +14,16 @@ namespace GameEngine
         void GetBounds(float& outMinX, float& outMinY,float& outMaxX, float& outMaxY) const override;
 
         void SetBounds(float left, float right, float top, float bottom);
+
+        void Render() const override;
+
+        void SetDrawCollider(bool DrawCollider) {m_DrawColliderShape = DrawCollider;}
     private:
         void SetBoundsToSprite();
+        void DrawDebugCollider() const;
 
         RectShape m_ColliderShape{0.f,1.f,1.f,0.f};
+        bool m_DrawColliderShape{false};
     public:
         ~RectColliderComponent() override = default;
         RectColliderComponent(const RectColliderComponent& other) = delete;

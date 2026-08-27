@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "Renderer.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
 
@@ -34,6 +35,11 @@ namespace GameEngine
         m_ColliderShape.Bottom = bottom;
     }
 
+    void RectColliderComponent::Render() const
+    {
+        DrawDebugCollider();
+    }
+
     void RectColliderComponent::SetBoundsToSprite()
     {
         const auto* sprite = m_Owner->GetComponent<SpriteRenderer>();
@@ -49,7 +55,17 @@ namespace GameEngine
 
         SetBounds(halfWidth, halfWidth, halfHeight, halfHeight);
 
-        // Move the centered collider to the sprite's center.
-        SetOffset({halfWidth, halfHeight, 0.f});
+        // Match the sprite's top-left world anchor and screen-space Y direction.
+        SetOffset({halfWidth, -halfHeight, 0.f});
+    }
+
+    void RectColliderComponent::DrawDebugCollider() const
+    {
+        if (!m_DrawColliderShape) return;
+
+        auto& renderer = Renderer::GetInstance();
+        RectShape ColliderShape;
+        GetBounds(ColliderShape.Left,ColliderShape.Bottom,ColliderShape.Right,ColliderShape.Top);
+        renderer.DrawDebugRect(ColliderShape, {0, 255, 0, 255});
     }
 }
