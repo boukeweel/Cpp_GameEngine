@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include "CollisionDataStructures.h"
+
 namespace GameEngine
 {
     class CollisionQuadTree;
@@ -21,6 +23,8 @@ namespace GameEngine
         [[nodiscard]] const CollisionQuadTree* GetQuadTree() const;
 
         void Render() const;
+
+        void QueryCollision();
 
     private:
         std::unique_ptr<CollisionQuadTree> m_QuadTree;

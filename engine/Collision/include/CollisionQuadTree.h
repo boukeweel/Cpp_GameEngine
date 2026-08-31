@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include <memory>
+#include <unordered_set>
 
 namespace GameEngine {
     class BaseColliderComponent;
@@ -15,9 +16,15 @@ namespace GameEngine {
 
         void Insert(BaseColliderComponent* collider);
 
-        void SetDrawDebugLines(bool drawDebugLines);
+        ///Searches for the colliders inside the quadtree what are contained in given shape
+        ///This function will check every instance of the children quadtrees inside it
+        ///Shape: the place where it will gather and return all the variable
+        ///outVector: all the colliders that where inside of the shape
+        void Query(RectShape shape,std::unordered_set<BaseColliderComponent*>& outSet);
 
+        void SetDrawDebugLines(bool drawDebugLines);
         void DebugDraw() const;
+
 
     private:
         void SubDivide();

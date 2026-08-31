@@ -47,8 +47,6 @@ namespace GameEngine
         InsertIntoDevision(collider);
     }
 
-
-
     void CollisionQuadTree::SubDivide()
     {
         const float midX = (m_QuadTreeShape.Left + m_QuadTreeShape.Right) / 2.f;
@@ -79,6 +77,29 @@ namespace GameEngine
                  maxX < m_QuadTreeShape.Left   ||
                  minY > m_QuadTreeShape.Top    ||
                  maxY < m_QuadTreeShape.Bottom);
+    }
+
+    void CollisionQuadTree::Query(RectShape shape,std::unordered_set<BaseColliderComponent*>& outSet)
+    {
+        if (!Intersects(shape.Left, shape.Bottom, shape.Right, shape.Top))
+            return;
+
+        for (auto* collider : m_Colliders)
+        {
+            float cMinX, cMinY, cMaxX, cMaxY;
+            collider->GetBounds(cMinX, cMinY, cMaxX, cMaxY);
+            if (!(cMinX > shape.Right || cMaxX < shape.Left ||
+                  cMinY > shape.Top  || cMaxY < shape.Bottom))
+            {
+                outSet.insert(collider);
+            }
+        }
+
+        if (m_IsSubdivided)
+        {
+            for (auto& child : m_QuadTrees)
+                child->Query(shape, outSet);
+        }
     }
 
     void CollisionQuadTree::SetDrawDebugLines(bool drawDebugLines)
