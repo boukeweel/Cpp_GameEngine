@@ -60,7 +60,6 @@ namespace GameEngine{
         static unsigned int s_idCounter;
 
         const SceneContext& m_SceneContext;
-        
 
     public:
         ~Scene();

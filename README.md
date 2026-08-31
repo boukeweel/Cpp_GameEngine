@@ -53,8 +53,10 @@ because I was noticing a hard part in what I should be creating for the engine, 
       - <img src="./Docs/Images/QuadTree_WorkingScreenShot.png" alt="QuadTree" width="500">
     - [x] Able to Get colliders from a portion of the Qaudtree
     - [ ] narrow phase for collision.
+    - [ ] Layer system
 - [ ] physic system
     - [ ] gravity reaction
+- [ ] Fps counter
 
 ## refactoring code
 Because I am solo on this project I will try my best to look at ways to refactor it alone.

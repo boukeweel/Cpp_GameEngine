@@ -18,11 +18,11 @@ namespace GameEngine
         
         void RegisterCollider(BaseColliderComponent* collider);
         void RemoveCollider(BaseColliderComponent* collider);
-        void Update();
 
         [[nodiscard]] const CollisionQuadTree* GetQuadTree() const;
 
         void Render() const;
+        void FixedUpdate();
 
         void QueryCollision();
 

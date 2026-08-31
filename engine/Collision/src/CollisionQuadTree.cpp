@@ -84,8 +84,18 @@ namespace GameEngine
         if (!Intersects(shape.Left, shape.Bottom, shape.Right, shape.Top))
             return;
 
+        if (m_IsSubdivided)
+        {
+            for (auto& child : m_QuadTrees)
+                child->Query(shape, outSet);
+
+            //if it is subdivided there should be no colliders in this section so after going to his children can just return
+            return;
+        }
+
         for (auto* collider : m_Colliders)
         {
+            //this is imidiatly the narrow check
             float cMinX, cMinY, cMaxX, cMaxY;
             collider->GetBounds(cMinX, cMinY, cMaxX, cMaxY);
             if (!(cMinX > shape.Right || cMaxX < shape.Left ||
@@ -93,12 +103,6 @@ namespace GameEngine
             {
                 outSet.insert(collider);
             }
-        }
-
-        if (m_IsSubdivided)
-        {
-            for (auto& child : m_QuadTrees)
-                child->Query(shape, outSet);
         }
     }
 
@@ -126,5 +130,15 @@ namespace GameEngine
                     quadTree->DebugDraw();
             }
         }
+    }
+
+    void CollisionQuadTree::Clear()
+    {
+        m_Colliders.clear();
+
+        for (auto& child : m_QuadTrees)
+            child.reset();
+
+        m_IsSubdivided = false;
     }
 }

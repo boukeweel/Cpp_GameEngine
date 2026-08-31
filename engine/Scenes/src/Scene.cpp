@@ -76,6 +76,12 @@ namespace GameEngine{
     	{
     		object->FixedUpdate();
     	}
+
+        //TODO: put this in a seperated update loop, like a collision update loop
+        if(m_CollisionHandler != nullptr)
+        {
+            m_CollisionHandler->FixedUpdate();
+        }
     }
     
     void Scene::Update()
@@ -90,11 +96,7 @@ namespace GameEngine{
             m_canvas->Update();
         }
 
-        //TODO: put this in a seperated update loop, like a collision update loop
-        if(m_CollisionHandler != nullptr)
-        {
-            m_CollisionHandler->Update();
-        }
+
     }
     
     void Scene::Render() const

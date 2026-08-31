@@ -23,7 +23,7 @@ namespace SurvivalGame
 
         scene.AddObject(LoadPlayer());
 
-        for (int i = 0; i < 50; ++i) {
+        for (int i = 0; i < 1; ++i) {
             auto Enemy = LoadEnemy();
             Enemy->GetTransform().SetPosition(GameEngine::Random::RandomF(0,1280.f),GameEngine::Random::RandomF(0,720.f),0);
             scene.AddObject(std::move(Enemy));
@@ -49,6 +49,8 @@ namespace SurvivalGame
         auto moveObject = player->AddComponent<SGPlayerMovement>(75);
         player->GetTransform().SetPosition(100.f,100.f,0);
         player->GetTransform().SetScale(2.f,2.f);
+
+        player->AddComponent<GameEngine::RectColliderComponent>();
         
         input.AddCommand(GameEngine::InputKeys::ARROW_LEFT, GameEngine::InputStates::Held
             , std::make_unique<SGMoveCommand>(moveObject, glm::vec3{-1.f, 0.f, 0.f}));
@@ -60,8 +62,6 @@ namespace SurvivalGame
             , std::make_unique<SGMoveCommand>(moveObject, glm::vec3{0.f, -1.f, 0.f}));
         
         SGGameDate::GetInstance().SetPlayer(player.get());
-    
-        rawPlayerPtr = player.get();
         return std::move(player);
     }
 

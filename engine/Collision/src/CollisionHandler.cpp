@@ -9,17 +9,11 @@
 namespace GameEngine
 {
 
-    CollisionHandler::CollisionHandler() = default;
-    CollisionHandler::~CollisionHandler() = default;
-
-    void CollisionHandler::Update()
+    CollisionHandler::CollisionHandler()
     {
-        //Bad
         m_QuadTree = std::make_unique<CollisionQuadTree>(RectShape{0,1280.f,720.f,0}, 2, true);
-        for (auto* collider : m_Colliders)
-            m_QuadTree->Insert(collider);
-
     }
+    CollisionHandler::~CollisionHandler() = default;
 
     const CollisionQuadTree* CollisionHandler::GetQuadTree() const
     {
@@ -32,10 +26,32 @@ namespace GameEngine
             m_QuadTree->DebugDraw();
     }
 
+    void CollisionHandler::FixedUpdate()
+    {
+        m_QuadTree->Clear();
+        for (auto* collider : m_Colliders)
+            m_QuadTree->Insert(collider);
+
+        QueryCollision();
+    }
+
     //todo actualy handle the Gotten colliders and check for near collision check
     void CollisionHandler::QueryCollision()
     {
-        std::unordered_set<BaseColliderComponent*> colliders;
+        for (auto* collider : m_Colliders)
+        {
+            RectShape shape;
+            collider->GetBounds(shape.Left,shape.Bottom,shape.Right,shape.Top);
+            std::unordered_set<BaseColliderComponent*> foundColliders;
+            m_QuadTree->Query(shape,foundColliders);
+
+            for (auto found_collider: foundColliders) {
+                if (found_collider == collider)
+                    continue;
+
+                std::cout << "Its colliding" << std::endl;
+            }
+        }
     }
 
     void CollisionHandler::RegisterCollider(BaseColliderComponent* collider)

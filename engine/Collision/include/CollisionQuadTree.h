@@ -25,6 +25,7 @@ namespace GameEngine {
         void SetDrawDebugLines(bool drawDebugLines);
         void DebugDraw() const;
 
+        void Clear();
 
     private:
         void SubDivide();
