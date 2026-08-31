@@ -1,4 +1,4 @@
-file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
+ file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
     Core/src/*.cpp
     Components/src/*.cpp
     UI/src/*.cpp

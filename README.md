@@ -19,13 +19,14 @@ I will start using small games to furter develop the engine, to keep more motiva
 because I was noticing a hard part in what I should be creating for the engine, and with small games what it should be for I hope to keep a better direction in the developement of this projet.
 
 ###  surviore game
-- [ ] simple player movement
+- [x] simple player movement
 - [ ] weapon, attacking closest weapon (blue staff from vamipre survivors)
-- [ ] aera effect weapon, (garlic/tome)
-- [ ] enemy running at player
+- [ ] aera effect weapon, (garlic/tome from vamipre survivors)
+- [x] enemy running at player
 - [ ] level up system
 - [ ] level up, choses
 - [ ] dmg numbers
+- [ ] Health System
 
 ## my todo's Engine
 - [ ] Canvas System
@@ -35,13 +36,19 @@ because I was noticing a hard part in what I should be creating for the engine, 
     - [ ] Buttons 
     - [ ] Eventmangar for button selection with keyboard.
 - [x] input system [Command Pattern](https://gameprogrammingpatterns.com/command.html)
-- [x] Camera
+- [ ] Camera
     - [x] First simple version Camera owned by renderer
     - [ ] Second Camera component for GameObjects (camera made for scrolling games that will follow the player where he goes)
 - [ ] Object culling for rendering
     - Look into Frustum culling
 - [ ] Controler input
-- [ ] Event
+- [ ] Event system
+  - Events should go into a queue of some sort.
+  - all functions linked to a event should be called when the event is called.
+  - new data type called Event where you can sub, unsub, and invoke on. 
+  - it should have a list of void* to every function that should be invoked
+  - [ ] make events without a type it passes.
+  - [ ] make a event with a Type you can pass with template function.
 - [ ] Audio system
 - [ ] Child/Parent system
 - [ ] sprite animation
@@ -52,7 +59,7 @@ because I was noticing a hard part in what I should be creating for the engine, 
     - [x] Get QuadTrees to work.
       - <img src="./Docs/Images/QuadTree_WorkingScreenShot.png" alt="QuadTree" width="500">
     - [x] Able to Get colliders from a portion of the Qaudtree
-    - [ ] narrow phase for collision.
+    - [x] narrow phase for collision.
     - [ ] Layer system
 - [ ] physic system
     - [ ] gravity reaction

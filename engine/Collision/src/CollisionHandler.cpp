@@ -49,7 +49,7 @@ namespace GameEngine
                 if (found_collider == collider)
                     continue;
 
-                std::cout << "Its colliding" << std::endl;
+                collider->OnCollision.Invoke(found_collider);
             }
         }
     }
