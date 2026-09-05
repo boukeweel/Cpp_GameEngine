@@ -4,10 +4,11 @@
 #include "Renderer.h"
 #include "ResourceManger.h"
 #include "SceneManagar.h"
-#include "Scene.h"
 #include "IBaseScene.h"
 #include "DefaultScene.h"
 #include <SDL_image.h>
+
+#include "RandomFunctions.h"
 
 namespace GameEngine {
 
@@ -37,7 +38,7 @@ namespace GameEngine {
         SceneContext context = { &m_window };
         GameEngine::SceneManagar::GetInstance().SetSceneContext(context);
     
-        srand(static_cast<unsigned int>(time(nullptr)));
+        Random::Init();
     
         m_running = true;
         return true;

@@ -12,7 +12,7 @@ This project has been created on linux Ubuntu(26.04)
 - [ ] Make (0,0) middle of the screen
 
 ## Know Bugs
-
+- [ ] fix random to c++ 11 watch https://learn.microsoft.com/en-us/shows/goingnative-2013/rand-considered-harmful
 
 ## game todo's
 I will start using small games to furter develop the engine, to keep more motivated in keep going on deveoping the engine

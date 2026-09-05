@@ -1,25 +1,53 @@
-//
-// Created by boeken on 8/26/26.
-//
-
 #ifndef GAMEENGINE_RANDOM_FUNCTIONS_H
 #define GAMEENGINE_RANDOM_FUNCTIONS_H
 
-#include <cstdlib>
+#include <random>
 
 namespace GameEngine
 {
     class Random final
     {
     public:
-        [[nodiscard]] static float RandomF() {return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);}
-        [[nodiscard]] static float RandomF(float max){ return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / max)); }
-        [[nodiscard]] static float RandomF(float min, float max){return min + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max - min)));}
+        [[nodiscard]] static float RandomF()
+        {
+            std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+            return dist(s_engine);
+        }
 
-        [[nodiscard]] static int RandomI(){ return rand(); }
-        [[nodiscard]] static int RandomI(int max){ return rand() % max; }
-        [[nodiscard]] static int RandomI(int min, int max){ return min + rand() % (max - min + 1); }
+        [[nodiscard]] static float RandomF(float max)
+        {
+            std::uniform_real_distribution<float> dist(0.0f, max);
+            return dist(s_engine);
+        }
+
+        [[nodiscard]] static float RandomF(float min, float max)
+        {
+            std::uniform_real_distribution<float> dist(min, max);
+            return dist(s_engine);
+        }
+
+        [[nodiscard]] static int RandomI(int max)
+        {
+            std::uniform_int_distribution<int> dist(0, max);
+            return dist(s_engine);
+        }
+
+        [[nodiscard]] static int RandomI(int min, int max)
+        {
+            std::uniform_int_distribution<int> dist(min, max);
+            return dist(s_engine);
+        }
+
+    private:
+        friend class Engine;
+
+        static void Init()
+        {
+            s_engine.seed(std::random_device{}());
+        }
+
+        static inline std::mt19937 s_engine{};
     };
 }
 
-#endif //GAMEENGINE_RANDOMFUNCTIONS_H
+#endif //GAMEENGINE_RANDOM_FUNCTIONS_H
