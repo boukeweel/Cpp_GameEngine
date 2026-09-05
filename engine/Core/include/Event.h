@@ -30,7 +30,8 @@ namespace GameEngine {
 
         void Invoke(Args... args)
         {
-            for (auto& [id, callback] : m_CallBacks)
+            auto callbacksCopy = m_CallBacks;
+            for (auto& [id, callback] : callbacksCopy)
                 callback(args...);
         }
     private:

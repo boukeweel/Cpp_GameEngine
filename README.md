@@ -8,11 +8,13 @@ This project has been created on linux Ubuntu(26.04)
 
 ## General todo's
 - [ ] comment code 
+- [ ] Create a readme for every folder in the engine, where it in short explains what this part does
 - [ ] Go to Refactoring guru site. to find any patterns I can apply
 - [ ] Make (0,0) middle of the screen
+- [x] fix random to c++ 11 watch https://learn.microsoft.com/en-us/shows/goingnative-2013/rand-considered-harmful
 
 ## Know Bugs
-- [ ] fix random to c++ 11 watch https://learn.microsoft.com/en-us/shows/goingnative-2013/rand-considered-harmful
+
 
 ## game todo's
 I will start using small games to furter develop the engine, to keep more motivated in keep going on deveoping the engine
