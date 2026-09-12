@@ -49,7 +49,7 @@ namespace GameEngine
                 if (found_collider == collider)
                     continue;
 
-                collider->OnCollision.Invoke(found_collider);
+                collider->m_OnCollision.Invoke(found_collider);
             }
         }
     }

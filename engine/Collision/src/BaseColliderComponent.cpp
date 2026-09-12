@@ -19,6 +19,16 @@ namespace GameEngine
             m_CollisionHandler->RemoveCollider(this);
     }
 
+    std::size_t BaseColliderComponent::SubscribeToCollision(std::function<void(BaseColliderComponent *)> callback)
+    {
+        return m_OnCollision.Subscribe(std::move(callback));
+    }
+
+    void BaseColliderComponent::UnsubscribeFromCollision(std::size_t id)
+    {
+        m_OnCollision.Unsubscribe(id);
+    }
+
     void BaseColliderComponent::Init()
     {
 
