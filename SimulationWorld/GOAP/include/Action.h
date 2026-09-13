@@ -4,18 +4,23 @@
 
 #ifndef SimWorld_ACTION_H
 #define SimWorld_ACTION_H
+#include "States.h"
 
 namespace SimWorld {
     class Action
     {
     public:
-        virtual bool CanPreform() = 0;
-        virtual bool PlanEffects() = 0;
-        virtual bool Preform() = 0;
+        virtual bool CanPreform(const PersonState& state) = 0;
+        virtual void PlanEffects(PersonState& state) = 0;
+        virtual bool Preform(PersonState& state) = 0;
 
-        virtual ~Action() = default;
+        [[nodiscard]] int GetCost() const {return m_Cost;}
+
+
     protected:
-        int Cost{0};
+        int m_Cost{0};
+    public:
+        virtual ~Action() = default;
     };
 }
 
