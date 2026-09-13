@@ -9,7 +9,7 @@ Game::Game(GameEngine::Engine& engine)
     : m_engine(engine) {
 }
 
-void Game::run() 
+void Game::run()
 {
     GameEngine::SceneManagar::GetInstance().CreateScene("Test_Scene",std::make_unique<TestScene>());
 

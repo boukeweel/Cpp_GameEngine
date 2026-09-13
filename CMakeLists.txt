@@ -40,5 +40,6 @@ endif()
 add_subdirectory(engine)
 add_subdirectory(TestingProject)
 add_subdirectory(SurvivalGame)
+add_subdirectory(SimulationWorld)
 
 

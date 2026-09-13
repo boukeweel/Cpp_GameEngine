@@ -6,6 +6,7 @@
 
 class TestScene : public GameEngine::IBaseScene
 {
+public:
     void Load(GameEngine::Scene& scene) override;
 };
 

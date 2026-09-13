@@ -1,12 +1,14 @@
 #include "Engine.h"
-#include "SG_Game.h"
+#include "SimGame.h"
 
 int main() {
-    GameEngine::Engine engine("Survival game", 1280, 720);
+    GameEngine::Engine engine("Simulation World", 1280, 720);
     if (!engine.init("Resources")) {
         return 1;
     }
-    SurvivalGame::SG_Game game(engine);
+
+    SimWorld::SimGame game{engine};
     game.run();
+
     return 0;
 }
