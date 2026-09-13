@@ -11,9 +11,25 @@
 #include "States.h"
 
 namespace SimWorld {
+    struct node {
+        PersonState goal;
+        Action* actionTaken;
+        node* parent;
+        int gCost;
+        int fCost;
+    };
+
     class Planner {
     public:
-        std::vector<Action*> plan(const PersonState& start, Goal* goal, const std::vector<Action*>& availableActions);
+        Planner(int maxIterations);
+
+        std::vector<Action*> plan(const PersonState& currentState, Goal* goal, const std::vector<Action*>& availableActions);
+
+    private:
+        bool IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState);
+        std::pair<PersonKeys,int> PickUnsatisfiedKey(const PersonState& GoalState, const PersonState& CurrentState);
+
+        int m_MaxIterations{1000};
     };
 }
 

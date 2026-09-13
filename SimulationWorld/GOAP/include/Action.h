@@ -10,8 +10,11 @@ namespace SimWorld {
     class Action
     {
     public:
-        virtual bool CanPreform(const PersonState& state) = 0;
-        virtual void PlanEffects(PersonState& state) = 0;
+        ///Get the conditions that needs to be met for this action to be able to preform
+        [[nodiscard]] virtual const PersonState& GetPreConditions() const = 0;
+        ///give the state back with the states changed by this effect, needed for the planner
+        [[nodiscard]] virtual const PersonState& GetEffect() const = 0;
+
         virtual bool Preform(PersonState& state) = 0;
 
         [[nodiscard]] int GetCost() const {return m_Cost;}

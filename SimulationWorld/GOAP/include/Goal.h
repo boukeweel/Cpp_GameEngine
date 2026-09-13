@@ -14,6 +14,8 @@ namespace SimWorld {
             return DistanceTo(state) == 0;
         }
 
+        virtual const PersonState& GetDesiredState() const = 0;
+
         [[nodiscard]] int GetPriority() const {return m_priority;}
     protected:
         int m_priority{0};
