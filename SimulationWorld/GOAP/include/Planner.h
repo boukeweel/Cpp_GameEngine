@@ -4,6 +4,7 @@
 
 #ifndef SimWorld_PLANNER_H
 #define SimWorld_PLANNER_H
+#include <queue>
 #include <vector>
 
 #include "Action.h"
@@ -23,11 +24,12 @@ namespace SimWorld {
     public:
         Planner(int maxIterations = 1000);
 
-        std::vector<Action*> Plan(const PersonState& currentState, Goal* goal, const std::vector<Action*>& availableActions);
+        [[nodiscard]] std::queue<Action*> Plan(const PersonState& currentState, Goal* goal, const std::vector<Action*>& availableActions);
 
     private:
         bool IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState);
-        std::pair<PersonKeys,int> PickUnsatisfiedKey(const PersonState& GoalState, const PersonState& CurrentState);
+
+        static std::pair<PersonKeys,int> PickUnsatisfiedKey(const PersonState& GoalState, const PersonState& CurrentState);
 
         int m_MaxIterations{1000};
     };

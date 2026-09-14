@@ -5,6 +5,7 @@
 #ifndef GAMEENGINE_PERSON_H
 #define GAMEENGINE_PERSON_H
 #include <memory>
+#include <queue>
 #include <vector>
 #include "Component.h"
 #include "States.h"
@@ -25,16 +26,16 @@ namespace SimWorld {
         void InitActions();
         void InitGoals();
 
-        std::unique_ptr<Planner> m_Planner;
-        PersonState m_CurrentState;
+        std::unique_ptr<Planner> m_Planner{};
+        PersonState m_CurrentState{};
 
-        std::vector<Action*> m_AvailableActions;
-        std::vector<Action*> m_CurrentPath;
+        std::vector<Action*> m_AvailableActions{};
+        std::queue<Action*> m_CurrentPath{};
 
-        std::vector<Goal*> m_Goals;
-        Goal* CurrentGoal;
+        std::vector<Goal*> m_Goals{};
+        Goal* m_CurrentGoal{nullptr};
     public:
-        ~Person();
+        ~Person() override;
     };
 } // SimWorld
 
