@@ -4,13 +4,17 @@
 
 #ifndef GAMEENGINE_EATACTION_H
 #define GAMEENGINE_EATACTION_H
+#include "Action.h"
 
-namespace SimWorld {
+namespace SimWorld
+{
+    class EatAction : public Action
+    {
+    public:
+        EatAction();
 
-class EatAction {
-
-};
-
+        bool Preform(PersonState &state) override;
+    };
 } // SimWorld
 
 #endif //GAMEENGINE_EATACTION_H

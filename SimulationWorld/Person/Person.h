@@ -21,9 +21,11 @@ namespace SimWorld {
         void FixedUpdate() override;
 
     private:
-        void init();
+        void InitStates();
+        void InitActions();
+        void InitGoals();
 
-        std::unique_ptr<Planner> planner;
+        std::unique_ptr<Planner> m_Planner;
         PersonState m_CurrentState;
 
         std::vector<Action*> m_AvailableActions;
@@ -32,7 +34,7 @@ namespace SimWorld {
         std::vector<Goal*> m_Goals;
         Goal* CurrentGoal;
     public:
-        ~Person() = default;
+        ~Person();
     };
 } // SimWorld
 

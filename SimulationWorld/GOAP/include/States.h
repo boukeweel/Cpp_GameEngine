@@ -8,8 +8,18 @@
 
 namespace SimWorld {
     enum class PersonKeys {
-        HasFood,
-        Hunger, // 0 = fed, 1 = hungry, 2 = starving
+        //Food wise
+        HasFood, //
+        Hunger, // 0 = fed, 1 = hungry
+
+        //Job related
+        HasJob,
+        ShouldWork,
+        FindJob,
+
+        //Buying
+
+
     };
 
     using PersonState = std::unordered_map<PersonKeys, int>;

@@ -21,9 +21,9 @@ namespace SimWorld {
 
     class Planner {
     public:
-        Planner(int maxIterations);
+        Planner(int maxIterations = 1000);
 
-        std::vector<Action*> plan(const PersonState& currentState, Goal* goal, const std::vector<Action*>& availableActions);
+        std::vector<Action*> Plan(const PersonState& currentState, Goal* goal, const std::vector<Action*>& availableActions);
 
     private:
         bool IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState);

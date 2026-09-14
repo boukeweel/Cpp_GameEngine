@@ -10,7 +10,7 @@ namespace SimWorld {
     Planner::Planner(int maxIterations) : m_MaxIterations(maxIterations) {
     }
 
-    std::vector<Action *> Planner::plan(const PersonState &currentState, Goal *goal, const std::vector<Action *> &availableActions) {
+    std::vector<Action *> Planner::Plan(const PersonState &currentState, Goal *goal, const std::vector<Action *> &availableActions) {
         auto cmp = [](const node *a, const node *b) {return a->fCost > b->fCost; };
         std::priority_queue<node*, std::vector<node*>, decltype(cmp)> open(cmp);
 
