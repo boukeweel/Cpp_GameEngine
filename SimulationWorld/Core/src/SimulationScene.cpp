@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "GameObject.h"
+#include "HungerComponent.h"
 #include "Person.h"
 #include "Scene.h"
 
@@ -15,6 +16,7 @@ namespace SimWorld {
     void SimulationScene::Load(GameEngine::Scene &scene) {
 
         auto person = std::make_unique<GameEngine::GameObject>();
+        person->AddComponent<HungerComponent>();
         person->AddComponent<Person>();
         scene.AddObject(std::move(person));
     }

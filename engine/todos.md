@@ -1,4 +1,5 @@
 # Engines
+- [ ] Create Begin fuction what triggers right before the game starts
 - [ ] Canvas System
     - [ ] Text rendering on canvas
         - problem = fix problem where text looks squiwist

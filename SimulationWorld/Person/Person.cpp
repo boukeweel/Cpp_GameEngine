@@ -11,6 +11,9 @@
 #include "Actions/EatAction.h"
 #include "Goals/EatGoal.h"
 #include "Action.h"
+#include "GameObject.h"
+#include "Actions/GetFoodAction.h"
+#include "HungerComponent.h"
 
 namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
@@ -26,13 +29,14 @@ namespace SimWorld {
 
     void Person::InitStates()
     {
-        m_CurrentState[PersonKeys::HasFood] = true;
+        m_CurrentState[PersonKeys::HasFood] = false;
         m_CurrentState[PersonKeys::Hunger] = 1;
     }
 
     void Person::InitActions()
     {
-        m_AvailableActions.emplace_back(new EatAction());
+        m_AvailableActions.emplace_back(new EatAction(m_Owner->GetComponent<HungerComponent>()));
+        m_AvailableActions.emplace_back(new GetFoodAction());
     }
 
     void Person::InitGoals()

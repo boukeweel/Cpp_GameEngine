@@ -8,12 +8,16 @@
 
 namespace SimWorld
 {
+    class HungerComponent;
+
     class EatAction : public Action
     {
     public:
-        EatAction();
+        EatAction(HungerComponent* hc);
 
         bool Preform(PersonState &state) override;
+    private:
+        HungerComponent* m_HungerComp;
     };
 } // SimWorld
 

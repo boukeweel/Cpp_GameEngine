@@ -3,6 +3,8 @@ file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
         GOAP/src/*.cpp
         Person/*.cpp
         Person/Goals/*.cpp
+        Person/Actions/*.cpp
+        Person/Components/*.cpp
     )
 
 add_executable(SimulationWorld ${GAME_SOURCES})
@@ -12,6 +14,8 @@ target_include_directories(SimulationWorld PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/GOAP/include
         ${CMAKE_CURRENT_SOURCE_DIR}/Person
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Goals
+        ${CMAKE_CURRENT_SOURCE_DIR}/Person/Actions
+        ${CMAKE_CURRENT_SOURCE_DIR}/Person/Components
     )
 
 target_link_libraries(SimulationWorld PRIVATE

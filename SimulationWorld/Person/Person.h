@@ -21,6 +21,9 @@ namespace SimWorld {
 
         void FixedUpdate() override;
 
+        PersonState* GetCurrentState() {return &m_CurrentState;}
+        template<typename T>
+        T* GetGoal();
     private:
         void InitStates();
         void InitActions();
@@ -37,6 +40,17 @@ namespace SimWorld {
     public:
         ~Person() override;
     };
+
+    template<typename T>
+    T * Person::GetGoal()
+    {
+        for (Goal* goal : m_Goals) {
+            if (T* match = dynamic_cast<T*>(goal)) {
+                return match;
+            }
+        }
+        return nullptr;
+    }
 } // SimWorld
 
 #endif //GAMEENGINE_PERSON_H
