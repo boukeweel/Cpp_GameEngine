@@ -10,6 +10,8 @@ namespace GameEngine {
     public:
         Component(GameObject* owner) : m_Owner(owner) {}
 
+        virtual void Begin();
+
         virtual void Update() {}
         virtual void FixedUpdate() {}
         virtual void Render() const {}

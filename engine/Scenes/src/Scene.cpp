@@ -26,6 +26,10 @@ namespace GameEngine{
     void Scene::LoadInScene()
     {
         m_Load->Load(*this);
+        for (auto& obj : m_sceneObjects)
+        {
+            obj->Begin();
+        }
     }
 
     bool Scene::AddCanvas(std::unique_ptr<Canvas> canvas)

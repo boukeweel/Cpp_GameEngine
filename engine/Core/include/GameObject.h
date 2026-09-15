@@ -16,6 +16,7 @@ namespace GameEngine {
     class GameObject final {
     public:
         GameObject();
+        void Begin();
 
         void Update();
         void FixedUpdate();
