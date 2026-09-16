@@ -11,25 +11,27 @@ namespace SimWorld
 {
     class EatGoal;
 
-    enum class hunger
+    enum class HungerLevel : int
     {
-        fed,
-        Hungry,
-        starving
+        fed = 0,
+        Hungry = 1,
+        starving = 1,
     };
     class HungerComponent : public GameEngine::Component
     {
     public:
         HungerComponent(GameEngine::GameObject* owner);
 
+        void Begin() override;
+
         void FixedUpdate() override;
         void AteFood();
     private:
         void UpdateHunger();
 
-        float HungerTimer{1000};
+        float HungerTimer{10};
         float CurrentHungerTimer{0};
-        hunger m_Hunger{hunger::fed};
+        HungerLevel m_Hunger{HungerLevel::fed};
         PersonState* m_CurrentState{nullptr};
         EatGoal* m_EatGoal{nullptr};
     };

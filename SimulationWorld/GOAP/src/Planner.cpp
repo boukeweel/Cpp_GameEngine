@@ -3,20 +3,47 @@
 //
 
 #include "Planner.h"
-
 #include <queue>
+#include <map>
 
 namespace SimWorld {
+    namespace {
+        using StateSignature = std::map<PersonKeys, int>;
+
+        StateSignature MakeStateSignature(const PersonState& state)
+        {
+            return {state.begin(), state.end()};
+        }
+    }
+
     Planner::Planner(int maxIterations) : m_MaxIterations(maxIterations) {
     }
 
-    std::queue<Action*> Planner::Plan(const PersonState &currentState, Goal *goal, const std::vector<Action *> &availableActions) {
-        auto cmp = [](const node *a, const node *b) {return a->fCost > b->fCost; };
+    bool Planner::IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState)
+    {
+        for (auto& [key, value] : GoalState) {
+            auto it = CurrentState.find(key);
+            if (it == CurrentState.end() || it->second != value) return false;
+        }
+        return true;
+    }
+
+    std::queue<Action*> Planner::Plan(const PersonState& currentState, Goal* goal,
+        const std::vector<std::unique_ptr<Action>>& availableActions)
+    {
+        auto cmp = [](const node* a, const node* b) { return a->fCost > b->fCost; };
         std::priority_queue<node*, std::vector<node*>, decltype(cmp)> open(cmp);
 
+        std::vector<std::unique_ptr<node>> allocatedNodes;
+        std::map<StateSignature, int> bestCosts;
+
         PersonState goalState = goal->GetDesiredState();
-        node* root = new node{goalState,nullptr,nullptr,0,static_cast<int>(goalState.size())};
-        open.push(root);
+
+        allocatedNodes.push_back(std::make_unique<node>(
+            goalState, nullptr, nullptr, 0, static_cast<int>(goalState.size())
+        ));
+        open.push(allocatedNodes.back().get());
+        bestCosts.emplace(MakeStateSignature(goalState), 0);
 
         int iteration = 0;
         while (!open.empty() && iteration < m_MaxIterations) {
@@ -24,6 +51,12 @@ namespace SimWorld {
 
             node* current = open.top();
             open.pop();
+
+            const StateSignature currentSignature = MakeStateSignature(current->goal);
+            const auto bestCost = bestCosts.find(currentSignature);
+            if (bestCost != bestCosts.end() && current->gCost > bestCost->second)
+                continue;
+
             if (IsSatisfied(current->goal, currentState)) {
                 std::queue<Action*> path;
                 for (node* n = current; n->parent != nullptr; n = n->parent) {
@@ -34,7 +67,7 @@ namespace SimWorld {
 
             auto [key, value] = PickUnsatisfiedKey(current->goal, currentState);
 
-            for (Action* action : availableActions) {
+            for (auto& action : availableActions) {
                 PersonState effect = action->GetEffect();
                 auto it = effect.find(key);
                 if (it == effect.end() || it->second != value) continue;
@@ -46,21 +79,26 @@ namespace SimWorld {
                 }
 
                 const int newCost = current->gCost + action->GetCost();
+                const StateSignature nextSignature = MakeStateSignature(nextGoal);
+                const auto bestNextCost = bestCosts.find(nextSignature);
+
+                if (bestNextCost != bestCosts.end() &&
+                    bestNextCost->second <= newCost)
+                {
+                    continue;
+                }
+
+                bestCosts[nextSignature] = newCost;
                 const int h = static_cast<int>(nextGoal.size());
-                open.push(new node{nextGoal,action,current,newCost, newCost + h});
+
+                allocatedNodes.push_back(std::make_unique<node>(
+                    nextGoal, action.get(), current, newCost, newCost + h
+                ));
+                open.push(allocatedNodes.back().get());
             }
         }
 
         return {};
-    }
-
-    bool Planner::IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState)
-    {
-        for (auto& [key, value] : GoalState) {
-            auto it = CurrentState.find(key);
-            if (it == CurrentState.end() || it->second != value) return false;
-        }
-        return true;
     }
 
     std::pair<PersonKeys,int> Planner::PickUnsatisfiedKey(const PersonState &GoalState, const PersonState &CurrentState)

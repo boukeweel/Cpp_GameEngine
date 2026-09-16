@@ -18,8 +18,19 @@ namespace SimWorld
     bool EatAction::Preform(PersonState &state)
     {
         //todo when inventory is done, it should remove a food item from the person inventory
+        auto food = state.find(PersonKeys::HasFood);
+
+        if (food == state.end() || food->second == 0)
+            return false;
+
+        if (m_HungerComp == nullptr)
+            return false;
+
         m_HungerComp->AteFood();
+
+        state[PersonKeys::HasFood] = false;
         state[PersonKeys::Hunger] = 0;
+
         std::cout << "Eating" << std::endl;
         return true;
     }

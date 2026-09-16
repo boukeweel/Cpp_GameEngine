@@ -18,11 +18,12 @@ namespace SimWorld {
     class Person : public GameEngine::Component {
     public:
         Person(GameEngine::GameObject* owner);
+        void Begin() override;
 
         void FixedUpdate() override;
 
         PersonState* GetCurrentState() {return &m_CurrentState;}
-        template<typename T>
+        template<typename T> requires std::derived_from<T, Goal>
         T* GetGoal();
     private:
         void InitStates();
@@ -32,20 +33,20 @@ namespace SimWorld {
         std::unique_ptr<Planner> m_Planner{};
         PersonState m_CurrentState{};
 
-        std::vector<Action*> m_AvailableActions{};
+        std::vector<std::unique_ptr<Action>> m_AvailableActions{};
         std::queue<Action*> m_CurrentPath{};
 
-        std::vector<Goal*> m_Goals{};
+        std::vector<std::unique_ptr<Goal>> m_Goals{};
         Goal* m_CurrentGoal{nullptr};
     public:
         ~Person() override;
     };
 
-    template<typename T>
+    template<typename T> requires std::derived_from<T, Goal>
     T * Person::GetGoal()
     {
-        for (Goal* goal : m_Goals) {
-            if (T* match = dynamic_cast<T*>(goal)) {
+        for (auto& goal : m_Goals) {
+            if (T* match = dynamic_cast<T*>(goal.get())) {
                 return match;
             }
         }

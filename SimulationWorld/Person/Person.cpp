@@ -19,11 +19,15 @@ namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
     {
         m_Planner = std::make_unique<Planner>();
+    }
+
+    void Person::Begin()
+    {
         InitStates();
         InitActions();
         InitGoals();
 
-        m_CurrentGoal = m_Goals[0];
+        m_CurrentGoal = m_Goals[0].get();
         m_CurrentPath = m_Planner->Plan(m_CurrentState,m_CurrentGoal,m_AvailableActions);
     }
 
@@ -35,8 +39,11 @@ namespace SimWorld {
 
     void Person::InitActions()
     {
-        m_AvailableActions.emplace_back(new EatAction(m_Owner->GetComponent<HungerComponent>()));
-        m_AvailableActions.emplace_back(new GetFoodAction());
+        m_AvailableActions.emplace_back(
+            std::make_unique<EatAction>
+                (m_Owner->GetComponent<HungerComponent>()));
+        m_AvailableActions.emplace_back(
+            std::make_unique<GetFoodAction>());
     }
 
     void Person::InitGoals()
@@ -56,17 +63,5 @@ namespace SimWorld {
         }
     }
 
-    Person::~Person()
-    {
-        for (auto action : m_AvailableActions)
-        {
-            delete action;
-            action = nullptr;
-        }
-        for (auto goal : m_Goals)
-        {
-            delete goal;
-            goal = nullptr;
-        }
-    }
+    Person::~Person() = default;
 } // SimWorld
