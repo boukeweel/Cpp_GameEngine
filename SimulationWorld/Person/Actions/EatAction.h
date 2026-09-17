@@ -5,6 +5,7 @@
 #ifndef GAMEENGINE_EATACTION_H
 #define GAMEENGINE_EATACTION_H
 #include "Action.h"
+#include "Event.h"
 
 namespace SimWorld
 {
@@ -13,9 +14,9 @@ namespace SimWorld
     class EatAction : public Action
     {
     public:
-        EatAction(HungerComponent* hc);
+        EatAction(HungerComponent* hc,GameEngine::Event<PersonKeys,int>* changeStateEvent);
 
-        bool Preform(PersonState &state) override;
+        bool Preform() override;
     private:
         HungerComponent* m_HungerComp;
     };

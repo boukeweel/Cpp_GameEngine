@@ -8,28 +8,24 @@
 
 namespace SimWorld
 {
-    EatAction::EatAction(HungerComponent* hc)
+    EatAction::EatAction(HungerComponent* hc, GameEngine::Event<PersonKeys,int>* changeStateEvent)
     {
+        m_ChangeStateEvent = changeStateEvent;
         m_PreConditions[PersonKeys::HasFood] = true;
         m_Effects[PersonKeys::Hunger] = 0;
         m_HungerComp = hc;
+
     }
 
-    bool EatAction::Preform(PersonState &state)
+    bool EatAction::Preform()
     {
-        //todo when inventory is done, it should remove a food item from the person inventory
-        auto food = state.find(PersonKeys::HasFood);
-
-        if (food == state.end() || food->second == 0)
-            return false;
-
-        if (m_HungerComp == nullptr)
+        if (m_HungerComp == nullptr || m_ChangeStateEvent == nullptr)
             return false;
 
         m_HungerComp->AteFood();
 
-        state[PersonKeys::HasFood] = false;
-        state[PersonKeys::Hunger] = 0;
+        m_ChangeStateEvent->Invoke(PersonKeys::HasFood, false);
+        m_ChangeStateEvent->Invoke(PersonKeys::Hunger, 0);
 
         std::cout << "Eating" << std::endl;
         return true;

@@ -4,6 +4,7 @@
 
 #ifndef SimWorld_ACTION_H
 #define SimWorld_ACTION_H
+#include "Event.h"
 #include "States.h"
 
 namespace SimWorld {
@@ -15,7 +16,7 @@ namespace SimWorld {
         ///give the state back with the states changed by this effect, needed for the planner
         [[nodiscard]] virtual const PersonState& GetEffect() const{return m_Effects;}
 
-        virtual bool Preform(PersonState& state) = 0;
+        virtual bool Preform() = 0;
 
         [[nodiscard]] int GetCost() const {return m_Cost;}
 
@@ -25,6 +26,8 @@ namespace SimWorld {
 
         PersonState m_PreConditions;
         PersonState m_Effects;
+
+        GameEngine::Event<PersonKeys,int>* m_ChangeStateEvent{nullptr};
     public:
         virtual ~Action() = default;
     };

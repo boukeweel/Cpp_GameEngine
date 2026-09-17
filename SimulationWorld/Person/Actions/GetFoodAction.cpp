@@ -9,14 +9,18 @@
 
 namespace SimWorld
 {
-    GetFoodAction::GetFoodAction()
+    GetFoodAction::GetFoodAction(GameEngine::Event<PersonKeys,int>* changeStateEvent)
     {
+        m_ChangeStateEvent = changeStateEvent;
         m_Effects[PersonKeys::HasFood] = true;
     }
 
-    bool GetFoodAction::Preform(PersonState &state)
+    bool GetFoodAction::Preform()
     {
-        state[PersonKeys::HasFood] = true;
+        if (m_ChangeStateEvent == nullptr)
+            return false;
+
+        m_ChangeStateEvent->Invoke(PersonKeys::HasFood, true);
         std::cout << "Got food" << std::endl;
         return true;
     }

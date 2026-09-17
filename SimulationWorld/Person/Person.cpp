@@ -19,6 +19,11 @@ namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
     {
         m_Planner = std::make_unique<Planner>();
+        m_ChangeStateEvent.Subscribe([this](PersonKeys key, int value)
+        {
+            SetState(key, value);
+        }
+);
     }
 
     void Person::Begin()
@@ -31,6 +36,12 @@ namespace SimWorld {
         m_CurrentPath = m_Planner->Plan(m_CurrentState,m_CurrentGoal,m_AvailableActions);
     }
 
+    void Person::SetState(PersonKeys key, int newValue)
+    {
+        //const auto it = m_CurrentState.find(key);
+        m_CurrentState[key] = newValue;
+    }
+
     void Person::InitStates()
     {
         m_CurrentState[PersonKeys::HasFood] = false;
@@ -41,14 +52,14 @@ namespace SimWorld {
     {
         m_AvailableActions.emplace_back(
             std::make_unique<EatAction>
-                (m_Owner->GetComponent<HungerComponent>()));
+                (m_Owner->GetComponent<HungerComponent>(),&m_ChangeStateEvent));
         m_AvailableActions.emplace_back(
-            std::make_unique<GetFoodAction>());
+            std::make_unique<GetFoodAction>(&m_ChangeStateEvent));
     }
 
     void Person::InitGoals()
     {
-        m_Goals.emplace_back(new EatGoal());
+        m_Goals.emplace_back(std::make_unique<EatGoal>());
     }
 
     void Person::FixedUpdate()
@@ -57,7 +68,7 @@ namespace SimWorld {
             return;
 
         Action* currentAction = m_CurrentPath.front();
-        if (currentAction != nullptr && currentAction->Preform(m_CurrentState))
+        if (currentAction != nullptr && currentAction->Preform())
         {
             m_CurrentPath.pop();
         }

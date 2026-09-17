@@ -8,6 +8,7 @@
 #include <queue>
 #include <vector>
 #include "Component.h"
+#include "Event.h"
 #include "States.h"
 
 namespace SimWorld {
@@ -25,10 +26,15 @@ namespace SimWorld {
         PersonState* GetCurrentState() {return &m_CurrentState;}
         template<typename T> requires std::derived_from<T, Goal>
         T* GetGoal();
+
+        void SetState(PersonKeys key, int value);
     private:
+
         void InitStates();
         void InitActions();
         void InitGoals();
+
+        GameEngine::Event<PersonKeys, int> m_ChangeStateEvent;
 
         std::unique_ptr<Planner> m_Planner{};
         PersonState m_CurrentState{};

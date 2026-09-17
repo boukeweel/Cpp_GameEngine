@@ -5,15 +5,16 @@
 #ifndef GAMEENGINE_GETFOODACTION_H
 #define GAMEENGINE_GETFOODACTION_H
 #include "Action.h"
+#include "Event.h"
 
 namespace SimWorld
 {
     class GetFoodAction : public Action
     {
     public:
-        GetFoodAction();
+        GetFoodAction(GameEngine::Event<PersonKeys,int>* changeStateEvent);
 
-        bool Preform(PersonState& state) override;
+        bool Preform() override;
     };
 } // SimWorld
 
