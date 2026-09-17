@@ -10,6 +10,7 @@ namespace SimWorld {
     namespace {
         using StateSignature = std::map<PersonKeys, int>;
 
+        //make from unordered map a map
         StateSignature MakeStateSignature(const PersonState& state)
         {
             return {state.begin(), state.end()};
@@ -31,6 +32,7 @@ namespace SimWorld {
     std::queue<Action*> Planner::Plan(const PersonState& currentState, Goal* goal,
         const std::vector<std::unique_ptr<Action>>& availableActions)
     {
+        //create priority queue to always have the lowest f cost in front.
         auto cmp = [](const node* a, const node* b) { return a->fCost > b->fCost; };
         std::priority_queue<node*, std::vector<node*>, decltype(cmp)> open(cmp);
 
@@ -39,6 +41,7 @@ namespace SimWorld {
 
         PersonState goalState = goal->GetDesiredState();
 
+        //create the initial node
         allocatedNodes.push_back(std::make_unique<node>(
             goalState, nullptr, nullptr, 0, static_cast<int>(goalState.size())
         ));
@@ -57,7 +60,9 @@ namespace SimWorld {
             if (bestCost != bestCosts.end() && current->gCost > bestCost->second)
                 continue;
 
+            //check if the goal is reached
             if (IsSatisfied(current->goal, currentState)) {
+                //created a queue, and push all actions on there
                 std::queue<Action*> path;
                 for (node* n = current; n->parent != nullptr; n = n->parent) {
                     path.push(n->actionTaken);
@@ -65,19 +70,24 @@ namespace SimWorld {
                 return path;
             }
 
+            //find next condition it will try to complete
             auto [key, value] = PickUnsatisfiedKey(current->goal, currentState);
 
+            //go through every action to check
             for (auto& action : availableActions) {
+                //Get the effect the action will have and check if thats something we need
                 PersonState effect = action->GetEffect();
                 auto it = effect.find(key);
                 if (it == effect.end() || it->second != value) continue;
 
+                //create a new goal, based on the pre conditions of the action
                 PersonState nextGoal = current->goal;
                 nextGoal.erase(key);
                 for (auto& [pkey, pvalue] : action->GetPreConditions()) {
                     nextGoal[pkey] = pvalue;
                 }
 
+                //check if there was not a better path already.
                 const int newCost = current->gCost + action->GetCost();
                 const StateSignature nextSignature = MakeStateSignature(nextGoal);
                 const auto bestNextCost = bestCosts.find(nextSignature);
@@ -88,6 +98,7 @@ namespace SimWorld {
                     continue;
                 }
 
+                //this is now the new best cost, so push it to the priority queue
                 bestCosts[nextSignature] = newCost;
                 const int h = static_cast<int>(nextGoal.size());
 
