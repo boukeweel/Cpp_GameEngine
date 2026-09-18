@@ -22,11 +22,10 @@ namespace SimWorld
 
     void HungerComponent::Begin()
     {
-        auto personComp = m_Owner->GetComponent<Person>();
-        if (personComp != nullptr)
+        m_MyPerson = m_Owner->GetComponent<Person>();
+        if (m_MyPerson != nullptr)
         {
-            m_CurrentState = personComp->GetCurrentState();
-            m_EatGoal = personComp->GetGoal<EatGoal>();
+            m_EatGoal = m_MyPerson->GetGoal<EatGoal>();
         }
     }
 
@@ -54,15 +53,15 @@ namespace SimWorld
             case HungerLevel::fed:
                 m_EatGoal->ChangePriority(5);
                 m_Hunger = HungerLevel::Hungry;
-                (*m_CurrentState)[PersonKeys::Hunger] = static_cast<int>(m_Hunger);
                 break;
             case HungerLevel::Hungry:
                 m_EatGoal->ChangePriority(20);
                 m_Hunger = HungerLevel::starving;
-                (*m_CurrentState)[PersonKeys::Hunger] = static_cast<int>(m_Hunger);
                 break;
             default:
                 break;
         }
+        m_MyPerson->SetState(
+                    PersonKeys::Hunger, static_cast<int>(m_Hunger));
     }
 } // SimWorld

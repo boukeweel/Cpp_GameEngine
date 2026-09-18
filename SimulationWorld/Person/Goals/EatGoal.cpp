@@ -4,8 +4,6 @@
 
 #include "EatGoal.h"
 
-#include <cmath>
-
 namespace SimWorld {
     EatGoal::EatGoal() : Goal(10)
     {

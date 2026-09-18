@@ -23,13 +23,12 @@ namespace SimWorld {
 
         void FixedUpdate() override;
 
-        PersonState* GetCurrentState() {return &m_CurrentState;}
+        //PersonState* GetCurrentState() {return &m_CurrentState;}
         template<typename T> requires std::derived_from<T, Goal>
         T* GetGoal();
 
         void SetState(PersonKeys key, int value);
     private:
-
         void InitStates();
         void InitActions();
         void InitGoals();

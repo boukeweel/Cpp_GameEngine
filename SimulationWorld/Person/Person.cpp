@@ -38,14 +38,21 @@ namespace SimWorld {
 
     void Person::SetState(PersonKeys key, int newValue)
     {
-        //const auto it = m_CurrentState.find(key);
+        const auto it = m_CurrentState.find(key);
+
+        if (it != m_CurrentState.end() &&
+            it->second == newValue)
+        {
+            return;
+        }
+
         m_CurrentState[key] = newValue;
     }
 
     void Person::InitStates()
     {
         m_CurrentState[PersonKeys::HasFood] = false;
-        m_CurrentState[PersonKeys::Hunger] = 1;
+        m_CurrentState[PersonKeys::Hunger] = 0;
     }
 
     void Person::InitActions()

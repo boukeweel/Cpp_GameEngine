@@ -10,6 +10,7 @@
 namespace SimWorld
 {
     class EatGoal;
+    class Person;
 
     enum class HungerLevel : int
     {
@@ -32,7 +33,7 @@ namespace SimWorld
         float HungerTimer{10};
         float CurrentHungerTimer{0};
         HungerLevel m_Hunger{HungerLevel::fed};
-        PersonState* m_CurrentState{nullptr};
+        Person* m_MyPerson{nullptr};
         EatGoal* m_EatGoal{nullptr};
     };
 } // SimWorld

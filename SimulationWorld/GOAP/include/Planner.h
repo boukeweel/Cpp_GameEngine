@@ -29,9 +29,8 @@ namespace SimWorld {
 
     private:
         bool IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState);
-
-        static std::pair<PersonKeys,int> PickUnsatisfiedKey(const PersonState& GoalState, const PersonState& CurrentState);
-
+        bool IsKeySatisfied(const PersonKeys& key, const int& value, const PersonState& currentState);
+        
         int m_MaxIterations{1000};
     };
 }

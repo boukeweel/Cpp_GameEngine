@@ -12,9 +12,9 @@ namespace SimWorld {
     {
     public:
         ///Get the conditions that needs to be met for this action to be able to preform
-        [[nodiscard]] virtual const PersonState& GetPreConditions() const{return m_PreConditions;}
+        [[nodiscard]] virtual const PersonState &GetPreConditions() const { return m_PreConditions; }
         ///give the state back with the states changed by this effect, needed for the planner
-        [[nodiscard]] virtual const PersonState& GetEffect() const{return m_Effects;}
+        [[nodiscard]] virtual const PersonState &GetEffect() const { return m_Effects; }
 
         virtual bool Preform() = 0;
 

@@ -29,8 +29,14 @@ namespace SimWorld {
         return true;
     }
 
+    bool Planner::IsKeySatisfied(const PersonKeys &key, const int &value, const PersonState &currentState)
+    {
+        auto it = currentState.find(key);
+        return it != currentState.end() && it->second == value;
+    }
+
     std::queue<Action*> Planner::Plan(const PersonState& currentState, Goal* goal,
-        const std::vector<std::unique_ptr<Action>>& availableActions)
+                                      const std::vector<std::unique_ptr<Action>>& availableActions)
     {
         //create priority queue to always have the lowest f cost in front.
         auto cmp = [](const node* a, const node* b) { return a->fCost > b->fCost; };
@@ -71,55 +77,56 @@ namespace SimWorld {
             }
 
             //find next condition it will try to complete
-            auto [key, value] = PickUnsatisfiedKey(current->goal, currentState);
+            for (auto& [key, value] : current->goal)
+            {
+                if (IsKeySatisfied(key, value, currentState)) continue; // skip already-satisfied keys
 
-            //go through every action to check
-            for (auto& action : availableActions) {
-                //Get the effect the action will have and check if thats something we need
-                PersonState effect = action->GetEffect();
-                auto it = effect.find(key);
-                if (it == effect.end() || it->second != value) continue;
+                for (auto& action : availableActions) {
+                    PersonState effect = action->GetEffect();
+                    auto it = effect.find(key);
+                    if (it == effect.end() || it->second != value) continue;
 
-                //create a new goal, based on the pre conditions of the action
-                PersonState nextGoal = current->goal;
-                nextGoal.erase(key);
-                for (auto& [pkey, pvalue] : action->GetPreConditions()) {
-                    nextGoal[pkey] = pvalue;
-                }
+                    // conflict check: does this action break any OTHER still-required key?
+                    bool conflicts = false;
+                    for (auto& [gKey, gValue] : current->goal) {
+                        if (gKey == key) continue;
+                        auto eIt = effect.find(gKey);
+                        if (eIt != effect.end() && eIt->second != gValue) { conflicts = true; break; }
+                    }
+                    if (conflicts) continue;
 
-                //check if there was not a better path already.
-                const int newCost = current->gCost + action->GetCost();
-                const StateSignature nextSignature = MakeStateSignature(nextGoal);
-                const auto bestNextCost = bestCosts.find(nextSignature);
+                    PersonState nextGoal = current->goal;
+                    for (auto& [eKey, eValue] : effect) {
+                        auto gIt = nextGoal.find(eKey);
+                        if (gIt != nextGoal.end() && gIt->second == eValue) nextGoal.erase(gIt);
+                    }
+                    for (auto& [pkey, pvalue] : action->GetPreConditions()) {
+                        nextGoal[pkey] = pvalue;
+                    }
 
-                if (bestNextCost != bestCosts.end() &&
+                    //check if there was not a better path already.
+                    const int newCost = current->gCost + action->GetCost();
+                    const StateSignature nextSignature = MakeStateSignature(nextGoal);
+                    const auto bestNextCost = bestCosts.find(nextSignature);
+
+                    if (bestNextCost != bestCosts.end() &&
                     bestNextCost->second <= newCost)
-                {
-                    continue;
+                    {
+                        continue;
+                    }
+
+                    //this is now the new best cost, so push it to the priority queue
+                    bestCosts[nextSignature] = newCost;
+                    const int h = static_cast<int>(nextGoal.size());
+
+                    allocatedNodes.push_back(std::make_unique<node>(
+                        nextGoal, action.get(), current, newCost, newCost + h
+                    ));
+                    open.push(allocatedNodes.back().get());
                 }
-
-                //this is now the new best cost, so push it to the priority queue
-                bestCosts[nextSignature] = newCost;
-                const int h = static_cast<int>(nextGoal.size());
-
-                allocatedNodes.push_back(std::make_unique<node>(
-                    nextGoal, action.get(), current, newCost, newCost + h
-                ));
-                open.push(allocatedNodes.back().get());
             }
         }
 
-        return {};
-    }
-
-    std::pair<PersonKeys,int> Planner::PickUnsatisfiedKey(const PersonState &GoalState, const PersonState &CurrentState)
-    {
-        for (auto& [key, value] : GoalState) {
-            auto it = CurrentState.find(key);
-            if (it == CurrentState.end() || it->second != value) {
-                return {key, value};
-            }
-        }
         return {};
     }
 }
