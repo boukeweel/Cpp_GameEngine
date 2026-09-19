@@ -129,4 +129,23 @@ namespace SimWorld {
 
         return {};
     }
+
+    Goal* Planner::GetNewGoal(const PersonState &currentState, const std::vector<std::unique_ptr<Goal>> & goals)
+    {
+        Goal* bestGoal = nullptr;
+        int bestPriority = -1; // anything <= -1 is invalid, so this is a safe starting floor
+
+        for (auto& goal : goals) {
+            if (goal->GetPriority() <= -1) continue;      // invalid goal
+            if (goal->IsReached(currentState)) continue;   // already satisfied, skip
+
+            if (goal->GetPriority() > bestPriority) {
+                bestPriority = goal->GetPriority();
+                bestGoal = goal.get();
+            }
+        }
+
+        //return nullptr if there is no valid goal
+        return bestGoal;
+    }
 }

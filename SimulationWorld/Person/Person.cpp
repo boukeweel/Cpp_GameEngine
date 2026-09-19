@@ -31,9 +31,6 @@ namespace SimWorld {
         InitStates();
         InitActions();
         InitGoals();
-
-        m_CurrentGoal = m_Goals[0].get();
-        m_CurrentPath = m_Planner->Plan(m_CurrentState,m_CurrentGoal,m_AvailableActions);
     }
 
     void Person::SetState(PersonKeys key, int newValue)
@@ -71,8 +68,20 @@ namespace SimWorld {
 
     void Person::FixedUpdate()
     {
-        if (m_CurrentPath.empty())
-            return;
+        if (m_CurrentGoal == nullptr || m_CurrentGoal->IsReached(m_CurrentState))
+        {
+            m_CurrentGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
+            if (m_CurrentGoal != nullptr)
+            {
+                m_CurrentPath = m_Planner->Plan(
+                    m_CurrentState,
+                    m_CurrentGoal,
+                    m_AvailableActions
+                    );
+            }
+        }
+
+        if (m_CurrentPath.empty()) return;
 
         Action* currentAction = m_CurrentPath.front();
         if (currentAction != nullptr && currentAction->Preform())

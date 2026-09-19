@@ -26,11 +26,12 @@ namespace SimWorld {
         Planner(int maxIterations = 1000);
 
         [[nodiscard]] std::queue<Action*> Plan(const PersonState& currentState, Goal* goal, const std::vector<std::unique_ptr<Action>>&);
+        [[nodiscard]] Goal* GetNewGoal(const PersonState& currentState, const std::vector<std::unique_ptr<Goal>>& goals);
 
     private:
         bool IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState);
         bool IsKeySatisfied(const PersonKeys& key, const int& value, const PersonState& currentState);
-        
+
         int m_MaxIterations{1000};
     };
 }
