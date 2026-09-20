@@ -21,4 +21,9 @@ namespace SimWorld {
 
         return 1;
     }
+
+    bool EatGoal::IsKeyRelated(const PersonKeys &key)
+    {
+        return m_DesiredState.contains(key);
+    }
 } // SimWorld

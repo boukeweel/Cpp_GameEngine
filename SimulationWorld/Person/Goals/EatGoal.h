@@ -15,6 +15,8 @@ namespace SimWorld {
         int DistanceTo(const PersonState &state) override;
         const PersonState &GetDesiredState() const override {return m_DesiredState;}
 
+        bool IsKeyRelated(const PersonKeys &key) override;
+
         void ChangePriority(int newPriority){m_priority = newPriority;}
 
     private:

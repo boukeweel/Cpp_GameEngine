@@ -44,6 +44,7 @@ namespace SimWorld {
         }
 
         m_CurrentState[key] = newValue;
+        ReCalculatedGoal(key);
     }
 
     void Person::InitStates()
@@ -66,6 +67,28 @@ namespace SimWorld {
         m_Goals.emplace_back(std::make_unique<EatGoal>());
     }
 
+    void Person::ReCalculatedGoal(PersonKeys key)
+    {
+        if (!m_CurrentGoal->IsKeyRelated(key))
+        {
+            Goal* newGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
+            if (newGoal != nullptr && newGoal != m_CurrentGoal)
+            {
+                m_CurrentGoal = newGoal;
+                ReCalculatedPath();
+            }
+        }
+    }
+
+    void Person::ReCalculatedPath()
+    {
+        m_CurrentPath = m_Planner->Plan(
+                    m_CurrentState,
+                    m_CurrentGoal,
+                    m_AvailableActions
+                    );
+    }
+
     void Person::FixedUpdate()
     {
         if (m_CurrentGoal == nullptr || m_CurrentGoal->IsReached(m_CurrentState))
@@ -73,11 +96,7 @@ namespace SimWorld {
             m_CurrentGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
             if (m_CurrentGoal != nullptr)
             {
-                m_CurrentPath = m_Planner->Plan(
-                    m_CurrentState,
-                    m_CurrentGoal,
-                    m_AvailableActions
-                    );
+                ReCalculatedPath();
             }
         }
 

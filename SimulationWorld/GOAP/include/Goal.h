@@ -16,6 +16,8 @@ namespace SimWorld {
             return DistanceTo(state) == 0;
         }
 
+        virtual bool IsKeyRelated(const PersonKeys& key) = 0;
+
         [[nodiscard]] virtual const PersonState& GetDesiredState() const = 0;
 
         [[nodiscard]] virtual int GetPriority() const {return m_priority;}
