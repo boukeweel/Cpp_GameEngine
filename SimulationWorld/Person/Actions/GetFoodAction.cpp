@@ -7,20 +7,22 @@
 #include <iostream>
 #include <ostream>
 
+#include "Person.h"
+
 namespace SimWorld
 {
-    GetFoodAction::GetFoodAction(GameEngine::Event<PersonKeys,int>* changeStateEvent)
+    GetFoodAction::GetFoodAction(Person* person)
     {
-        m_ChangeStateEvent = changeStateEvent;
+        m_Person = person;
         m_Effects[PersonKeys::HasFood] = true;
     }
 
     bool GetFoodAction::Preform()
     {
-        if (m_ChangeStateEvent == nullptr)
+        if (m_Person == nullptr)
             return false;
 
-        m_ChangeStateEvent->Invoke(PersonKeys::HasFood, true);
+        m_Person->SetState(PersonKeys::HasFood, true);
         std::cout << "Got food" << std::endl;
         return true;
     }

@@ -41,8 +41,6 @@ namespace SimWorld {
         ///Plans the path again, and changes the actions based on the result.
         void ReCalculatedPath();
 
-        GameEngine::Event<PersonKeys, int> m_ChangeStateEvent;
-
         std::unique_ptr<Planner> m_Planner{};
         PersonState m_CurrentState{};
 

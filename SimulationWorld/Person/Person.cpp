@@ -19,11 +19,6 @@ namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
     {
         m_Planner = std::make_unique<Planner>();
-        m_ChangeStateEvent.Subscribe([this](PersonKeys key, int value)
-        {
-            SetState(key, value);
-        }
-);
     }
 
     void Person::Begin()
@@ -57,9 +52,9 @@ namespace SimWorld {
     {
         m_AvailableActions.emplace_back(
             std::make_unique<EatAction>
-                (m_Owner->GetComponent<HungerComponent>(),&m_ChangeStateEvent));
+                (m_Owner->GetComponent<HungerComponent>(),this));
         m_AvailableActions.emplace_back(
-            std::make_unique<GetFoodAction>(&m_ChangeStateEvent));
+            std::make_unique<GetFoodAction>(this));
     }
 
     void Person::InitGoals()
@@ -69,7 +64,7 @@ namespace SimWorld {
 
     void Person::ReCalculatedGoal(PersonKeys key)
     {
-        if (!m_CurrentGoal->IsKeyRelated(key))
+        if (m_CurrentGoal == nullptr || !m_CurrentGoal->IsKeyRelated(key))
         {
             Goal* newGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
             if (newGoal != nullptr && newGoal != m_CurrentGoal)

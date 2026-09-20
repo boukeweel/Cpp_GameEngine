@@ -9,12 +9,16 @@
 
 namespace SimWorld
 {
+    class Person;
+
     class GetFoodAction : public Action
     {
     public:
-        GetFoodAction(GameEngine::Event<PersonKeys,int>* changeStateEvent);
+        GetFoodAction(Person* person);
 
         bool Preform() override;
+        private:
+        Person* m_Person;
     };
 } // SimWorld
 
