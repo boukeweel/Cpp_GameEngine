@@ -14,11 +14,15 @@
 #include "GameObject.h"
 #include "Actions/GetFoodAction.h"
 #include "HungerComponent.h"
+#include "Inventory.h"
+#include "Wallet.h"
 
 namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
     {
         m_Planner = std::make_unique<Planner>();
+        m_Wallet = std::make_unique<Wallet>(*this,100);
+        m_Inventory = std::make_unique<Inventory>();
     }
 
     void Person::Begin()
@@ -77,11 +81,14 @@ namespace SimWorld {
 
     void Person::ReCalculatedPath()
     {
-        m_CurrentPath = m_Planner->Plan(
-                    m_CurrentState,
-                    m_CurrentGoal,
-                    m_AvailableActions
-                    );
+        if (m_CurrentGoal != nullptr)
+        {
+            m_CurrentPath = m_Planner->Plan(
+                                m_CurrentState,
+                                m_CurrentGoal,
+                                m_AvailableActions
+                                );
+        }
     }
 
     void Person::FixedUpdate()
@@ -89,10 +96,7 @@ namespace SimWorld {
         if (m_CurrentGoal == nullptr || m_CurrentGoal->IsReached(m_CurrentState))
         {
             m_CurrentGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
-            if (m_CurrentGoal != nullptr)
-            {
-                ReCalculatedPath();
-            }
+            ReCalculatedPath();
         }
 
         if (m_CurrentPath.empty()) return;

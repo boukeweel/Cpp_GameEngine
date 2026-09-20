@@ -12,6 +12,8 @@
 #include "States.h"
 
 namespace SimWorld {
+    class Inventory;
+    class Wallet;
     class Planner;
     class Goal;
     class Action;
@@ -27,8 +29,15 @@ namespace SimWorld {
         template<typename T> requires std::derived_from<T, Goal>
         T* GetGoal();
 
+        Wallet& GetWallet() const {return *m_Wallet;}
+        Inventory& GetInventory() const {return *m_Inventory;}
+
         void SetState(PersonKeys key, int value);
     private:
+        std::unique_ptr<Wallet> m_Wallet{};
+        std::unique_ptr<Inventory> m_Inventory{};
+
+        //GOAP ------------------------------------------------------
         void InitStates();
         void InitActions();
         void InitGoals();
@@ -49,6 +58,7 @@ namespace SimWorld {
 
         std::vector<std::unique_ptr<Goal>> m_Goals{};
         Goal* m_CurrentGoal{nullptr};
+        //end GOAP related -----------------------------------------
     public:
         ~Person() override;
     };
