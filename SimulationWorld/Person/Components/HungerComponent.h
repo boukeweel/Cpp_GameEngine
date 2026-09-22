@@ -5,7 +5,7 @@
 #ifndef GAMEENGINE_HUNGERCOMPONENT_H
 #define GAMEENGINE_HUNGERCOMPONENT_H
 #include "Component.h"
-#include "States.h"
+#include "../../GOAP/States.h"
 
 namespace SimWorld
 {

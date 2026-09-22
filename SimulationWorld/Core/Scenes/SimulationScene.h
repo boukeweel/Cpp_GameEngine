@@ -2,8 +2,8 @@
 // Created by boeken on 9/12/26.
 //
 
-#ifndef SimWorld_SIMULATIONSCENE_H
-#define SimWorld_SIMULATIONSCENE_H
+#ifndef SIMWORLD_SIMULATIONSCENE_H
+#define SIMWORLD_SIMULATIONSCENE_H
 #include "IBaseScene.h"
 
 namespace SimWorld {
@@ -15,4 +15,4 @@ namespace SimWorld {
 
 
 
-#endif //GAMEENGINE_SIMULATIONSCENE_H
+#endif //SIMWORLD_SIMULATIONSCENE_H

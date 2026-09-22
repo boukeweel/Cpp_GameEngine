@@ -6,12 +6,14 @@
 
 #include <cassert>
 
+#include "WorldData.h"
+
 namespace SimWorld
 {
     FoodStore::FoodStore(GameEngine::GameObject* owner,int pricePerFood) : Component(owner),
         m_pricePerFood(pricePerFood)
     {
-
+        WorldData::GetInstance().AddFoodStore(this);
     }
 
     bool FoodStore::Buy(Wallet& buyerWallet, Inventory& buyerInventory, int amount)

@@ -4,7 +4,7 @@
 
 #ifndef GAMEENGINE_EATGOAL_H
 #define GAMEENGINE_EATGOAL_H
-#include "Goal.h"
+#include "../../GOAP/Goal.h"
 
 namespace SimWorld {
     class EatGoal : public Goal

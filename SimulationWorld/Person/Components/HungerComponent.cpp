@@ -11,7 +11,7 @@
 #include "Person.h"
 #include "EatGoal.h"
 #include "EngineTime.h"
-#include "States.h"
+#include "../../GOAP/States.h"
 
 namespace SimWorld
 {

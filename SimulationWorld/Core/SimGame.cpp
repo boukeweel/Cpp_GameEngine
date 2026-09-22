@@ -4,7 +4,7 @@
 #include "SimGame.h"
 #include "InputHandler.h"
 #include <memory>
-#include "SimulationScene.h"
+#include "Scenes/SimulationScene.h"
 
 namespace SimWorld {
 

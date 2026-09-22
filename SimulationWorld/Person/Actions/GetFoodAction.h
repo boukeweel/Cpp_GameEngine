@@ -4,7 +4,7 @@
 
 #ifndef GAMEENGINE_GETFOODACTION_H
 #define GAMEENGINE_GETFOODACTION_H
-#include "Action.h"
+#include "../../GOAP/Action.h"
 #include "Event.h"
 
 namespace SimWorld

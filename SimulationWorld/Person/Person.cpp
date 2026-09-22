@@ -7,10 +7,10 @@
 #include <iostream>
 #include <ostream>
 
-#include "Planner.h"
+#include "../GOAP/Planner.h"
 #include "Actions/EatAction.h"
 #include "Goals/EatGoal.h"
-#include "Action.h"
+#include "../GOAP/Action.h"
 #include "GameObject.h"
 #include "Actions/GetFoodAction.h"
 #include "HungerComponent.h"

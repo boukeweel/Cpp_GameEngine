@@ -1,6 +1,7 @@
 file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
-        Core/src/*.cpp
-        GOAP/src/*.cpp
+        Core/*.cpp
+        Core/Scenes/*.cpp
+        GOAP/*.cpp
         Person/*.cpp
         Person/Goals/*.cpp
         Person/Actions/*.cpp
@@ -12,8 +13,8 @@ file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
 add_executable(SimulationWorld ${GAME_SOURCES})
 
 target_include_directories(SimulationWorld PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Core/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/GOAP/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/Core
+        ${CMAKE_CURRENT_SOURCE_DIR}/GOAP
         ${CMAKE_CURRENT_SOURCE_DIR}/Person
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Goals
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Actions

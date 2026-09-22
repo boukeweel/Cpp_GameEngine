@@ -5,7 +5,7 @@ Goal of this simulation, is to attempt to find out if its possible to create a s
 ## what the simulation should do.
 
 ### simulated a person
-A person will be what I will call a single Agent. 
+A person will be what I will call a single Agent.
 
 #### Goals
 Goals will have a priority in what the most inportant goal is going from higher

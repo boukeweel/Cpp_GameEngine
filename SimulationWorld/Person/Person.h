@@ -9,7 +9,7 @@
 #include <vector>
 #include "Component.h"
 #include "Event.h"
-#include "States.h"
+#include "../GOAP/States.h"
 
 namespace SimWorld {
     class Inventory;
