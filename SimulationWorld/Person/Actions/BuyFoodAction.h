@@ -11,10 +11,10 @@ namespace SimWorld
 {
     class Person;
 
-    class GetFoodAction : public Action
+    class BuyFoodAction : public Action
     {
     public:
-        GetFoodAction(Person* person);
+        BuyFoodAction(Person* person);
 
         bool Preform() override;
         private:

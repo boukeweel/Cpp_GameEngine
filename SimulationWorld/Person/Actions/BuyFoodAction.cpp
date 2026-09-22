@@ -2,7 +2,7 @@
 // Created by boeken-work on 9/15/26.
 //
 
-#include "GetFoodAction.h"
+#include "BuyFoodAction.h"
 
 #include <iostream>
 #include <ostream>
@@ -11,13 +11,13 @@
 
 namespace SimWorld
 {
-    GetFoodAction::GetFoodAction(Person* person)
+    BuyFoodAction::BuyFoodAction(Person* person)
     {
         m_Person = person;
         m_Effects[PersonKeys::HasFood] = true;
     }
 
-    bool GetFoodAction::Preform()
+    bool BuyFoodAction::Preform()
     {
         if (m_Person == nullptr)
             return false;

@@ -12,7 +12,7 @@
 #include "Goals/EatGoal.h"
 #include "../GOAP/Action.h"
 #include "GameObject.h"
-#include "Actions/GetFoodAction.h"
+#include "Actions/BuyFoodAction.h"
 #include "HungerComponent.h"
 #include "Inventory.h"
 #include "Wallet.h"
@@ -58,7 +58,7 @@ namespace SimWorld {
             std::make_unique<EatAction>
                 (m_Owner->GetComponent<HungerComponent>(),this));
         m_AvailableActions.emplace_back(
-            std::make_unique<GetFoodAction>(this));
+            std::make_unique<BuyFoodAction>(this));
     }
 
     void Person::InitGoals()
