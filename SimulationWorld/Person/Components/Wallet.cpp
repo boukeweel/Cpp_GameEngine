@@ -18,12 +18,12 @@ namespace SimWorld
         : m_owner(person)
         , m_balance(startingBalance)
     {
-        assert(startingBalance >= 0 && "Wallet cannot start with a negative balance");
+
     }
 
     bool Wallet::Withdraw(int amount)
     {
-        assert(amount >= 0 && "Cannot withdraw a negative amount");
+        if (amount <= 0) return false;;
 
         if (!CanAfford(amount))
         {
@@ -36,7 +36,7 @@ namespace SimWorld
 
     void Wallet::Deposit(int amount)
     {
-        assert(amount >= 0 && "Cannot deposit a negative amount");
+        if (amount <= 0) return;
         m_balance += amount;
     }
 

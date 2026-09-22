@@ -15,7 +15,7 @@ namespace SimWorld
 
     bool Inventory::Remove(ItemType type, int amount)
     {
-        assert(amount >= 0 && "Cannot remove a negative amount");
+        if (amount <= 0) return false;
 
         if (!Has(type, amount))
         {
@@ -28,7 +28,7 @@ namespace SimWorld
 
     void Inventory::Add(ItemType type, int amount)
     {
-        assert(amount >= 0 && "Cannot add a negative amount");
+        if (amount <= 0) return;
         m_items[type] += amount;
     }
 

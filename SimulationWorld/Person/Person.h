@@ -18,6 +18,8 @@ namespace SimWorld {
     class Goal;
     class Action;
 
+    //todo I should prop make this a GOAP agent and Person class.
+    //split them up, but for now I am going to keep it simple till I got enough working that I deem it needed
     class Person : public GameEngine::Component {
     public:
         Person(GameEngine::GameObject* owner);

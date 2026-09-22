@@ -5,6 +5,8 @@ file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
         Person/Goals/*.cpp
         Person/Actions/*.cpp
         Person/Components/*.cpp
+        Items/Food/*.cpp
+        Objects/*.cpp
     )
 
 add_executable(SimulationWorld ${GAME_SOURCES})
@@ -16,6 +18,9 @@ target_include_directories(SimulationWorld PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Goals
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Actions
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Components
+        ${CMAKE_CURRENT_SOURCE_DIR}/Items/Food
+        ${CMAKE_CURRENT_SOURCE_DIR}/Objects
+
     )
 
 target_link_libraries(SimulationWorld PRIVATE
