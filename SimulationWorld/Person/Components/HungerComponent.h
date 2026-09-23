@@ -9,6 +9,7 @@
 
 namespace SimWorld
 {
+    class GOAPAgentComponent;
     class EatGoal;
     class Person;
 
@@ -33,7 +34,7 @@ namespace SimWorld
         float HungerTimer{10};
         float CurrentHungerTimer{0};
         HungerLevel m_Hunger{HungerLevel::fed};
-        Person* m_MyPerson{nullptr};
+        GOAPAgentComponent* m_GoapAgent{nullptr};
         EatGoal* m_EatGoal{nullptr};
     };
 } // SimWorld

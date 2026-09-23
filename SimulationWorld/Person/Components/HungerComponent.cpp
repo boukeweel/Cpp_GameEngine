@@ -11,6 +11,7 @@
 #include "Person.h"
 #include "EatGoal.h"
 #include "EngineTime.h"
+#include "GOAPAgentComponent.h"
 #include "../../GOAP/States.h"
 
 namespace SimWorld
@@ -22,10 +23,10 @@ namespace SimWorld
 
     void HungerComponent::Begin()
     {
-        m_MyPerson = m_Owner->GetComponent<Person>();
-        if (m_MyPerson != nullptr)
+        m_GoapAgent = m_Owner->GetComponent<Person>()->GetGOAPAgentComponent();
+        if (m_GoapAgent != nullptr)
         {
-            m_EatGoal = m_MyPerson->GetGoal<EatGoal>();
+            m_EatGoal = m_GoapAgent->GetGoal<EatGoal>();
         }
     }
 
@@ -61,7 +62,7 @@ namespace SimWorld
             default:
                 break;
         }
-        m_MyPerson->SetState(
+        m_GoapAgent->SetState(
                     PersonKeys::Hunger, static_cast<int>(m_Hunger));
     }
 } // SimWorld

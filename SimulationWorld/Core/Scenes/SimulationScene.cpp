@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
+#include "GOAPAgentComponent.h"
 
 
 namespace SimWorld {
@@ -32,6 +33,7 @@ namespace SimWorld {
     {
         auto person = std::make_unique<GameEngine::GameObject>();
         person->AddComponent<HungerComponent>();
+        person->AddComponent<GOAPAgentComponent>();
         person->AddComponent<Person>();
         person->AddComponent<GameEngine::SpriteRenderer>("/Sprites/Person.png");
 

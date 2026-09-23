@@ -7,22 +7,23 @@
 #include <iostream>
 #include <ostream>
 
+#include "GOAPAgentComponent.h"
 #include "Person.h"
 
 namespace SimWorld
 {
-    BuyFoodAction::BuyFoodAction(Person* person)
+    BuyFoodAction::BuyFoodAction(GOAPAgentComponent* agent)
     {
-        m_Person = person;
+        m_GoapAgent = agent;
         m_Effects[PersonKeys::HasFood] = true;
     }
 
     bool BuyFoodAction::Preform()
     {
-        if (m_Person == nullptr)
+        if (m_GoapAgent == nullptr)
             return false;
 
-        m_Person->SetState(PersonKeys::HasFood, true);
+        m_GoapAgent->SetState(PersonKeys::HasFood, true);
         std::cout << "Got food" << std::endl;
         return true;
     }

@@ -19,8 +19,8 @@ namespace SimWorld {
         virtual bool Preform() = 0;
 
         [[nodiscard]] int GetCost() const {return m_Cost;}
-
-
+        
+        virtual bool IsInRange() const {return true;}
     protected:
         int m_Cost{0};
 

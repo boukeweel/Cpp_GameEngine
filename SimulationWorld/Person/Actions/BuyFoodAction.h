@@ -9,16 +9,16 @@
 
 namespace SimWorld
 {
-    class Person;
+    class GOAPAgentComponent;
 
     class BuyFoodAction : public Action
     {
     public:
-        BuyFoodAction(Person* person);
+        BuyFoodAction(GOAPAgentComponent* agent);
 
         bool Preform() override;
         private:
-        Person* m_Person;
+        GOAPAgentComponent* m_GoapAgent;
     };
 } // SimWorld
 
