@@ -6,10 +6,13 @@
 
 #include <cassert>
 
+#include "GOAPAgentComponent.h"
+#include "Person.h"
+
 namespace SimWorld
 {
-    Inventory::Inventory()
-        : m_items()
+    Inventory::Inventory(Person* person)
+        : m_items(), m_Person(person)
     {
     }
 
@@ -21,8 +24,14 @@ namespace SimWorld
         {
             return false;
         }
-
         m_items[type] -= amount;
+
+        //todo Should be done better, now its hard for food but it should set the correct state later on
+        if (type == ItemType::Food && m_items[type] <= 0)
+        {
+            m_Person->GetGOAPAgentComponent()->SetState(PersonKeys::HasFood,false);
+        }
+
         return true;
     }
 
@@ -30,6 +39,7 @@ namespace SimWorld
     {
         if (amount <= 0) return;
         m_items[type] += amount;
+        m_Person->GetGOAPAgentComponent()->SetState(PersonKeys::HasFood,true);
     }
 
     bool Inventory::Transfer(Inventory& other, ItemType type, int amount)

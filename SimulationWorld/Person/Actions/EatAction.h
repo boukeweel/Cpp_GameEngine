@@ -9,6 +9,7 @@
 
 namespace SimWorld
 {
+    class Person;
     class GOAPAgentComponent;
 
     class HungerComponent;
@@ -16,12 +17,12 @@ namespace SimWorld
     class EatAction : public Action
     {
     public:
-        EatAction(HungerComponent* hc,GOAPAgentComponent* agent);
+        EatAction(HungerComponent* hc,Person* agent);
 
         bool Preform() override;
     private:
         HungerComponent* m_HungerComp;
-        GOAPAgentComponent* m_GoapAgent;
+        Person* m_Person;
     };
 } // SimWorld
 

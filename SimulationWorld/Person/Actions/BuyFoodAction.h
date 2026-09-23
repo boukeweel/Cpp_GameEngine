@@ -4,21 +4,21 @@
 
 #ifndef GAMEENGINE_GETFOODACTION_H
 #define GAMEENGINE_GETFOODACTION_H
-#include "../../GOAP/Action.h"
-#include "Event.h"
+#include "Action.h"
 
 namespace SimWorld
 {
+    class Person;
     class GOAPAgentComponent;
 
     class BuyFoodAction : public Action
     {
     public:
-        BuyFoodAction(GOAPAgentComponent* agent);
+        BuyFoodAction(Person* agent);
 
         bool Preform() override;
-        private:
-        GOAPAgentComponent* m_GoapAgent;
+    private:
+        Person* m_Person{nullptr};
     };
 } // SimWorld
 

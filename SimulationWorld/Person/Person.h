@@ -5,11 +5,7 @@
 #ifndef GAMEENGINE_PERSON_H
 #define GAMEENGINE_PERSON_H
 #include <memory>
-#include <queue>
-#include <vector>
 #include "Component.h"
-#include "Event.h"
-#include "../GOAP/States.h"
 
 namespace SimWorld {
     class GOAPAgentComponent;

@@ -8,13 +8,13 @@
 
 namespace SimWorld
 {
-    Wallet::Wallet(Person& person)
+    Wallet::Wallet(Person* person)
         : m_owner(person)
         , m_balance(0)
     {
     }
 
-    Wallet::Wallet(Person& person, int startingBalance)
+    Wallet::Wallet(Person* person, int startingBalance)
         : m_owner(person)
         , m_balance(startingBalance)
     {
@@ -59,10 +59,5 @@ namespace SimWorld
     int Wallet::GetBalance() const
     {
         return m_balance;
-    }
-
-    Person& Wallet::GetOwner() const
-    {
-        return m_owner;
     }
 } // SimWorld

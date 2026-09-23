@@ -5,6 +5,8 @@
 #include "FoodStore.h"
 
 #include <cassert>
+#include <iostream>
+#include <ostream>
 
 #include "WorldData.h"
 
@@ -28,6 +30,7 @@ namespace SimWorld
         }
 
         buyerInventory.Add(ItemType::Food, amount);
+        std::cout << "Bought food" << std::endl;
         return true;
     }
 

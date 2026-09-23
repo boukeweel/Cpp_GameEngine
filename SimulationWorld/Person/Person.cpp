@@ -17,8 +17,8 @@ namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
     {
 
-        m_Wallet = std::make_unique<Wallet>(*this,100);
-        m_Inventory = std::make_unique<Inventory>();
+        m_Wallet = std::make_unique<Wallet>(this,100);
+        m_Inventory = std::make_unique<Inventory>(this);
     }
 
     void Person::Begin()
@@ -33,10 +33,10 @@ namespace SimWorld {
     }
     void Person::InitActions()
     {
-        m_AgentComponent->AddAction(std::make_unique<BuyFoodAction>(m_AgentComponent));
+        m_AgentComponent->AddAction(std::make_unique<BuyFoodAction>(this));
         HungerComponent* hunger = m_Owner->GetComponent<HungerComponent>();
         if (hunger != nullptr)
-            m_AgentComponent->AddAction(std::make_unique<EatAction>(hunger,m_AgentComponent));
+            m_AgentComponent->AddAction(std::make_unique<EatAction>(hunger,this));
     }
 
     void Person::InitGoals()

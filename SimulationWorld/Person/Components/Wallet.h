@@ -13,8 +13,8 @@ namespace SimWorld
     class Wallet
     {
     public:
-        Wallet(Person& person);
-        Wallet(Person& person, int startingBalance);
+        Wallet(Person* person);
+        Wallet(Person* person, int startingBalance);
 
         bool Withdraw(int amount);
         void Deposit(int amount);
@@ -23,10 +23,9 @@ namespace SimWorld
         bool CanAfford(int amount) const;
 
         int GetBalance() const;
-        Person& GetOwner() const;
 
     private:
-        Person& m_owner;
+        Person* m_owner;
         int m_balance;
     };
 } // SimWorld

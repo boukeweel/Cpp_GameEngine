@@ -7,6 +7,8 @@
 
 #include <unordered_map>
 
+#include "Person.h"
+
 namespace SimWorld
 {
     enum class ItemType
@@ -18,7 +20,7 @@ namespace SimWorld
     class Inventory
     {
     public:
-        Inventory();
+        Inventory(Person* person);
 
         bool Remove(ItemType type, int amount);
         void Add(ItemType type, int amount);
@@ -29,6 +31,7 @@ namespace SimWorld
 
     private:
         std::unordered_map<ItemType, int> m_items;
+        Person* m_Person;
     };
 } // SimWorld
 
