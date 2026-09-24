@@ -8,7 +8,7 @@
 #include <queue>
 
 #include "Component.h"
-#include "States.h"
+#include "PersonalState.h"
 
 namespace SimWorld
 {
@@ -29,10 +29,10 @@ namespace SimWorld
 
         void AddAction(std::unique_ptr<Action> action);
         void AddGoal(std::unique_ptr<Goal> goal);
-        void AddState(PersonKeys, int value);
+        void AddState(PersonalKey, int value);
 
-        void SetState(PersonKeys key, int value);
-        const PersonState& GetState() const{return m_CurrentState;}
+        void SetState(PersonalKey key, int value);
+        const PersonalState& GetState() const{return m_PersonalState;}
 
         ~GOAPAgentComponent() override;
     private:
@@ -47,7 +47,7 @@ namespace SimWorld
 
         std::unique_ptr<Planner> m_Planner{};
         //I am not sure if I should make the agent or the person hold the state but for now this is oke enough
-        PersonState m_CurrentState{};
+        PersonalState m_PersonalState{};
 
         std::vector<std::unique_ptr<Action>> m_AvailableActions{};
         std::queue<Action*> m_CurrentPath{};

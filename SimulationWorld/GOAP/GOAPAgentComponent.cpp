@@ -9,6 +9,7 @@
 #include <ostream>
 
 #include "Planner.h"
+#include "WorldData.h"
 
 namespace SimWorld
 {
@@ -32,16 +33,17 @@ namespace SimWorld
         m_Goals.emplace_back(std::move(goal));
     }
 
-    void GOAPAgentComponent::AddState(PersonKeys key, int value)
+    void GOAPAgentComponent::AddState(PersonalKey key, int value)
     {
-        m_CurrentState[key] = value;
+        m_PersonalState.Set(key, value);
     }
 
     void GOAPAgentComponent::FixedUpdate()
     {
-        if (m_CurrentGoal == nullptr || m_CurrentGoal->IsReached(m_CurrentState))
+        const WorldState& worldState = WorldData::GetInstance().GetWorldState();
+        if (m_CurrentGoal == nullptr || m_CurrentGoal->IsReached(m_PersonalState, worldState))
         {
-            m_CurrentGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
+            m_CurrentGoal = m_Planner->GetNewGoal(m_PersonalState, worldState, m_Goals);
             ReCalculatedPath();
         }
 
@@ -71,18 +73,15 @@ namespace SimWorld
         }
     }
 
-    void GOAPAgentComponent::SetState(PersonKeys key, int newValue)
+    void GOAPAgentComponent::SetState(PersonalKey key, int newValue)
     {
-        const auto it = m_CurrentState.find(key);
-
-        if (it != m_CurrentState.end() &&
-            it->second == newValue)
+        if (m_PersonalState.Has(key) && m_PersonalState.Get(key) == newValue)
         {
             return;
         }
 
-        m_CurrentState[key] = newValue;
-        if (!m_CurrentGoal->IsKeyRelated(key))
+        m_PersonalState.Set(key, newValue);
+        if (m_CurrentGoal == nullptr || !m_CurrentGoal->IsPersonalKeyRelated(key))
             ReCalculatedGoal();
     }
 
@@ -90,8 +89,9 @@ namespace SimWorld
 
     void GOAPAgentComponent::ReCalculatedGoal()
     {
-        Goal* newGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
-        if (newGoal != nullptr && newGoal != m_CurrentGoal)
+        const WorldState& worldState = WorldData::GetInstance().GetWorldState();
+        Goal* newGoal = m_Planner->GetNewGoal(m_PersonalState, worldState, m_Goals);
+        if (newGoal != m_CurrentGoal)
         {
             m_CurrentGoal = newGoal;
             ReCalculatedPath();
@@ -103,7 +103,8 @@ namespace SimWorld
         if (m_CurrentGoal != nullptr)
         {
             m_CurrentPath = m_Planner->Plan(
-                m_CurrentState,
+                m_PersonalState,
+                WorldData::GetInstance().GetWorldState(),
                 m_CurrentGoal,
                 m_AvailableActions
             );

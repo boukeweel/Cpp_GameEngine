@@ -8,34 +8,40 @@
 
 namespace SimWorld {
     namespace {
-        using StateSignature = std::map<PersonKeys, int>;
+        using StateSignature = std::map<PersonalKey, int>;
 
         //make from unordered map a map
-        StateSignature MakeStateSignature(const PersonState& state)
+        StateSignature MakeStateSignature(const PersonalState& state)
         {
-            return {state.begin(), state.end()};
+            return {state.Values().begin(), state.Values().end()};
         }
     }
 
     Planner::Planner(int maxIterations) : m_MaxIterations(maxIterations) {
     }
 
-    bool Planner::IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState)
+    bool Planner::IsSatisfied(const PersonalState& requiredState, const PersonalState& currentState)
     {
-        for (auto& [key, value] : GoalState) {
-            auto it = CurrentState.find(key);
-            if (it == CurrentState.end() || it->second != value) return false;
+        for (const auto& [key, value] : requiredState.Values()) {
+            if (!currentState.Has(key) || currentState.Get(key) != value) return false;
         }
         return true;
     }
 
-    bool Planner::IsKeySatisfied(const PersonKeys &key, const int &value, const PersonState &currentState)
+    bool Planner::IsWorldSatisfied(const WorldState& requiredState, const WorldState& currentState)
     {
-        auto it = currentState.find(key);
-        return it != currentState.end() && it->second == value;
+        for (const auto& [key, value] : requiredState.Values()) {
+            if (!currentState.Has(key) || currentState.Get(key) != value) return false;
+        }
+        return true;
     }
 
-    std::queue<Action*> Planner::Plan(const PersonState& currentState, Goal* goal,
+    bool Planner::IsKeySatisfied(PersonalKey key, int value, const PersonalState &currentState)
+    {
+        return currentState.Has(key) && currentState.Get(key) == value;
+    }
+
+    std::queue<Action*> Planner::Plan(const PersonalState& personalState, const WorldState& worldState, Goal* goal,
                                       const std::vector<std::unique_ptr<Action>>& availableActions)
     {
         //create priority queue to always have the lowest f cost in front.
@@ -45,11 +51,12 @@ namespace SimWorld {
         std::vector<std::unique_ptr<node>> allocatedNodes;
         std::map<StateSignature, int> bestCosts;
 
-        PersonState goalState = goal->GetDesiredState();
+        PersonalState goalState = goal->GetDesiredPersonalState();
+        const WorldState& requiredWorldState = goal->GetDesiredWorldState();
 
         //create the initial node
         allocatedNodes.push_back(std::make_unique<node>(
-            goalState, nullptr, nullptr, 0, static_cast<int>(goalState.size())
+            goalState, requiredWorldState, nullptr, nullptr, 0, static_cast<int>(goalState.Values().size())
         ));
         open.push(allocatedNodes.back().get());
         bestCosts.emplace(MakeStateSignature(goalState), 0);
@@ -61,13 +68,14 @@ namespace SimWorld {
             node* current = open.top();
             open.pop();
 
-            const StateSignature currentSignature = MakeStateSignature(current->goal);
+            const StateSignature currentSignature = MakeStateSignature(current->requiredPersonalState);
             const auto bestCost = bestCosts.find(currentSignature);
             if (bestCost != bestCosts.end() && current->gCost > bestCost->second)
                 continue;
 
             //check if the goal is reached
-            if (IsSatisfied(current->goal, currentState)) {
+            if (IsSatisfied(current->requiredPersonalState, personalState) &&
+                IsWorldSatisfied(current->requiredWorldState, worldState)) {
                 //created a queue, and push all actions on there
                 std::queue<Action*> path;
                 for (node* n = current; n->parent != nullptr; n = n->parent) {
@@ -77,31 +85,36 @@ namespace SimWorld {
             }
 
             //find next condition it will try to complete
-            for (auto& [key, value] : current->goal)
+            for (const auto& [key, value] : current->requiredPersonalState.Values())
             {
-                if (IsKeySatisfied(key, value, currentState)) continue; // skip already-satisfied keys
+                if (IsKeySatisfied(key, value, personalState)) continue; // skip already-satisfied keys
 
                 for (auto& action : availableActions) {
-                    PersonState effect = action->GetEffect();
-                    auto it = effect.find(key);
-                    if (it == effect.end() || it->second != value) continue;
+                    if (!IsWorldSatisfied(action->GetWorldPreconditions(), worldState))
+                    {
+                        continue;
+                    }
+
+                    const auto& effect = action->GetPersonalEffects();
+                    if (!effect.Has(key) || effect.Get(key) != value) continue;
 
                     // conflict check: does this action break any OTHER still-required key?
                     bool conflicts = false;
-                    for (auto& [gKey, gValue] : current->goal) {
+                    for (const auto& [gKey, gValue] : current->requiredPersonalState.Values()) {
                         if (gKey == key) continue;
-                        auto eIt = effect.find(gKey);
-                        if (eIt != effect.end() && eIt->second != gValue) { conflicts = true; break; }
+                        if (effect.Has(gKey) && effect.Get(gKey) != gValue) { conflicts = true; break; }
                     }
                     if (conflicts) continue;
 
-                    PersonState nextGoal = current->goal;
-                    for (auto& [eKey, eValue] : effect) {
-                        auto gIt = nextGoal.find(eKey);
-                        if (gIt != nextGoal.end() && gIt->second == eValue) nextGoal.erase(gIt);
+                    PersonalState nextGoal = current->requiredPersonalState;
+                    for (const auto& [eKey, eValue] : effect.Values()) {
+                        if (nextGoal.Has(eKey) && nextGoal.Get(eKey) == eValue)
+                        {
+                            nextGoal.Erase(eKey);
+                        }
                     }
-                    for (auto& [pkey, pvalue] : action->GetPreConditions()) {
-                        nextGoal[pkey] = pvalue;
+                    for (const auto& [pkey, pvalue] : action->GetPersonalPreconditions().Values()) {
+                        nextGoal.Set(pkey, pvalue);
                     }
 
                     //check if there was not a better path already.
@@ -117,10 +130,10 @@ namespace SimWorld {
 
                     //this is now the new best cost, so push it to the priority queue
                     bestCosts[nextSignature] = newCost;
-                    const int h = static_cast<int>(nextGoal.size());
+                    const int h = static_cast<int>(nextGoal.Values().size());
 
                     allocatedNodes.push_back(std::make_unique<node>(
-                        nextGoal, action.get(), current, newCost, newCost + h
+                        nextGoal, current->requiredWorldState, action.get(), current, newCost, newCost + h
                     ));
                     open.push(allocatedNodes.back().get());
                 }
@@ -130,14 +143,15 @@ namespace SimWorld {
         return {};
     }
 
-    Goal* Planner::GetNewGoal(const PersonState &currentState, const std::vector<std::unique_ptr<Goal>> & goals)
+    Goal* Planner::GetNewGoal(const PersonalState& personalState, const WorldState& worldState,
+                              const std::vector<std::unique_ptr<Goal>>& goals)
     {
         Goal* bestGoal = nullptr;
         int bestPriority = -1; // anything <= -1 is invalid, so this is a safe starting floor
 
         for (auto& goal : goals) {
             if (goal->GetPriority() <= -1) continue;      // invalid goal
-            if (goal->IsReached(currentState)) continue;   // already satisfied, skip
+            if (goal->IsReached(personalState, worldState)) continue;   // already satisfied, skip
 
             if (goal->GetPriority() > bestPriority) {
                 bestPriority = goal->GetPriority();

@@ -46,8 +46,9 @@ namespace SimWorld {
 
     void Person::InitStates()
     {
-        m_AgentComponent->AddState(PersonKeys::HasFood, false);
-        m_AgentComponent->AddState(PersonKeys::Hunger, 0);
+        m_AgentComponent->AddState(PersonalKey::FoodQuantity, m_Inventory->GetQuantity(ItemType::Food));
+        m_AgentComponent->AddState(PersonalKey::Money, m_Wallet->GetBalance());
+        m_AgentComponent->AddState(PersonalKey::Hunger, 0);
     }
 
     void Person::FixedUpdate()

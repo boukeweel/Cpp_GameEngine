@@ -14,8 +14,8 @@ namespace SimWorld
 {
     EatAction::EatAction(HungerComponent* hc,Person* agent) : m_Person{agent}, m_HungerComp{hc}
     {
-        m_PreConditions[PersonKeys::HasFood] = true;
-        m_Effects[PersonKeys::Hunger] = 0;
+        m_PersonalPreconditions.Set(PersonalKey::FoodQuantity, 1);
+        m_PersonalEffects.Set(PersonalKey::Hunger, 0);
 
         m_Name = "Eat Action";
     }
@@ -28,7 +28,7 @@ namespace SimWorld
         if (m_Person->GetInventory().Remove(ItemType::Food,1))
         {
             m_HungerComp->AteFood();
-            m_Person->GetGOAPAgentComponent()->SetState(PersonKeys::Hunger, 0);
+            m_Person->GetGOAPAgentComponent()->SetState(PersonalKey::Hunger, 0);
 
             std::cout << "Eating" << std::endl;
             return ActionState::Completed;

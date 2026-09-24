@@ -7,6 +7,8 @@
 #include <string>
 
 #include "Event.h"
+#include "PersonalState.h"
+#include "WorldState.h"
 #include "States.h"
 
 namespace SimWorld {
@@ -23,9 +25,13 @@ namespace SimWorld {
     {
     public:
         ///Get the conditions that needs to be met for this action to be able to preform
-        [[nodiscard]] virtual const PersonState &GetPreConditions() const { return m_PreConditions; }
+        [[nodiscard]] virtual const PersonalState &GetPersonalPreconditions() const { return m_PersonalPreconditions; }
         ///give the state back with the states changed by this effect, needed for the planner
-        [[nodiscard]] virtual const PersonState &GetEffect() const { return m_Effects; }
+        [[nodiscard]] virtual const PersonalState &GetPersonalEffects() const { return m_PersonalEffects; }
+        [[nodiscard]] virtual const WorldState &GetWorldPreconditions() const { return m_WorldPreconditions; }
+        [[nodiscard]] virtual const WorldState &GetWorldEffects() const { return m_WorldEffects; }
+
+
 
         virtual ActionState Preform() = 0;
 
@@ -37,10 +43,12 @@ namespace SimWorld {
         int m_Cost{0};
 
         std::string m_Name{""};
-        PersonState m_PreConditions;
-        PersonState m_Effects;
+        GameEngine::Event<PersonalKey,int>* m_ChangeStateEvent{nullptr};
 
-        GameEngine::Event<PersonKeys,int>* m_ChangeStateEvent{nullptr};
+        PersonalState m_PersonalPreconditions;
+        PersonalState m_PersonalEffects;
+        WorldState m_WorldPreconditions;
+        WorldState m_WorldEffects;
     public:
         virtual ~Action() = default;
     };

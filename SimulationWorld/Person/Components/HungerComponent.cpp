@@ -23,11 +23,16 @@ namespace SimWorld
 
     void HungerComponent::Begin()
     {
-        m_GoapAgent = m_Owner->GetComponent<Person>()->GetGOAPAgentComponent();
-        if (m_GoapAgent != nullptr)
+        auto person = m_Owner->GetComponent<Person>();
+        if (person != nullptr)
         {
-            m_EatGoal = m_GoapAgent->GetGoal<EatGoal>();
+            m_GoapAgent = person->GetGOAPAgentComponent();
+            if (m_GoapAgent != nullptr)
+            {
+                m_EatGoal = m_GoapAgent->GetGoal<EatGoal>();
+            }
         }
+
     }
 
     void HungerComponent::FixedUpdate()
@@ -63,6 +68,6 @@ namespace SimWorld
                 break;
         }
         m_GoapAgent->SetState(
-                    PersonKeys::Hunger, static_cast<int>(m_Hunger));
+                    PersonalKey::Hunger, static_cast<int>(m_Hunger));
     }
 } // SimWorld

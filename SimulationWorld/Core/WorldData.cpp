@@ -16,5 +16,11 @@ namespace SimWorld
     void WorldData::AddFoodStore(FoodStore* foodStore)
     {
         m_FoodStores.emplace_back(foodStore);
+        if (foodStore != nullptr)
+        {
+            m_WorldState.Set(WorldKey::StoreAvailable, true);
+            m_WorldState.Set(WorldKey::FoodAvailable, true);
+            m_WorldState.Set(WorldKey::FoodPrice, foodStore->GetPrice());
+        }
     }
 } // SimWorld

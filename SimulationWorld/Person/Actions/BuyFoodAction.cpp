@@ -15,7 +15,9 @@ namespace SimWorld
 {
     BuyFoodAction::BuyFoodAction(Person* agent) : m_Person{agent}
     {
-        m_Effects[PersonKeys::HasFood] = true;
+        m_PersonalEffects.Set(PersonalKey::FoodQuantity, 1);
+        m_WorldPreconditions.Set(WorldKey::StoreAvailable, true);
+        m_WorldPreconditions.Set(WorldKey::FoodAvailable, true);
         m_Name = "BuyFoodAction";
     }
 
@@ -33,6 +35,9 @@ namespace SimWorld
 
         if (store->Buy(m_Person->GetWallet(),m_Person->GetInventory(),1))
         {
+            m_Person->GetGOAPAgentComponent()->SetState(
+                PersonalKey::Money,
+                m_Person->GetWallet().GetBalance());
             std::cout << "Got food" << std::endl;
             return ActionState::Completed;
         }

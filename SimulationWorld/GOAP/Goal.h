@@ -4,21 +4,23 @@
 
 #ifndef SimWorld_GOAL_H
 #define SimWorld_GOAL_H
-#include "States.h"
+#include "PersonalState.h"
+#include "WorldState.h"
 
 namespace SimWorld {
     class Goal {
     public:
         Goal(int priority = 0) : m_priority{priority} {};
 
-        virtual int DistanceTo(const PersonState& state) = 0;
-        virtual bool IsReached(const PersonState& state) {
-            return DistanceTo(state) == 0;
+        virtual int DistanceTo(const PersonalState& personalState, const WorldState& worldState) = 0;
+        virtual bool IsReached(const PersonalState& personalState, const WorldState& worldState) {
+            return DistanceTo(personalState, worldState) == 0;
         }
 
-        virtual bool IsKeyRelated(const PersonKeys& key) = 0;
+        virtual bool IsPersonalKeyRelated(const PersonalKey& key) = 0;
 
-        [[nodiscard]] virtual const PersonState& GetDesiredState() const = 0;
+        [[nodiscard]] virtual const PersonalState& GetDesiredPersonalState() const = 0;
+        [[nodiscard]] virtual const WorldState& GetDesiredWorldState() const = 0;
 
         [[nodiscard]] virtual int GetPriority() const {return m_priority;}
     protected:

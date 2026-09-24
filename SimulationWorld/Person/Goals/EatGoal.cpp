@@ -7,23 +7,22 @@
 namespace SimWorld {
     EatGoal::EatGoal() : Goal(10)
     {
-        m_DesiredState[PersonKeys::Hunger] = 0;
+        m_DesiredState.Set(PersonalKey::Hunger, 0);
     }
 
-    int EatGoal::DistanceTo(const PersonState &state)
+    int EatGoal::DistanceTo(const PersonalState& personalState, const WorldState&)
     {
-        const auto it = state.find(PersonKeys::Hunger);
-        if (it == state.end())
+        if (!personalState.Has(PersonalKey::Hunger))
             return 1;
 
-        if (it->second == m_DesiredState.at(PersonKeys::Hunger))
+        if (personalState.Get(PersonalKey::Hunger) == m_DesiredState.Get(PersonalKey::Hunger))
             return 0;
 
         return 1;
     }
 
-    bool EatGoal::IsKeyRelated(const PersonKeys &key)
+    bool EatGoal::IsPersonalKeyRelated(const PersonalKey& key)
     {
-        return m_DesiredState.contains(key);
+        return m_DesiredState.Has(key);
     }
 } // SimWorld

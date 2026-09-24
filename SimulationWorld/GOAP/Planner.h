@@ -10,11 +10,11 @@
 
 #include "Action.h"
 #include "Goal.h"
-#include "States.h"
 
 namespace SimWorld {
     struct node {
-        PersonState goal;
+        PersonalState requiredPersonalState;
+        WorldState requiredWorldState;
         Action* actionTaken;
         node* parent;
         int gCost;
@@ -25,12 +25,15 @@ namespace SimWorld {
     public:
         Planner(int maxIterations = 1000);
 
-        [[nodiscard]] std::queue<Action*> Plan(const PersonState& currentState, Goal* goal, const std::vector<std::unique_ptr<Action>>&);
-        [[nodiscard]] Goal* GetNewGoal(const PersonState& currentState, const std::vector<std::unique_ptr<Goal>>& goals);
+        [[nodiscard]] std::queue<Action*> Plan(const PersonalState& personalState, const WorldState& worldState,
+                                               Goal* goal, const std::vector<std::unique_ptr<Action>>&);
+        [[nodiscard]] Goal* GetNewGoal(const PersonalState& personalState, const WorldState& worldState,
+                                       const std::vector<std::unique_ptr<Goal>>& goals);
 
     private:
-        bool IsSatisfied(const PersonState& GoalState, const PersonState& CurrentState);
-        bool IsKeySatisfied(const PersonKeys& key, const int& value, const PersonState& currentState);
+        bool IsSatisfied(const PersonalState& requiredState, const PersonalState& currentState);
+        bool IsWorldSatisfied(const WorldState& requiredState, const WorldState& currentState);
+        bool IsKeySatisfied(PersonalKey key, int value, const PersonalState& currentState);
 
         int m_MaxIterations{1000};
     };
