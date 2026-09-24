@@ -4,8 +4,8 @@
 
 #ifndef SimWorld_GOAL_H
 #define SimWorld_GOAL_H
-#include "PersonalState.h"
-#include "WorldState.h"
+#include <vector>
+#include "Conditions.h"
 
 namespace SimWorld {
     class Goal {
@@ -19,8 +19,8 @@ namespace SimWorld {
 
         virtual bool IsPersonalKeyRelated(const PersonalKey& key) = 0;
 
-        [[nodiscard]] virtual const PersonalState& GetDesiredPersonalState() const = 0;
-        [[nodiscard]] virtual const WorldState& GetDesiredWorldState() const = 0;
+        [[nodiscard]] virtual const std::vector<Condition>& GetPersonalConditions() const = 0;
+        [[nodiscard]] virtual const std::vector<Condition>& GetWorldConditions() const = 0;
 
         [[nodiscard]] virtual int GetPriority() const {return m_priority;}
     protected:

@@ -14,8 +14,25 @@ namespace SimWorld
 {
     EatAction::EatAction(HungerComponent* hc,Person* agent) : m_Person{agent}, m_HungerComp{hc}
     {
-        m_PersonalPreconditions.Set(PersonalKey::FoodQuantity, 1);
-        m_PersonalEffects.Set(PersonalKey::Hunger, 0);
+        m_PersonalPreconditions.push_back({
+            StateValue::Personal(PersonalKey::FoodQuantity),
+            Comparison::GreaterOrEqual,
+            StateValue::Constant(1)
+        });
+        m_Effects.push_back({
+            ValueSource::Personal,
+            PersonalKey::Hunger,
+            {},
+            EffectOperation::Set,
+            StateValue::Constant(0)
+        });
+        m_Effects.push_back({
+            ValueSource::Personal,
+            PersonalKey::FoodQuantity,
+            {},
+            EffectOperation::Subtract,
+            StateValue::Constant(1)
+        });
 
         m_Name = "Eat Action";
     }

@@ -15,9 +15,35 @@ namespace SimWorld
 {
     BuyFoodAction::BuyFoodAction(Person* agent) : m_Person{agent}
     {
-        m_PersonalEffects.Set(PersonalKey::FoodQuantity, 1);
-        m_WorldPreconditions.Set(WorldKey::StoreAvailable, true);
-        m_WorldPreconditions.Set(WorldKey::FoodAvailable, true);
+        m_PersonalPreconditions.push_back({
+            StateValue::Personal(PersonalKey::Money),
+            Comparison::GreaterOrEqual,
+            StateValue::World(WorldKey::FoodPrice)
+        });
+        m_WorldPreconditions.push_back({
+            StateValue::World(WorldKey::StoreAvailable),
+            Comparison::GreaterOrEqual,
+            StateValue::Constant(1)
+        });
+        m_WorldPreconditions.push_back({
+            StateValue::World(WorldKey::FoodAvailable),
+            Comparison::GreaterOrEqual,
+            StateValue::Constant(1)
+        });
+        m_Effects.push_back({
+            ValueSource::Personal,
+            PersonalKey::FoodQuantity,
+            {},
+            EffectOperation::Add,
+            StateValue::Constant(1)
+        });
+        m_Effects.push_back({
+            ValueSource::Personal,
+            PersonalKey::Money,
+            {},
+            EffectOperation::Subtract,
+            StateValue::World(WorldKey::FoodPrice)
+        });
         m_Name = "BuyFoodAction";
     }
 

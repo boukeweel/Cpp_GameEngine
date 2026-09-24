@@ -13,8 +13,8 @@
 
 namespace SimWorld {
     struct node {
-        PersonalState requiredPersonalState;
-        WorldState requiredWorldState;
+        PersonalState personalState;
+        WorldState worldState;
         Action* actionTaken;
         node* parent;
         int gCost;
@@ -31,9 +31,11 @@ namespace SimWorld {
                                        const std::vector<std::unique_ptr<Goal>>& goals);
 
     private:
-        bool IsSatisfied(const PersonalState& requiredState, const PersonalState& currentState);
-        bool IsWorldSatisfied(const WorldState& requiredState, const WorldState& currentState);
-        bool IsKeySatisfied(PersonalKey key, int value, const PersonalState& currentState);
+        bool AreSatisfied(const std::vector<Condition>& conditions,
+                          const PersonalState& personalState,
+                          const WorldState& worldState) const;
+        int CountUnsatisfied(const Goal& goal, const PersonalState& personalState,
+                             const WorldState& worldState) const;
 
         int m_MaxIterations{1000};
     };

@@ -5,10 +5,10 @@
 #ifndef SimWorld_ACTION_H
 #define SimWorld_ACTION_H
 #include <string>
+#include <vector>
 
 #include "Event.h"
-#include "PersonalState.h"
-#include "WorldState.h"
+#include "Conditions.h"
 #include "States.h"
 
 namespace SimWorld {
@@ -24,12 +24,9 @@ namespace SimWorld {
     class Action
     {
     public:
-        ///Get the conditions that needs to be met for this action to be able to preform
-        [[nodiscard]] virtual const PersonalState &GetPersonalPreconditions() const { return m_PersonalPreconditions; }
-        ///give the state back with the states changed by this effect, needed for the planner
-        [[nodiscard]] virtual const PersonalState &GetPersonalEffects() const { return m_PersonalEffects; }
-        [[nodiscard]] virtual const WorldState &GetWorldPreconditions() const { return m_WorldPreconditions; }
-        [[nodiscard]] virtual const WorldState &GetWorldEffects() const { return m_WorldEffects; }
+        [[nodiscard]] const std::vector<Condition>& GetPersonalPreconditions() const { return m_PersonalPreconditions; }
+        [[nodiscard]] const std::vector<Condition>& GetWorldPreconditions() const { return m_WorldPreconditions; }
+        [[nodiscard]] const std::vector<Effect>& GetEffects() const { return m_Effects; }
 
 
 
@@ -45,10 +42,9 @@ namespace SimWorld {
         std::string m_Name{""};
         GameEngine::Event<PersonalKey,int>* m_ChangeStateEvent{nullptr};
 
-        PersonalState m_PersonalPreconditions;
-        PersonalState m_PersonalEffects;
-        WorldState m_WorldPreconditions;
-        WorldState m_WorldEffects;
+        std::vector<Condition> m_PersonalPreconditions;
+        std::vector<Condition> m_WorldPreconditions;
+        std::vector<Effect> m_Effects;
     public:
         virtual ~Action() = default;
     };
