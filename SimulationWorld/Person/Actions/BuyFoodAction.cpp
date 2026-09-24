@@ -16,23 +16,27 @@ namespace SimWorld
     BuyFoodAction::BuyFoodAction(Person* agent) : m_Person{agent}
     {
         m_Effects[PersonKeys::HasFood] = true;
+        m_Name = "BuyFoodAction";
     }
 
-    bool BuyFoodAction::Preform()
+    ActionState BuyFoodAction::Preform()
     {
         if (m_Person == nullptr)
-            return false;
+            return ActionState::Aborted;
 
         //todo I want the agent to hold there favorite food store, so I dont have to get it every time from the worldData
         auto store = WorldData::GetInstance().GetFoodStore();
-        if (store == nullptr) return false;
+        if (store == nullptr) return ActionState::Aborted;
 
         if (store->GetPrice() > m_Person->GetWallet().GetBalance())
-            return false;
+            return ActionState::Failed;
 
-        store->Buy(m_Person->GetWallet(),m_Person->GetInventory(),1);
+        if (store->Buy(m_Person->GetWallet(),m_Person->GetInventory(),1))
+        {
+            std::cout << "Got food" << std::endl;
+            return ActionState::Completed;
+        }
 
-        std::cout << "Got food" << std::endl;
-        return true;
+        return ActionState::Running;
     }
 } // SimWorld

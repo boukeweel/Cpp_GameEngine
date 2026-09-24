@@ -19,7 +19,7 @@ namespace SimWorld
     public:
         EatAction(HungerComponent* hc,Person* agent);
 
-        bool Preform() override;
+        ActionState Preform() override;
     private:
         HungerComponent* m_HungerComp;
         Person* m_Person;

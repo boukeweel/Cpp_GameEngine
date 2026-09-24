@@ -40,7 +40,7 @@ namespace SimWorld
         ///Checks if the state changes has anything to do with the current goal
         ///if it has nothing to do with the current goal, recalculated the goals to check if the current goal is still
         ///the most important
-        void ReCalculatedGoal(PersonKeys key);
+        void ReCalculatedGoal();
 
         ///Plans the path again, and changes the actions based on the result.
         void ReCalculatedPath();

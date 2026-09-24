@@ -16,7 +16,7 @@ namespace SimWorld
     public:
         BuyFoodAction(Person* agent);
 
-        bool Preform() override;
+        ActionState Preform() override;
     private:
         Person* m_Person{nullptr};
     };

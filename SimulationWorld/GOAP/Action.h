@@ -4,10 +4,21 @@
 
 #ifndef SimWorld_ACTION_H
 #define SimWorld_ACTION_H
+#include <string>
+
 #include "Event.h"
 #include "States.h"
 
 namespace SimWorld {
+
+    enum class ActionState
+    {
+        Completed,
+        Running,
+        Failed,
+        Aborted,
+    };
+
     class Action
     {
     public:
@@ -16,14 +27,16 @@ namespace SimWorld {
         ///give the state back with the states changed by this effect, needed for the planner
         [[nodiscard]] virtual const PersonState &GetEffect() const { return m_Effects; }
 
-        virtual bool Preform() = 0;
+        virtual ActionState Preform() = 0;
 
         [[nodiscard]] int GetCost() const {return m_Cost;}
+        [[nodiscard]] const std::string& GetName() const { return m_Name; }
         
         virtual bool IsInRange() const {return true;}
     protected:
         int m_Cost{0};
 
+        std::string m_Name{""};
         PersonState m_PreConditions;
         PersonState m_Effects;
 

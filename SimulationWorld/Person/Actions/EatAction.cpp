@@ -16,19 +16,25 @@ namespace SimWorld
     {
         m_PreConditions[PersonKeys::HasFood] = true;
         m_Effects[PersonKeys::Hunger] = 0;
+
+        m_Name = "Eat Action";
     }
 
-    bool EatAction::Preform()
+    ActionState EatAction::Preform()
     {
         if (m_HungerComp == nullptr || m_Person == nullptr)
-            return false;
+            return ActionState::Aborted;
 
-        m_HungerComp->AteFood();
+        if (m_Person->GetInventory().Remove(ItemType::Food,1))
+        {
+            m_HungerComp->AteFood();
+            m_Person->GetGOAPAgentComponent()->SetState(PersonKeys::Hunger, 0);
 
-        m_Person->GetInventory().Remove(ItemType::Food,1);
-        m_Person->GetGOAPAgentComponent()->SetState(PersonKeys::Hunger, 0);
+            std::cout << "Eating" << std::endl;
+            return ActionState::Completed;
+        }
 
-        std::cout << "Eating" << std::endl;
-        return true;
+        return ActionState::Running;
+
     }
 } // SimWorld

@@ -4,6 +4,10 @@
 
 #include "GOAPAgentComponent.h"
 
+#include <assert.h>
+#include <iostream>
+#include <ostream>
+
 #include "Planner.h"
 
 namespace SimWorld
@@ -44,9 +48,26 @@ namespace SimWorld
         if (m_CurrentPath.empty()) return;
 
         Action* currentAction = m_CurrentPath.front();
-        if (currentAction != nullptr && currentAction->Preform())
+        if (currentAction != nullptr)
         {
-            m_CurrentPath.pop();
+            switch (currentAction->Preform())
+            {
+                case ActionState::Completed:
+                    m_CurrentPath.pop();
+                    break;
+                case ActionState::Running:
+                    break;
+                case ActionState::Aborted:
+                    //The action got aborted so something big went wrong
+                    std::cout << "The action " << currentAction->GetName()
+                               << " aborted, something went really wrong" << std::endl;
+                    assert(false && "Action aborted, something went really wrong");
+                    break;
+                case ActionState::Failed:
+                    //Aborted or failed means its atm unable to completed this action
+                    ReCalculatedGoal();
+                    break;
+            }
         }
     }
 
@@ -61,21 +82,19 @@ namespace SimWorld
         }
 
         m_CurrentState[key] = newValue;
-        ReCalculatedGoal(key);
+        if (!m_CurrentGoal->IsKeyRelated(key))
+            ReCalculatedGoal();
     }
 
     GOAPAgentComponent::~GOAPAgentComponent() = default;
 
-    void GOAPAgentComponent::ReCalculatedGoal(PersonKeys key)
+    void GOAPAgentComponent::ReCalculatedGoal()
     {
-        if (m_CurrentGoal == nullptr || !m_CurrentGoal->IsKeyRelated(key))
+        Goal* newGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
+        if (newGoal != nullptr && newGoal != m_CurrentGoal)
         {
-            Goal* newGoal = m_Planner->GetNewGoal(m_CurrentState,m_Goals);
-            if (newGoal != nullptr && newGoal != m_CurrentGoal)
-            {
-                m_CurrentGoal = newGoal;
-                ReCalculatedPath();
-            }
+            m_CurrentGoal = newGoal;
+            ReCalculatedPath();
         }
     }
 
