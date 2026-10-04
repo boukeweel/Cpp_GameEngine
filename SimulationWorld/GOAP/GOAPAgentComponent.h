@@ -34,6 +34,9 @@ namespace SimWorld
         void SetState(PersonalKey key, int value);
         const PersonalState& GetState() const{return m_PersonalState;}
 
+        void SetMoveSpeed(float speed) { m_MoveSpeed = speed; }
+        float GetMoveSpeed() const { return m_MoveSpeed; }
+
         ~GOAPAgentComponent() override;
     private:
 
@@ -54,6 +57,10 @@ namespace SimWorld
 
         std::vector<std::unique_ptr<Goal>> m_Goals{};
         Goal* m_CurrentGoal{nullptr};
+
+        bool TryMoveToCurrentActionTarget();
+
+        float m_MoveSpeed{80.0f};
     };
 
     template<typename T> requires std::derived_from<T, Goal>

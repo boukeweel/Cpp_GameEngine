@@ -14,7 +14,12 @@ namespace SimWorld
     class BuyFoodAction : public Action
     {
     public:
-        BuyFoodAction(Person* agent);
+        explicit BuyFoodAction(Person* agent);
+
+        bool HasTarget() const override;
+        const GameEngine::GameObject* GetTargetObject() const override;
+        glm::vec3 GetTargetPosition() const override;
+        float GetRequiredDistance() const override;
 
         ActionState Preform() override;
     private:

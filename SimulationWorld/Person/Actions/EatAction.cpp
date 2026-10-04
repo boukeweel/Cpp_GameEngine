@@ -51,7 +51,7 @@ namespace SimWorld
             return ActionState::Completed;
         }
 
-        return ActionState::Running;
+        return ActionState::Failed;
 
     }
 } // SimWorld

@@ -128,6 +128,7 @@ namespace SimWorld
                 continue;
             }
 
+            //there must be a better way to reverse the list for the queue
             if (goal->IsReached(current->personalState, current->worldState))
             {
                 std::vector<Action*> reversedPath;

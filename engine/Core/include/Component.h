@@ -10,6 +10,8 @@ namespace GameEngine {
     public:
         Component(GameObject* owner) : m_Owner(owner) {}
 
+        [[nodiscard]] GameObject* GetOwner() const { return m_Owner; }
+
         virtual void Begin() {}
 
         virtual void Update() {}
