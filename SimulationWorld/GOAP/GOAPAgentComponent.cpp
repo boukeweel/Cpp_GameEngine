@@ -40,7 +40,13 @@ namespace SimWorld
 
     void GOAPAgentComponent::AddGoal(std::unique_ptr<Goal> goal)
     {
+        if (goal == nullptr)
+            return;
+
+        Goal* addedGoal = goal.get();
         m_Goals.emplace_back(std::move(goal));
+        addedGoal->GetPriorityChangedEvent().Subscribe(
+            [this](Goal*, int, int) { ReCalculatedGoal(); });
     }
 
     void GOAPAgentComponent::AddState(PersonalKey key, int value)
@@ -139,6 +145,7 @@ namespace SimWorld
 
     void GOAPAgentComponent::ReCalculatedPath()
     {
+        m_CurrentPath = {};
         if (m_CurrentGoal != nullptr)
         {
             m_CurrentPath = m_Planner->Plan(

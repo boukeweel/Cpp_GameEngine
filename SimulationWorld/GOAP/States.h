@@ -10,7 +10,6 @@ namespace SimWorld {
         FoodQuantity,
         Money,
         HasJob,
-        ShouldWork,
         FindJob,
     };
 

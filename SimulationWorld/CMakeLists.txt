@@ -5,6 +5,8 @@ file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
         Person/*.cpp
         Person/Goals/*.cpp
         Person/Actions/*.cpp
+        Person/Actions/FoodActions/*.cpp
+        Person/Actions/JobActions/*.cpp
         Person/Components/*.cpp
         Items/Food/*.cpp
         Objects/*.cpp
@@ -18,6 +20,8 @@ target_include_directories(SimulationWorld PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/Person
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Goals
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Actions
+        ${CMAKE_CURRENT_SOURCE_DIR}/Person/Actions/FoodActions
+        ${CMAKE_CURRENT_SOURCE_DIR}/Person/Actions/JobActions
         ${CMAKE_CURRENT_SOURCE_DIR}/Person/Components
         ${CMAKE_CURRENT_SOURCE_DIR}/Items/Food
         ${CMAKE_CURRENT_SOURCE_DIR}/Objects

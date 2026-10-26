@@ -18,8 +18,6 @@ namespace SimWorld {
 
         bool IsPersonalKeyRelated(const PersonalKey& key) override;
 
-        void ChangePriority(int newPriority){m_priority = newPriority;}
-
     private:
         std::vector<Condition> m_PersonalConditions;
         std::vector<Condition> m_WorldConditions;

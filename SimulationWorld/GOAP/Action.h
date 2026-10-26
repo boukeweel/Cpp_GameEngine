@@ -37,6 +37,8 @@ namespace SimWorld {
         [[nodiscard]] int GetCost() const { return m_Cost; }
         [[nodiscard]] const std::string& GetName() const { return m_Name; }
 
+
+        //todo I feel like I should make 2 actions classes, one with out target finding and one with
         virtual bool HasTarget() const { return m_TargetObject != nullptr; }
         virtual void SetTargetObject(GameEngine::GameObject* targetObject) { m_TargetObject = targetObject; }
         virtual const GameEngine::GameObject* GetTargetObject() const { return m_TargetObject; }

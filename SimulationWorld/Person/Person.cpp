@@ -4,8 +4,8 @@
 
 #include "Person.h"
 
-#include "BuyFoodAction.h"
-#include "EatAction.h"
+#include "Actions/FoodActions/BuyFoodAction.h"
+#include "Actions/FoodActions/EatAction.h"
 #include "EatGoal.h"
 #include "GameObject.h"
 #include "HungerComponent.h"
