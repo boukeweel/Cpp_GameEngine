@@ -11,6 +11,7 @@ namespace SimWorld {
         Money,
         HasJob,
         FindJob,
+        WorkProgress,
     };
 
     enum class WorldKey {

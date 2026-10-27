@@ -26,7 +26,7 @@ namespace SimWorld
 
     void GOAPAgentComponent::Begin()
     {
-
+        ReCalculatedGoal();
     }
 
     void GOAPAgentComponent::AddAction(std::unique_ptr<Action> action)
@@ -46,7 +46,7 @@ namespace SimWorld
         Goal* addedGoal = goal.get();
         m_Goals.emplace_back(std::move(goal));
         addedGoal->GetPriorityChangedEvent().Subscribe(
-            [this](Goal*, int, int) { ReCalculatedGoal(); });
+            [this](int, int) { ReCalculatedGoal(); });
     }
 
     void GOAPAgentComponent::AddState(PersonalKey key, int value)

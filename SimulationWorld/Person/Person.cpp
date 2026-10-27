@@ -12,6 +12,8 @@
 #include "Inventory.h"
 #include "Wallet.h"
 #include "GOAPAgentComponent.h"
+#include "WorkGoal.h"
+#include "JobActions/WorkJobAction.h"
 
 namespace SimWorld {
     Person::Person(GameEngine::GameObject *owner) : Component(owner)
@@ -37,11 +39,14 @@ namespace SimWorld {
         HungerComponent* hunger = m_Owner->GetComponent<HungerComponent>();
         if (hunger != nullptr)
             m_AgentComponent->AddAction(std::make_unique<EatAction>(hunger,this));
+
+        m_AgentComponent->AddAction(std::make_unique<WorkJobAction>(this));
     }
 
     void Person::InitGoals()
     {
         m_AgentComponent->AddGoal(std::make_unique<EatGoal>());
+        m_AgentComponent->AddGoal(std::make_unique<WorkGoal>());
     }
 
     void Person::InitStates()
@@ -49,6 +54,8 @@ namespace SimWorld {
         m_AgentComponent->AddState(PersonalKey::FoodQuantity, m_Inventory->GetQuantity(ItemType::Food));
         m_AgentComponent->AddState(PersonalKey::Money, m_Wallet->GetBalance());
         m_AgentComponent->AddState(PersonalKey::Hunger, 0);
+        m_AgentComponent->AddState(PersonalKey::HasJob, 1);
+        m_AgentComponent->AddState(PersonalKey::WorkProgress, 0);
     }
 
     void Person::FixedUpdate()

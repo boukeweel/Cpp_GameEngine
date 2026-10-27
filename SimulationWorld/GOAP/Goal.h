@@ -11,12 +11,13 @@
 
 namespace SimWorld {
 
-    using PriorityChangedEvent = GameEngine::Event<Goal*, int, int>;
+    using PriorityChangedEvent = GameEngine::Event<int, int>;
 
     class Goal {
     public:
         Goal(int priority = 0) : m_priority{priority} {};
 
+        //todo put in .cpp
         void ChangePriority(int newPriority)
         {
             if (m_priority == newPriority)
@@ -24,7 +25,7 @@ namespace SimWorld {
 
             const int oldPriority = m_priority;
             m_priority = newPriority;
-            m_PriorityChangedEvent.Invoke(this, oldPriority, newPriority);
+            m_PriorityChangedEvent.Invoke(oldPriority, newPriority);
         }
         [[nodiscard]] virtual int GetPriority() const {return m_priority;}
         PriorityChangedEvent& GetPriorityChangedEvent() { return m_PriorityChangedEvent; }
@@ -36,8 +37,11 @@ namespace SimWorld {
 
         virtual bool IsPersonalKeyRelated(const PersonalKey& key) = 0;
 
-        [[nodiscard]] virtual const std::vector<Condition>& GetPersonalConditions() const = 0;
-        [[nodiscard]] virtual const std::vector<Condition>& GetWorldConditions() const = 0;
+        virtual const std::vector<Condition>& GetWorldConditions() const {return m_WorldConditions;}
+        virtual const std::vector<Condition>& GetPersonalConditions() const {return m_PersonalConditions;}
+    protected:
+        std::vector<Condition> m_PersonalConditions;
+        std::vector<Condition> m_WorldConditions;
 
     private:
         int m_priority{0};

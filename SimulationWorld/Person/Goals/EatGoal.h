@@ -13,14 +13,8 @@ namespace SimWorld {
         EatGoal();
 
         int DistanceTo(const PersonalState& personalState, const WorldState& worldState) override;
-        const std::vector<Condition>& GetPersonalConditions() const override {return m_PersonalConditions;}
-        const std::vector<Condition>& GetWorldConditions() const override {return m_WorldConditions;}
 
         bool IsPersonalKeyRelated(const PersonalKey& key) override;
-
-    private:
-        std::vector<Condition> m_PersonalConditions;
-        std::vector<Condition> m_WorldConditions;
     };
 } // SimWorld
 

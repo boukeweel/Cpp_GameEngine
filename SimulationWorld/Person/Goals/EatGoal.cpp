@@ -14,14 +14,14 @@ namespace SimWorld {
         });
     }
 
-    int EatGoal::DistanceTo(const PersonalState& personalState, const WorldState&)
+    int EatGoal::DistanceTo(const PersonalState& personalState, const WorldState& worldState)
     {
         if (!personalState.Has(PersonalKey::Hunger))
             return 1;
 
         for (const auto& condition : m_PersonalConditions)
         {
-            if (!condition.IsSatisfied(personalState, WorldState{}))
+            if (!condition.IsSatisfied(personalState, worldState))
                 return 1;
         }
         return 0;
