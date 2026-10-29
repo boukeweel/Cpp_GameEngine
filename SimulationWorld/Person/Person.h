@@ -6,6 +6,7 @@
 #define GAMEENGINE_PERSON_H
 #include <memory>
 #include "Component.h"
+#include "WorkPlace.h"
 
 namespace SimWorld {
     class GOAPAgentComponent;
@@ -27,6 +28,9 @@ namespace SimWorld {
         Wallet& GetWallet() const {return *m_Wallet;}
         Inventory& GetInventory() const {return *m_Inventory;}
         GOAPAgentComponent* GetGOAPAgentComponent() const {return m_AgentComponent;}
+
+        void SetWorkPlace(WorkPlace* workplace){m_WorkPlace = workplace;}
+
     private:
         void InitActions();
         void InitGoals();
@@ -36,6 +40,8 @@ namespace SimWorld {
         std::unique_ptr<Inventory> m_Inventory{};
 
         GOAPAgentComponent* m_AgentComponent{};
+
+        WorkPlace* m_WorkPlace{};
     public:
         ~Person() override;
     };

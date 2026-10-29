@@ -7,6 +7,7 @@
 #include "Actions/FoodActions/BuyFoodAction.h"
 #include "Actions/FoodActions/EatAction.h"
 #include "EatGoal.h"
+#include "FindJobAction.h"
 #include "GameObject.h"
 #include "HungerComponent.h"
 #include "Inventory.h"
@@ -41,6 +42,7 @@ namespace SimWorld {
             m_AgentComponent->AddAction(std::make_unique<EatAction>(hunger,this));
 
         m_AgentComponent->AddAction(std::make_unique<WorkJobAction>(this));
+        m_AgentComponent->AddAction(std::make_unique<FindJobAction>(this));
     }
 
     void Person::InitGoals()
@@ -54,7 +56,7 @@ namespace SimWorld {
         m_AgentComponent->AddState(PersonalKey::FoodQuantity, m_Inventory->GetQuantity(ItemType::Food));
         m_AgentComponent->AddState(PersonalKey::Money, m_Wallet->GetBalance());
         m_AgentComponent->AddState(PersonalKey::Hunger, 0);
-        m_AgentComponent->AddState(PersonalKey::HasJob, 1);
+        m_AgentComponent->AddState(PersonalKey::HasJob, 0);
         m_AgentComponent->AddState(PersonalKey::WorkProgress, 0);
     }
 

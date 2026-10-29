@@ -83,6 +83,7 @@ namespace SimWorld
         return unsatisfied;
     }
 
+    //todo split function up
     std::queue<Action*> Planner::Plan(
         const PersonalState& personalState,
         const WorldState& worldState,
@@ -148,6 +149,8 @@ namespace SimWorld
 
             for (const auto& action : availableActions)
             {
+                //check if the action is relevant to the goal
+
                 if (!AreSatisfied(action->GetPersonalPreconditions(),
                                   current->personalState,
                                   current->worldState) ||

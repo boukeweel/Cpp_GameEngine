@@ -14,7 +14,7 @@ namespace SimWorld
         m_PersonalPreconditions.push_back({
             StateValue::Personal(PersonalKey::HasJob),
             Comparison::Equal,
-            StateValue::Constant(1)
+            StateValue::Constant(true)
         });
 
         m_Effects.push_back({
@@ -23,7 +23,14 @@ namespace SimWorld
             {},
             EffectOperation::Add,
             StateValue::Constant(100)
-            });
+        });
+        m_Effects.push_back({
+            ValueSource::Personal,
+            PersonalKey::Money,
+            {},
+            EffectOperation::Add,
+            StateValue::Constant(50)
+        });
     }
 
     ActionState WorkJobAction::Preform()

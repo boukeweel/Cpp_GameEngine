@@ -23,4 +23,19 @@ namespace SimWorld
             m_WorldState.Set(WorldKey::FoodPrice, foodStore->GetPrice());
         }
     }
+
+    void WorldData::AddWorkPlace(WorkPlace *workPlace)
+    {
+        m_WorkPlaces.emplace_back(workPlace);
+        if (workPlace !=  nullptr)
+        {
+            m_WorldState.Set(WorldKey::WorkPlaceAvailable, true);
+        }
+    }
+
+    WorkPlace* WorldData::GetWorkPlace()
+    {
+        if (m_WorkPlaces.empty()) return nullptr;
+        return m_WorkPlaces.front();
+    }
 } // SimWorld

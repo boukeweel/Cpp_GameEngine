@@ -27,6 +27,13 @@ namespace SimWorld {
         foodStore->GetTransform().SetPosition({200,300,0});
         foodStore->GetTransform().SetScale({2,2});
         scene.AddObject(std::move(foodStore));
+
+        auto workPlace = std::make_unique<GameEngine::GameObject>();
+        workPlace->AddComponent<WorkPlace>();
+        workPlace->AddComponent<GameEngine::SpriteRenderer>("/Sprites/Jobsprite.png");
+        workPlace->GetTransform().SetPosition({600,100,0});
+        workPlace->GetTransform().SetScale({2,2});
+        scene.AddObject(std::move(workPlace));
     }
 
     std::unique_ptr<GameEngine::GameObject> SimulationScene::CreatePerson()

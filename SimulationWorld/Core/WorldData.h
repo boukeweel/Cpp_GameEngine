@@ -8,6 +8,7 @@
 
 #include "FoodStore.h"
 #include "Singleton.h"
+#include "WorkPlace.h"
 #include "WorldState.h"
 
 namespace SimWorld
@@ -21,8 +22,12 @@ namespace SimWorld
         void AddFoodStore(FoodStore* foodStore);
         WorldState& GetWorldState() { return m_WorldState; }
         const WorldState& GetWorldState() const { return m_WorldState; }
+
+        void AddWorkPlace(WorkPlace* workPlace);
+        WorkPlace* GetWorkPlace();
     private:
         std::vector<FoodStore*> m_FoodStores;
+        std::vector<WorkPlace*> m_WorkPlaces;
         WorldState m_WorldState;
     };
 } // SimWorld

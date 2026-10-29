@@ -18,6 +18,7 @@ namespace SimWorld {
         FoodPrice,
         FoodAvailable,
         StoreAvailable,
+        WorkPlaceAvailable,
     };
 }
 
