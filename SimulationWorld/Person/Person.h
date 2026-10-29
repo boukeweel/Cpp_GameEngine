@@ -30,6 +30,7 @@ namespace SimWorld {
         GOAPAgentComponent* GetGOAPAgentComponent() const {return m_AgentComponent;}
 
         void SetWorkPlace(WorkPlace* workplace){m_WorkPlace = workplace;}
+        const WorkPlace* GetWorkPlace() const {return m_WorkPlace;}
 
     private:
         void InitActions();

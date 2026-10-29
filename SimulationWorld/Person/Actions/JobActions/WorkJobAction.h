@@ -17,6 +17,10 @@ namespace SimWorld
         WorkJobAction(Person* agent);
 
         ActionState Preform() override;
+
+        bool HasTarget() const override;
+        const GameEngine::GameObject* GetTargetObject() const override;
+        glm::vec3 GetTargetPosition() const override;
     private:
         Person* m_Person;
 
